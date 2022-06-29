@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Button, Col, Form } from "react-bootstrap";
+import { authActionCreator } from "../../store/auth/action-creators/auth.action-creator";
+import { useAppDispatch } from "../../store/hooks/store.hook";
 import { ELoginKeys, ELoginTitles } from "./enums/Login.enum";
 
 const LoginPage = () => {
+  const dispatch = useAppDispatch();
   const [authData, setAuthData] = useState({
     login: "",
     password: "",
@@ -16,13 +19,19 @@ const LoginPage = () => {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event: any) => { // ?
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    event.preventDefault();
+    // event.stopPropagation();
+    // const form = event.currentTarget;
+    // if (form.checkValidity() === false) {
+
+    // }
 
     setValidated(true);
+
+    dispatch(authActionCreator({
+      email: authData.login,
+      password: authData.password,
+    }));
   };
   return (
     <Form validated={validated} onSubmit={handleSubmit}>

@@ -1,9 +1,9 @@
 import * as firebase from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_WHAT_API_KEY,
+  apiKey: process.env.REACT_API_KEY,
   authDomain: process.env.REACT_AUTH_DOMAIN,
   databaseURL: process.env.REACT_DATABASE_URL,
   projectId: process.env.REACT_PROJECT_ID,
@@ -19,8 +19,10 @@ class Firebase {
 
   userUid: null | string | number;
 
+  app: firebase.FirebaseApp;
+
   constructor() {
-    firebase.initializeApp(firebaseConfig);
+    this.app = firebase.initializeApp(firebaseConfig);
 
     this.auth = getAuth();
     this.database = getDatabase();
@@ -31,7 +33,7 @@ class Firebase {
     this.userUid = uid;
   }
 
-  signWithEmail = (email: string, password: string) => this.auth.signInWithEmailAndPassword(email, password);
+  signWithEmail = (email: string, password: string) => signInWithEmailAndPassword(this.auth, email, password);
 }
 
 export default Firebase;

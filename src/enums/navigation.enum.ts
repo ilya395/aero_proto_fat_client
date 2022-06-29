@@ -1,4 +1,4 @@
-export enum ENavigationValues {
+export enum ENavigationKeys {
   Main = "/",
   Orders = "/orders",
   Customers = "/customers",
