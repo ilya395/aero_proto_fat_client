@@ -1,11 +1,10 @@
-import { useSelector } from "react-redux";
-import { authDataSelector } from "../store/auth/reducers/auth.reducer";
+import localAuthDataService from "../services/localAuthData/localAuthData.service";
 
 const useAuth = () => {
-  const data = useSelector(authDataSelector);
-
+  // const data = useSelector(authDataSelector);
+  const localUid = localAuthDataService.getUId();
   return {
-    isAuth: !!data?.uid,
+    isAuth: !!localUid, // !!data?.uid,
   }
 }
 

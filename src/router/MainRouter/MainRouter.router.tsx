@@ -37,7 +37,7 @@ const MainRouter = () => {
         />
         <Route
           path="*"
-          element={<NotFoundPage />}
+          element={isAuth ? <NotFoundPage /> : <Navigate replace to={ENavigationKeys.Login} />}
         />
       </Routes>
     </BrowserRouter>

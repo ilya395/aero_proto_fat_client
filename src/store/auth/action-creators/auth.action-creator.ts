@@ -4,6 +4,7 @@ import { ISignWithEmail } from "../../../services/firebase/models/firebase.model
 import { AuthSlice } from "../reducers/auth.reducer";
 import { EBaseErrorTitles } from "../../../enums/errors.enum";
 import { IAuthResponse } from "../models/auth.model";
+import localAuthDataService from "../../../services/localAuthData/localAuthData.service";
 
 const firebase = new Firebase();
 
@@ -19,10 +20,12 @@ export const authActionCreator = (object: ISignWithEmail) => async (dispatch: Ap
       const response: IAuthResponse = await firebase.signWithEmail(email, password);
       if (response) {
         const { user } = response;
-        dispatch(AuthSlice.actions.authSuccess({
+        const data = {
           uid: user.uid,
           email: user.email || "",
-        }));
+        }
+        localAuthDataService.setAuthData(JSON.stringify(data));
+        dispatch(AuthSlice.actions.authSuccess(data));
       } else {
         dispatch(AuthSlice.actions.authError({
           message: EBaseErrorTitles.FailAuthRequest,
