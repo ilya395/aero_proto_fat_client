@@ -10,7 +10,6 @@ import ProductsPage from "../../pages/Products/Products.page";
 
 const MainRouter = () => {
   const { isAuth } = useAuth();
-  console.log(isAuth)
   return (
     <BrowserRouter>
       <Routes>
