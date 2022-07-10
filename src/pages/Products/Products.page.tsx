@@ -1,5 +1,10 @@
 import React from "react";
+import MainLayout from "../../layouts/Main/Main.layout";
 
-const ProductsPage = () => (<div>Products</div>);
+const ProductsPage = () => (
+  <MainLayout>
+    <div>Products</div>
+  </MainLayout>
+);
 
 export default ProductsPage;

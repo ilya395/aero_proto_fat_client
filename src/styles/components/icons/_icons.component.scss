@@ -1,0 +1,11 @@
+.icon-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // padding: 3.5px 0px;
+
+  & svg {
+    width: 100%;
+    height: 100%;
+  }
+}

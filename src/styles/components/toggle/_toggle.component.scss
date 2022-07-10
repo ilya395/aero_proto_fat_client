@@ -1,0 +1,8 @@
+.dropdown-toggle {
+  &.without-arrow {
+    padding: .5rem;
+    &::after {
+      display: none;
+    }
+  }
+}
