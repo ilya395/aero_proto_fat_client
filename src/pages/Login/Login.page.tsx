@@ -1,24 +1,25 @@
-import React, { useState } from "react";
-import { Button, Col, Form } from "react-bootstrap";
+import React, { useCallback, useState } from "react";
+import LoginForm from "../../components/ui/LoginForm/LoginForm.component";
+import LoginLayout from "../../layouts/Login/Login.layout";
 import { authActionCreator } from "../../store/auth/action-creators/auth.action-creator";
 import { useAppDispatch } from "../../store/hooks/store.hook";
-import { ELoginKeys, ELoginTitles } from "./enums/Login.enum";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
+
   const [authData, setAuthData] = useState({
     login: "",
     password: "",
   });
-  const handleChange = (arg: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuthData(state => ({
-      ...state,
-      [arg]: event.target.value,
-    }))
-  }
+
+  const handleChange = useCallback((arg: string) => (event: React.ChangeEvent<HTMLInputElement>) => setAuthData(state => ({
+    ...state,
+    [arg]: event.target.value,
+  })), [setAuthData]);
+
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event: any) => { // ?
+  const handleSubmit = useCallback((event: React.SyntheticEvent) => { // ?
     event.preventDefault();
     // event.stopPropagation();
     // const form = event.currentTarget;
@@ -32,35 +33,18 @@ const LoginPage = () => {
       email: authData.login,
       password: authData.password,
     }));
-  };
+  }, [authData.login, authData.password, dispatch]);
+
   return (
-    <Form validated={validated} onSubmit={handleSubmit}>
-      <Form.Group as={Col} controlId="login" className="mb-3">
-        <Form.Label>Логин</Form.Label>
-        <Form.Control
-          required
-          type="text"
-          placeholder={ELoginTitles.Login}
-          defaultValue={authData.login}
-          onChange={handleChange(ELoginKeys.Login)}
-        />
-        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-      </Form.Group>
-      <Form.Group as={Col} controlId="password" className="mb-3">
-        <Form.Label>Пароль</Form.Label>
-        <Form.Control
-          required
-          type="password"
-          placeholder={ELoginTitles.Password}
-          defaultValue={authData.password}
-          onChange={handleChange(ELoginKeys.Password)}
-        />
-        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Войти
-      </Button>
-    </Form>
+    <LoginLayout>
+      <LoginForm
+        login={authData.login}
+        password={authData.password}
+        validated={validated}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
+    </LoginLayout>
   )
 };
 
