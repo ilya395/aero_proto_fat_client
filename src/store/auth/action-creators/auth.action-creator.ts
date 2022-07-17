@@ -1,14 +1,12 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AppDispatch } from "../../root.reducer";
-import Firebase from "../../../services/firebase/firebase.service";
+import { firebaseInstance } from "../../../services/firebase/firebase.service";
 import { ISignWithEmail } from "../../../services/firebase/models/firebase.model";
 import { AuthSlice } from "../reducers/auth.reducer";
 import { EBaseErrorTitles } from "../../../enums/errors.enum";
-import { IAuthResponse } from "../models/auth.model";
+import { IAuthData, IAuthResponse } from "../models/auth.model";
 import localAuthDataService from "../../../services/localAuthData/localAuthData.service";
 
-const firebase = new Firebase();
-
-// eslint-disable-next-line import/prefer-default-export
 export const authActionCreator = (object: ISignWithEmail) => async (dispatch: AppDispatch) => {
   try {
     const {
@@ -17,13 +15,15 @@ export const authActionCreator = (object: ISignWithEmail) => async (dispatch: Ap
     } = object;
     if (email && password) {
       dispatch(AuthSlice.actions.authAwait());
-      const response: IAuthResponse = await firebase.signWithEmail(email, password);
+      const response: IAuthResponse = await firebaseInstance.signWithEmail(email, password);
       if (response) {
         const { user } = response;
+        const accessToken = await user.getIdToken();
         const data = {
           uid: user.uid,
           email: user.email || "",
-        }
+          accessToken,
+        } as IAuthData;
         localAuthDataService.setAuthData(JSON.stringify(data));
         dispatch(AuthSlice.actions.authSuccess(data));
       } else {
@@ -42,3 +42,39 @@ export const authActionCreator = (object: ISignWithEmail) => async (dispatch: Ap
     }));
   }
 }
+
+export const authFetch = createAsyncThunk(
+  "auth/fetch",
+  async (object: ISignWithEmail, thunkAPi) => {
+    try {
+      const {
+        email,
+        password,
+      } = object;
+      if (email && password) {
+        const response: IAuthResponse = await firebaseInstance.signWithEmail(email, password);
+        if (response) {
+          const { user } = response;
+          const accessToken = await user.getIdToken();
+          const data = {
+            uid: user.uid,
+            email: user.email || "",
+            accessToken,
+          } as IAuthData;
+          localAuthDataService.setAuthData(JSON.stringify(data));
+          return data;
+        }
+        return thunkAPi.rejectWithValue({
+          message: EBaseErrorTitles.FailAuthRequest,
+        });
+      }
+      return thunkAPi.rejectWithValue({
+        message: EBaseErrorTitles.FailLoginData,
+      });
+    } catch (e) {
+      return thunkAPi.rejectWithValue({
+        message: EBaseErrorTitles.FailLoginData,
+      });
+    }
+  },
+);

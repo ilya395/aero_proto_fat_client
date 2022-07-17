@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../root.reducer";
 import { IAuthData, IAuthError, IAuthState } from "../models/auth.model";
 
@@ -40,3 +40,16 @@ export const { authAwait, authSuccess, authError } = AuthSlice.actions;
 export const authDataSelector = (state: RootState) => state.auth.authData;
 export const authAwaitSelector = (state: RootState) => state.auth.await;
 export const authErrorSelector = (state: RootState) => state.auth.error;
+
+export const authDataMemoSelector = createSelector(
+  [authDataSelector],
+  (authData) => authData,
+);
+export const authAwaitMemoSelector = createSelector(
+  [authAwaitSelector],
+  (await) => await,
+);
+export const authErrorMemoSelector = createSelector(
+  [authErrorSelector],
+  (error) => error,
+);

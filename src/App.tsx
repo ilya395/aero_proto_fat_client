@@ -6,10 +6,10 @@ import MainRouter from "./router/MainRouter/MainRouter.router";
 import "./styles/style.scss";
 
 const App = () => {
-  const { isAuth, loading } = useAuth();
+  const { isAuth, loading,} = useAuth();
   const contextData = useMemo(() => ({
-    isAuth
-  }), [isAuth]);
+    isAuth,
+  }), [ isAuth]);
   return (
     <>
       <AuthContext.Provider

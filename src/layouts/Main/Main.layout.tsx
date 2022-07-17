@@ -5,6 +5,7 @@ import { Col, Container, Dropdown, Row } from "react-bootstrap";
 import { IMainLayoutProps } from "./models/Main.model";
 import "./Main.style.scss";
 import { ENavigationKeys, ENavigationTitles } from "../../enums/navigation.enum";
+import BreadcrumbsContainer from "../../components/logic/BreadcrumbsContainer/Breadcrumbs.container";
 
 const MainLayout = (props: IMainLayoutProps) => {
   const {
@@ -63,7 +64,12 @@ const MainLayout = (props: IMainLayoutProps) => {
         </Container>
       </header>
       <main className="main">
-        {children}
+        <Container>
+          <Row>
+            <BreadcrumbsContainer />
+          </Row>
+          {children}
+        </Container>
       </main>
     </div>
   );

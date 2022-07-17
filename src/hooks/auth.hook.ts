@@ -24,6 +24,14 @@ const useAuth = () => {
   }, []);
   // const data = useSelector(authDataSelector);
   // const localUid = localAuthDataService.getUId();
+
+  // const [
+  //   user,
+  //   // loading,
+  //   // error,
+  // ] = useAuthState(getAuth());
+  // console.log("2: ", user)
+
   return {
     isAuth: !!authUser, //  !!localUid, // !!data?.uid,
     loading,

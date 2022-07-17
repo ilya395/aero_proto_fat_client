@@ -5,6 +5,7 @@ import { ENavigationKeys } from "../../enums/navigation.enum";
 import CustomersPage from "../../pages/Customers/Customers.page";
 import LoginPage from "../../pages/Login/Login.page";
 import NotFoundPage from "../../pages/NotFound/NotFound.page";
+import OrderPage from "../../pages/Order/Order.page";
 import OrdersPage from "../../pages/Orders/Orders.page";
 import ProductsPage from "../../pages/Products/Products.page";
 
@@ -19,7 +20,7 @@ const MainRouter = () => {
         >
           <Route
             path=":id"
-            element={context?.isAuth ? <OrdersPage /> : <Navigate replace to={ENavigationKeys.Login} />}
+            element={context?.isAuth ? <OrderPage /> : <Navigate replace to={ENavigationKeys.Login} />}
           />
         </Route>
         <Route
