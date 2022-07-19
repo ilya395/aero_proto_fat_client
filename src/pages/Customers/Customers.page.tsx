@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Row } from "react-bootstrap";
+import CustomerPanel from "../../components/logic/CustomerPanel/CustomerPanel.container";
+import CustomersContainer from "../../components/logic/CustomersContainer/Customers.container";
 import MainLayout from "../../layouts/Main/Main.layout";
 import { useAppDispatch } from "../../store/hooks/store.hook";
 import { fetchUsersList } from "../../store/users/action-creators/users.action-creator";
@@ -11,12 +12,8 @@ const CustomersPage = () => {
   }, [dispatch]);
   return (
     <MainLayout>
-      <Row>
-        <div>panel</div>
-      </Row>
-      <Row>
-        <div>Customers</div>
-      </Row>
+      <CustomerPanel />
+      <CustomersContainer />
     </MainLayout>
   );
 }

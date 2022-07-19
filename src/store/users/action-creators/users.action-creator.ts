@@ -11,7 +11,10 @@ export const fetchUsersList = createAsyncThunk(
       const q = await query(collection(firebaseInstance.getFirestore(), "/users"));
       const querySnapshot = await getDocs(q);
       const response:Array<DocumentData> = [];
-      querySnapshot.forEach((doc) => response.push(doc.data()));
+      querySnapshot.forEach((doc) => response.push({
+        id: doc.id,
+        ...doc.data(),
+      }));
       if (response.length) {
         return response;
       }
