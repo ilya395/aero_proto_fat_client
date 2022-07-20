@@ -10,7 +10,7 @@ const BreadcrumbsView = (props: IBreadcrumbsProps) => {
   const navigate = useNavigate();
   const handleNavigate = (path: string) => () => navigate(path);
   return (
-    <Breadcrumb>
+    <Breadcrumb className="pt-4">
       {
         list?.map(item => (
           <Breadcrumb.Item

@@ -16,28 +16,28 @@ const MainRouter = () => {
       <Routes>
         <Route
           path={ENavigationKeys.Orders}
-          element={context?.isAuth ? <OrdersPage /> : <Navigate replace to={ENavigationKeys.Login} />}
+          element={context?.isAuth ? <OrdersPage /> : <Navigate to={ENavigationKeys.Login} />}
         >
           <Route
             path=":id"
-            element={context?.isAuth ? <OrderPage /> : <Navigate replace to={ENavigationKeys.Login} />}
+            element={context?.isAuth ? <OrderPage /> : <Navigate to={ENavigationKeys.Login} />}
           />
         </Route>
         <Route
           path={ENavigationKeys.Customers}
-          element={context?.isAuth ? <CustomersPage /> : <Navigate replace to={ENavigationKeys.Login} />}
+          element={context?.isAuth ? <CustomersPage /> : <Navigate to={ENavigationKeys.Login} />}
         />
         <Route
           path={ENavigationKeys.Products}
-          element={context?.isAuth ? <ProductsPage /> : <Navigate replace to={ENavigationKeys.Login} />}
+          element={context?.isAuth ? <ProductsPage /> : <Navigate to={ENavigationKeys.Login} />}
         />
         <Route
           path={ENavigationKeys.Login}
-          element={context?.isAuth ? <Navigate replace to={ENavigationKeys.Orders} /> : <LoginPage />}
+          element={context?.isAuth ? <Navigate to={ENavigationKeys.Orders} /> : <LoginPage />}
         />
         <Route
           path="*"
-          element={context?.isAuth ? <NotFoundPage /> : <Navigate replace to={ENavigationKeys.Login} />}
+          element={context?.isAuth ? <NotFoundPage /> : <Navigate to={ENavigationKeys.Login} />}
         />
       </Routes>
     </BrowserRouter>

@@ -9,7 +9,7 @@ const CustomersView = (props: ICustomersViewProps) => {
   } = props;
 
   return (
-    <Row className="customers-list">
+    <Row className="customers-list pt-4" >
       {
         customers?.map(item => (
           <Col key={item?.id}>

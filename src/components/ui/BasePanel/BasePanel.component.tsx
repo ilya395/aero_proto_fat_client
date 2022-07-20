@@ -1,16 +1,22 @@
 import React, { memo } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { IBasePanelProps } from "./models/BasePanel.model";
+import s from "./BasePanel.module.scss";
 
 const BasePanel = (props: IBasePanelProps) => {
-  console.log(props)
+  const {
+    handleCallFilter,
+    handleCreate,
+    handleUpdate,
+  } = props;
   return (
-    <Row>
+    <Row className="pt-4">
       <Col>
-        1
+        <Button variant="primary" onClick={handleCreate}>Создать</Button>
+        <Button variant="outline-primary ms-2" onClick={handleUpdate}>Обновить</Button>
       </Col>
-      <Col>
-        2
+      <Col className={s["panel-column_left"]}>
+        <Button variant="primary" onClick={handleCallFilter}>Фильтр</Button>
       </Col>
     </Row>
   );
