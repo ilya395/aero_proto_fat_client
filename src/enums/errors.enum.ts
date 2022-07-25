@@ -4,4 +4,7 @@ export enum EBaseErrorTitles {
   FailAuthRequest = "Ошибка при попытке авторизации...",
 
   FailGetUsersList = "Ошибка при запросе клиентов...",
+
+  FailRequestDeleteUser = "Ошибка при запросе на удаление клиента...",
+  FailDeleteUser = "Ошибка при удалении клиента...",
 }

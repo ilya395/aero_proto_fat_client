@@ -6,6 +6,7 @@ import { ICustomersViewProps } from "./models/CustomersView.model";
 const CustomersView = (props: ICustomersViewProps) => {
   const {
     customers,
+    deleteCallback,
   } = props;
 
   return (
@@ -13,7 +14,10 @@ const CustomersView = (props: ICustomersViewProps) => {
       {
         customers?.map(item => (
           <Col key={item?.id}>
-            <CustomerCard {...item} />
+            <CustomerCard
+              {...item}
+              deleteCallback={deleteCallback}
+            />
           </Col>
         ))
       }

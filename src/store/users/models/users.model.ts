@@ -6,3 +6,9 @@ export interface IUsersState {
   error: IAuthError | null;
   usersList: Array<IUser> | null;
 }
+
+export interface IDeleteUserState {
+  await: boolean;
+  error: IAuthError | null;
+  delete: null | boolean;
+}

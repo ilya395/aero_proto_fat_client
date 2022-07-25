@@ -9,7 +9,7 @@ const App = () => {
   const { isAuth, loading,} = useAuth();
   const contextData = useMemo(() => ({
     isAuth,
-  }), [ isAuth]);
+  }), [isAuth]);
   return (
     <>
       <AuthContext.Provider

@@ -23,9 +23,7 @@ const CustomerCard = (props: ICustomerCardProps) => {
 
   const handleDelete = useCallback((event: React.MouseEvent<BsPrefixRefForwardingComponent<"a", unknown> | any>) => {
     event.preventDefault();
-    deleteCallback && id && deleteCallback({
-      id,
-    })
+    deleteCallback && id && deleteCallback(id)
   }, [deleteCallback, id]);
 
   return (
