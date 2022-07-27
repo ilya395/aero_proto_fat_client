@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import AuthContext from "../../contexts/Auth/Auth.context";
 import { ENavigationKeys } from "../../enums/navigation.enum";
+import CustomerPage from "../../pages/Customer/Customer.page";
 import CustomersPage from "../../pages/Customers/Customers.page";
 import LoginPage from "../../pages/Login/Login.page";
 import NotFoundPage from "../../pages/NotFound/NotFound.page";
@@ -26,6 +27,14 @@ const MainRouter = () => {
         <Route
           path={ENavigationKeys.Customers}
           element={context?.isAuth ? <CustomersPage /> : <Navigate to={ENavigationKeys.Login} />}
+        />
+        <Route
+          path={`${ENavigationKeys.Customers}/:id`}
+          element={context?.isAuth ? <CustomerPage /> : <Navigate to={ENavigationKeys.Login} />}
+        />
+        <Route
+          path={`${ENavigationKeys.Customers}/new`}
+          element={context?.isAuth ? <CustomerPage /> : <Navigate to={ENavigationKeys.Login} />}
         />
         <Route
           path={ENavigationKeys.Products}
