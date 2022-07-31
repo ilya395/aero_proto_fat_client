@@ -5,7 +5,7 @@ import { Col, Container, Dropdown, Row } from "react-bootstrap";
 import { IMainLayoutProps } from "./models/Main.model";
 import "./Main.style.scss";
 import { ENavigationKeys, ENavigationTitles } from "../../enums/navigation.enum";
-import BreadcrumbsContainer from "../../components/logic/BreadcrumbsContainer/Breadcrumbs.container";
+import BreadcrumbsContainer from "../../components/containers/Breadcrumbs/Breadcrumbs.container";
 
 const MainLayout = (props: IMainLayoutProps) => {
   const {

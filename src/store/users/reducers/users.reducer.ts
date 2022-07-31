@@ -14,7 +14,12 @@ const initialUsersState: IUsersState = {
 export const UsersSlice = createSlice({
   name: "users",
   initialState: initialUsersState,
-  reducers: {},
+  reducers: {
+    usersAwaitAction(state) {},
+    usersErrorAction(state, payload) {},
+    usersSuccessAction(state, payload) {},
+    deleteUserAction(state, payload) {}
+  },
   extraReducers: {
     [fetchUsersList.fulfilled.type]: (state, action: PayloadAction<Array<IUser>>) => {
       // eslint-disable-next-line no-param-reassign

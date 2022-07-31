@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import PageSpinner from "./components/ui/PageSpinner/PageSpinner.component";
+import PageSpinner from "./components/views/PageSpinner/PageSpinner.component";
 import AuthContext from "./contexts/Auth/Auth.context";
 import useAuth from "./hooks/auth.hook";
 import MainRouter from "./router/MainRouter/MainRouter.router";

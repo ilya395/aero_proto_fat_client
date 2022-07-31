@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import LoginForm from "../../components/ui/LoginForm/LoginForm.component";
+import LoginForm from "../../components/views/LoginForm/LoginForm.view";
 import LoginLayout from "../../layouts/Login/Login.layout";
 import { authActionCreator } from "../../store/auth/action-creators/auth.action-creator";
 import { useAppDispatch } from "../../store/hooks/store.hook";

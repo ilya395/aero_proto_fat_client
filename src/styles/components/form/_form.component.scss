@@ -3,3 +3,22 @@
   margin: auto;
   transform: translateY(50%);
 }
+
+.base-form {
+  &__management-buttons {
+    padding: 20px 0;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+}
+
+.management-button {
+  padding: 0 15px;
+
+  &:first-child {
+    padding-left: 0;
+  }
+  &:last-child {
+    padding-right: 0;
+  }
+}
