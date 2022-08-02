@@ -44,6 +44,7 @@ export const UserSlice = createSlice({
       };
     },
   },
+  extraReducers: {},
 });
 
 export const UserReducer = UserSlice.reducer;
