@@ -30,7 +30,7 @@ export const fetchUsersList = createAsyncThunk(
 
 export const fetchDeleteUser = createAsyncThunk(
   "users/deleteOneUser",
-  async (object: {id: string; collection?: string;}, thunkAPI) => {
+  async (object: { id: string; collection?: string; }, thunkAPI) => {
     try {
       const {
         id,

@@ -1,6 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "../../models/users.model";
 import { RootState } from "../../root.reducer";
+import { fetchOneUser } from "../action-creators/user.action-creator";
 import { IUserError, IUserState } from "../models/user.model";
 
 const initialUserState: IUserState = {
@@ -14,47 +15,75 @@ export const UserSlice = createSlice({
   name: "user",
   initialState: initialUserState,
   reducers: {
-    userAwaitAction(state) {
+    // userAwaitAction(state) {
+    //   // eslint-disable-next-line no-param-reassign
+    //   state.await = true;
+    // },
+    // userErrorAction(state, action: PayloadAction<IUserError>) {
+    //   // eslint-disable-next-line no-param-reassign
+    //   state.await = false;
+    //   // eslint-disable-next-line no-param-reassign
+    //   state.error = action.payload;
+    // },
+    // userSuccessAction(state, action: PayloadAction<IUser>) {
+    //   // eslint-disable-next-line no-param-reassign
+    //   state.await = false;
+    //   // eslint-disable-next-line no-param-reassign
+    //   state.error = null;
+    //   // eslint-disable-next-line no-param-reassign
+    //   state.userData = action.payload;
+    // },
+    userResetAction (state) {
       // eslint-disable-next-line no-param-reassign
-      state.await = true;
+      state.userData = state.defaultUserData;
     },
-    userErrorAction(state, action: PayloadAction<IUserError>) {
+    // updateUserAction(state, action: PayloadAction<IUser>) {
+    //   // eslint-disable-next-line no-param-reassign
+    //   state.userData = {
+    //     ...state.userData,
+    //     ...action.payload,
+    //   };
+    // },
+    userAddNewAction(state) {
       // eslint-disable-next-line no-param-reassign
-      state.await = false;
+      state.userData = {};
       // eslint-disable-next-line no-param-reassign
-      state.error = action.payload;
+      state.defaultUserData = {};
     },
-    userSuccessAction(state, action: PayloadAction<IUser>) {
+  },
+  extraReducers: {
+    [fetchOneUser.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
       // eslint-disable-next-line no-param-reassign
       state.await = false;
       // eslint-disable-next-line no-param-reassign
       state.error = null;
       // eslint-disable-next-line no-param-reassign
       state.userData = action.payload;
-    },
-    userResetAction (state) {
       // eslint-disable-next-line no-param-reassign
-      state.userData = state.defaultUserData;
+      state.defaultUserData = action.payload;
     },
-    updateUserAction(state, action: PayloadAction<IUser>) {
+    [fetchOneUser.pending.type]: (state) => {
       // eslint-disable-next-line no-param-reassign
-      state.userData = {
-        ...state.userData,
-        ...action.payload,
-      };
+      state.await = true;
+    },
+    [fetchOneUser.rejected.type]: (state, action: PayloadAction<IUserError>) => {
+      // eslint-disable-next-line no-param-reassign
+      state.await = false;
+      // eslint-disable-next-line no-param-reassign
+      state.error = action.payload;
     },
   },
-  extraReducers: {},
 });
 
 export const UserReducer = UserSlice.reducer;
 
 export const {
-  userAwaitAction,
-  userErrorAction,
+  // userAwaitAction,
+  // userErrorAction,
   userResetAction,
-  userSuccessAction,
-  updateUserAction,
+  // userSuccessAction,
+  // updateUserAction,
+  userAddNewAction,
 } = UserSlice.actions;
 
 export const userDataSelector = (state: RootState) => state.user.userData;

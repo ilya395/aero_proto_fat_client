@@ -4,9 +4,9 @@ import { EBaseErrorTitles } from "../../../enums/errors.enum";
 import { firebaseInstance } from "../../../services/firebase/firebase.service";
 import { IUser } from "../../models/users.model";
 
-export const fetchUser = createAsyncThunk(
+export const fetchOneUser = createAsyncThunk(
   "user/fetchOneUser",
-  async (object: {id: string;}, thunkAPI) => {
+  async (object: { id: string; }, thunkAPI) => {
     try {
       const {
         id,
@@ -14,8 +14,10 @@ export const fetchUser = createAsyncThunk(
       const docRef = doc(firebaseInstance.getFirestore(), "users", id);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
-        return docSnap.data();
+        return {
+          id,
+          ...docSnap.data(),
+        }
       }
       return thunkAPI.rejectWithValue({
         message: EBaseErrorTitles.FailUndefinedUser,
