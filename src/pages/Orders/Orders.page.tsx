@@ -6,13 +6,13 @@ import MainLayout from "../../layouts/Main/Main.layout";
 import { firebaseInstance } from "../../services/firebase/firebase.service";
 
 const OrdersPage = () => {
-  const [
-    items,
-    // loading,
-    // error,
-  ] = useCollectionData(
-    collection(firebaseInstance.getFirestore(), "/orders")
-  )
+  // const [
+  //   items,
+  //   // loading,
+  //   // error,
+  // ] = useCollectionData(
+  //   collection(firebaseInstance.getFirestore(), "/orders")
+  // )
   return (
     <MainLayout>
       <div>Orders</div>

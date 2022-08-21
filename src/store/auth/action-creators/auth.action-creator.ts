@@ -43,7 +43,7 @@ export const authActionCreator = (object: ISignWithEmail) => async (dispatch: Ap
   }
 }
 
-export const authFetch = createAsyncThunk(
+export const authFetch = createAsyncThunk( // ? not used
   "auth/fetch",
   async (object: ISignWithEmail, thunkAPi) => {
     try {

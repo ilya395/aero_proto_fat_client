@@ -3,7 +3,7 @@ export enum EInputTypeKeys {
   Phone = "phone",
   Email = "email",
   Address = "address",
-  CreationDate = "creayionDate",
+  CreationDate = "creationDate",
 }
 
 export enum EInputTypeTitles {

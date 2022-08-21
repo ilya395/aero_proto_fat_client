@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { EBaseErrorTitles } from "../../../enums/errors.enum";
 import { firebaseInstance } from "../../../services/firebase/firebase.service";
+import UserService from "../../../services/User/User.service";
 import { IUser } from "../../models/users.model";
 
 export const fetchOneUser = createAsyncThunk(
@@ -11,13 +11,10 @@ export const fetchOneUser = createAsyncThunk(
       const {
         id,
       } = object;
-      const docRef = doc(firebaseInstance.getFirestore(), "users", id);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        return {
-          id,
-          ...docSnap.data(),
-        }
+      const userService = new UserService(firebaseInstance.getFirestore());
+      const data = await userService.getOne(id);
+      if (data) {
+        return data;
       }
       return thunkAPI.rejectWithValue({
         message: EBaseErrorTitles.FailUndefinedUser,
@@ -37,9 +34,14 @@ export const createUser = createAsyncThunk(
       const {
         user,
       } = object;
-      const docRef = await addDoc(collection(firebaseInstance.getFirestore(), "/users"), user);
-      console.log(docRef)
-      return true;
+      const userService = new UserService(firebaseInstance.getFirestore());
+      const redirectId = await userService.createOne(user);
+      if (redirectId) {
+        return redirectId;
+      }
+      return thunkAPI.rejectWithValue({
+        message: EBaseErrorTitles.FailDateUser,
+      });
     } catch (e) {
       return thunkAPI.rejectWithValue({
         message: EBaseErrorTitles.FailCreateUser,
@@ -55,15 +57,10 @@ export const updateUser = createAsyncThunk(
       const {
         user,
       } = object;
-      const {
-        id,
-        ...rest
-      } = user;
-      if (id) {
-        const docRef = doc(firebaseInstance.getFirestore(), "users", id);
-        const response = await setDoc(docRef, rest, { merge: true }); // ?
-        console.log(response)
-        return true;
+      const userService = new UserService(firebaseInstance.getFirestore());
+      const data = await userService.updateOne(user);
+      if (data) {
+        return data;
       }
       return thunkAPI.rejectWithValue({
         message: EBaseErrorTitles.FailDateUser,

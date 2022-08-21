@@ -7,7 +7,7 @@ export const fetchUsersList = createAsyncThunk(
   "users/fetchAll",
   async (_, thunkAPI) => {
     try {
-      const q = await query(collection(firebaseInstance.getFirestore(), "/users"));
+      const q = query(collection(firebaseInstance.getFirestore(), "users"));
       const querySnapshot = await getDocs(q);
       const response:Array<DocumentData> = [];
       querySnapshot.forEach((doc) => response.push({

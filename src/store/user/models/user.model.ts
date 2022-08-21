@@ -8,4 +8,5 @@ export interface IUserState {
   error: IUserError | null;
   defaultUserData: IUser | null;
   userData: IUser | null;
+  redirectId?: string | null;
 }
