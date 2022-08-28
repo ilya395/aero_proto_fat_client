@@ -1,21 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { collection, deleteDoc, doc, DocumentData, getDocs, query } from "firebase/firestore";
 import { EBaseErrorTitles } from "../../../enums/errors.enum";
 import { firebaseInstance } from "../../../services/firebase/firebase.service";
+import UsersService from "../../../services/Users/Users.service";
+import { IUsersFilter } from "../../models/users.model";
 
 export const fetchUsersList = createAsyncThunk(
   "users/fetchAll",
-  async (_, thunkAPI) => {
+  async (object: IUsersFilter, thunkAPI) => {
     try {
-      const q = query(collection(firebaseInstance.getFirestore(), "users"));
-      const querySnapshot = await getDocs(q);
-      const response:Array<DocumentData> = [];
-      querySnapshot.forEach((doc) => response.push({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      if (response.length) {
-        return response;
+      const usersService = new UsersService(firebaseInstance.getFirestore());
+      const data = await usersService.filter(object);
+      if (data) {
+        return data;
       }
       return thunkAPI.rejectWithValue({
         message: EBaseErrorTitles.FailGetUsersList,
@@ -34,11 +30,11 @@ export const fetchDeleteUser = createAsyncThunk(
     try {
       const {
         id,
-        collection = "users",
       } = object;
-      const q = await deleteDoc(doc(firebaseInstance.getFirestore(), collection, id));
-      console.log(q)
+      const usersService = new UsersService(firebaseInstance.getFirestore());
+      await usersService.deleteOne(id);
       return true;
+
       // return thunkAPI.rejectWithValue({
       //   message: EBaseErrorTitles.FailDeleteUser,
       // });

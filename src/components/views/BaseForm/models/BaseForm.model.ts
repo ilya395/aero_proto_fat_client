@@ -2,6 +2,11 @@ import BaseTextInput from "../../inputs/BaseTextInput/BaseTextInput.component";
 
 export interface IBaseFormProps {
   config?: IBaseFormConfig;
+  col?: {
+    xs: number;
+    sm: number;
+    xl: number;
+  }
 }
 
 export interface IBaseFormConfig {

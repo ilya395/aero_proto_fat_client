@@ -1,11 +1,10 @@
 import { addDoc, collection, doc, Firestore, getDoc, setDoc, Timestamp } from "firebase/firestore";
-import { IUser } from "../../store/models/users.model"
+import { IUser } from "../../store/models/users.model";
+import FirestoreService from "../Firestore/Firestore.service";
 
-class UserService {
-  db: Firestore;
-
+class UserService extends FirestoreService {
   constructor(firestore: Firestore) {
-    this.db = firestore;
+    super(firestore);
     this.getOne = this.getOne.bind(this);
     this.createOne = this.createOne.bind(this);
     this.updateOne = this.updateOne.bind(this);

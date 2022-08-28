@@ -6,3 +6,8 @@ export interface IUser extends IBaseCreationDate, IBaseId {
   email?: string;
   address?: string;
 }
+
+export interface IUsersFilter extends IUser {
+  creationDateFrom?: Date;
+  creationDateTo?: Date;
+}

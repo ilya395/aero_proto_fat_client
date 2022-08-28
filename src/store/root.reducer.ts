@@ -3,12 +3,14 @@ import { combineReducers } from "redux";
 import { AuthReducer } from "./auth/reducers/auth.reducer";
 import { UserReducer } from "./user/reducers/user.reducer";
 import { DeleteUserReducer, UsersReducer } from "./users/reducers/users.reducer";
+import { UsersFilterReducer } from "./usersFilter/reducers/usersFilter.reducer";
 
 const RootReducer = combineReducers({
   auth: AuthReducer,
   users: UsersReducer,
   deleteUser: DeleteUserReducer,
   user: UserReducer,
+  usersFilter: UsersFilterReducer,
 });
 
 export const setupStore = () => configureStore({

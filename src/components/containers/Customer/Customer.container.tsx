@@ -15,11 +15,11 @@ import BaseTextInput from "../../views/inputs/BaseTextInput/BaseTextInput.compon
 
 const CustomerContainer = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const params = useParams();
   const { id, } = params;
 
-  const navigate = useNavigate();
-
+  // business
   const userPhone = useSelector(userPhoneMemoSelector);
   const userName = useSelector(userNameMemoSelector);
   const userEmail = useSelector(userEmailMemoSelector);
@@ -27,7 +27,6 @@ const CustomerContainer = () => {
   const userCreationDate = useSelector(userCreationDateMemoSelector);
   const redirectId = useSelector(userRedirectIdMemoSelector);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isNew = useMemo(() => !id, [id]);
   useEffect(() => {
     if (id) {

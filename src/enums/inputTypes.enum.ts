@@ -4,12 +4,18 @@ export enum EInputTypeKeys {
   Email = "email",
   Address = "address",
   CreationDate = "creationDate",
+
+  CreationDateFrom = "creationDateFrom",
+  CreationDateTo = "creationDateTo",
 }
 
 export enum EInputTypeTitles {
   Name = "Имя",
   Phone = "Телефон",
   Email = "Email",
-  Address = "Ажрес доставки",
+  Address = "Адрес доставки",
   CreationDate = "Дата регистрации пользователя",
+
+  CreationDateFrom = "Дата регистрации c",
+  CreationDateTo = "Дата регистрации до",
 }

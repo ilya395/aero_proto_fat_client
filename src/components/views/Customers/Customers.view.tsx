@@ -5,12 +5,13 @@ import BaseModal from "../BaseModal/BaseModal.view";
 import { ICustomersViewProps } from "./models/CustomersView.model";
 import { ENavigationKeys } from "../../../enums/navigation.enum";
 
-const CustomersView = (props: ICustomersViewProps) => {
+const CustomersView = memo((props: ICustomersViewProps) => {
   const {
     customers,
     deleteCallback,
   } = props;
 
+  // ui
   const [showDeleteModalId, setShowDeleteModalId] = useState<string | null>(null);
   const handleCloseModal = useCallback(() => setShowDeleteModalId(null), []);
   const handleShowModal = useCallback((id: string) => setShowDeleteModalId(id), []);
@@ -44,8 +45,7 @@ const CustomersView = (props: ICustomersViewProps) => {
         handleAction={handleActionModal}
       />
     </>
-
   );
-}
+});
 
-export default memo(CustomersView);
+export default CustomersView;

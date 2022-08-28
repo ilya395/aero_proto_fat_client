@@ -5,6 +5,11 @@ import { IBaseFormProps } from "./models/BaseForm.model";
 const BaseForm = (props: IBaseFormProps) => {
   const {
     config,
+    col = {
+      xs: 12,
+      sm: 6,
+      xl: 4,
+    },
   } = props;
 
   return (
@@ -12,7 +17,7 @@ const BaseForm = (props: IBaseFormProps) => {
       <Row>
         {
           config?.list?.map(item => (
-            <Col xs={12} sm={6} xl={4} key={item.id}>
+            <Col xs={col.xs} sm={col.sm} xl={col.xl} key={item.id}>
               <Fragment key={item.id}>
                 {item.component}
               </Fragment>
