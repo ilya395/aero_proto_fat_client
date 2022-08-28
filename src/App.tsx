@@ -9,6 +9,7 @@ import { usersAwaitSelector } from "./store/users/reducers/users.reducer";
 import "./styles/style.scss";
 
 const App = () => {
+  // business
   const { isAuth, loading,} = useAuth();
   const usersAwait = useSelector(usersAwaitSelector);
   const userAwait = useSelector(userAwaitSelector);
@@ -16,6 +17,7 @@ const App = () => {
     isAuth,
   }), [isAuth]);
   const globalLoading = useMemo(() => loading || usersAwait || userAwait, [loading, userAwait, usersAwait]);
+
   return (
     <>
       <AuthContext.Provider
