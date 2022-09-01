@@ -2,11 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { EBaseErrorTitles } from "../../../enums/errors.enum";
 import { firebaseInstance } from "../../../services/firebase/firebase.service";
 import UsersService from "../../../services/Users/Users.service";
-import { IUsersFilter } from "../../models/users.model";
+import { IUsersRequest } from "../../models/users.model";
 
 export const fetchUsersList = createAsyncThunk(
   "users/fetchAll",
-  async (object: IUsersFilter, thunkAPI) => {
+  async (object: IUsersRequest, thunkAPI) => {
     try {
       const usersService = new UsersService(firebaseInstance.getFirestore());
       const data = await usersService.filter(object);

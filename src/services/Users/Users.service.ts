@@ -1,6 +1,7 @@
-import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, query, Timestamp, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, limit, Query, query, startAfter, Timestamp, where } from "firebase/firestore";
+import { PAGINATION_LIMIT } from "../../constants/variables.constant";
 import { EInputTypeKeys } from "../../enums/inputTypes.enum";
-import { IUsersFilter } from "../../store/models/users.model";
+import { IUsersRequest, IUsersResponse } from "../../store/models/users.model";
 import FirestoreService from "../Firestore/Firestore.service";
 
 class UsersService extends FirestoreService {
@@ -8,10 +9,17 @@ class UsersService extends FirestoreService {
     super(firestore);
 
     this.filter = this.filter.bind(this);
+    this.deleteOne = this.deleteOne.bind(this);
   }
 
-  public async filter(object: IUsersFilter) {
-    const collectionKeysWeHave = Object.entries(object);
+  public async filter(object: IUsersRequest): Promise<IUsersResponse | undefined> {
+    const {
+      filter = {},
+      pagination = {
+        lastVisible: null,
+      },
+    } = object;
+    const collectionKeysWeHave = Object.entries(filter);
     const array = collectionKeysWeHave.map(item => {
       if (item[0] === EInputTypeKeys.CreationDateFrom) {
         return where(EInputTypeKeys.CreationDate, ">=", Timestamp.fromDate(new Date(item[1])));
@@ -21,18 +29,36 @@ class UsersService extends FirestoreService {
       }
       return where(item[0], "==", item[1]);
     })
-    const q = array.length ? query(collection(this.db, "users"), ...array) : query(collection(this.db, "users"));
+    let q: Query<DocumentData> | null = null;
+    if (pagination.lastVisible) {
+      if (array.length) {
+        q = query(collection(this.db, "users"), ...array, startAfter(pagination.lastVisible), limit(PAGINATION_LIMIT));
+      } else {
+        q = query(collection(this.db, "users"), startAfter(pagination.lastVisible), limit(PAGINATION_LIMIT));
+      }
+    } else if (array.length) {
+      q = query(collection(this.db, "users"), ...array, limit(PAGINATION_LIMIT));
+    } else {
+      q = query(collection(this.db, "users"), limit(PAGINATION_LIMIT));
+    }
+
     const querySnapshot = await getDocs(q);
+
+    const item = querySnapshot.docs[querySnapshot.docs.length - 1];
+
     const response:Array<DocumentData> = [];
     querySnapshot.forEach((doc) => response.push({
       id: doc.id,
       ...doc.data(),
       creationDate: doc.data().creationDate.toDate(),
     }));
-    if (response) {
-      return response;
+    if (!response.length && !item) {
+      return undefined;
     }
-    return undefined;
+    return {
+      response,
+      lastVisible: item,
+    };
   }
 
   public async deleteOne(id: string) {

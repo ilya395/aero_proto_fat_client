@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { EInputTypeKeys, EInputTypeTitles } from "../../../enums/inputTypes.enum";
 import { ENavigationKeys } from "../../../enums/navigation.enum";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
-import { IUsersFilter } from "../../../store/models/users.model";
+import { IUsersFilter, IUsersRequest } from "../../../store/models/users.model";
 import { fetchUsersList } from "../../../store/users/action-creators/users.action-creator";
+import { clearUsersPagination, usersPaginationSelector } from "../../../store/users/reducers/users.reducer";
 import { resetUsersFilterAction, updateUsersFilterAction, usersFilterDataSelector } from "../../../store/usersFilter/reducers/usersFilter.reducer";
 import BaseForm from "../../views/BaseForm/BaseForm.view";
 import { IBaseFormConfig } from "../../views/BaseForm/models/BaseForm.model";
@@ -26,15 +27,30 @@ const CustomerPanel = () => {
 
   // business
   const usersFilter = useSelector(usersFilterDataSelector);
+  const lastVisible = useSelector(usersPaginationSelector);
+  const filterData: IUsersRequest = useMemo(() => ({
+    filter: usersFilter || undefined,
+    pagination: {
+      lastVisible,
+    }
+  }), [lastVisible, usersFilter]);
   const createNew = useCallback(() => navigate(`${ENavigationKeys.Customers}/new`), [navigate]);
-  const handleUpdate = useCallback(() => dispatch(fetchUsersList(usersFilter || {})), [dispatch, usersFilter]);
+  const handleUpdate = useCallback(() => {
+    dispatch(clearUsersPagination());
+    dispatch(fetchUsersList({
+      filter: usersFilter || undefined,
+      pagination: {
+        lastVisible: null,
+      }
+    }))
+  }, [dispatch, usersFilter]);
 
   const changeFilterHandle = useCallback((arg: {[x: string]: string | Date;} | IUsersFilter) => dispatch(updateUsersFilterAction(arg)), [dispatch]);
   const resetFormHandle = useCallback(() => dispatch(resetUsersFilterAction()), [dispatch]);
   const filterHandle = useCallback(() => {
-    dispatch(fetchUsersList(usersFilter || {}));
+    dispatch(fetchUsersList(filterData));
     setVisibleFilter(false);
-  }, [dispatch, usersFilter]);
+  }, [dispatch, filterData]);
   const config: IBaseFormConfig = useMemo(() => ({
     list: [
       {

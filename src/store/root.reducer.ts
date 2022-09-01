@@ -2,7 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { AuthReducer } from "./auth/reducers/auth.reducer";
 import { UserReducer } from "./user/reducers/user.reducer";
-import { DeleteUserReducer, UsersReducer } from "./users/reducers/users.reducer";
+import { DeleteUserReducer } from "./users/reducers/deleteUser.reducer";
+import { UsersReducer } from "./users/reducers/users.reducer";
 import { UsersFilterReducer } from "./usersFilter/reducers/usersFilter.reducer";
 
 const RootReducer = combineReducers({
