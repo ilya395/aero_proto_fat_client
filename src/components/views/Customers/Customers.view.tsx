@@ -9,6 +9,9 @@ const CustomersView = memo((props: ICustomersViewProps) => {
   const {
     customers,
     deleteCallback,
+    // callbackRef,
+    callbackRefToFirstElement,
+    callbackRefToLastElement
   } = props;
 
   // ui
@@ -24,18 +27,48 @@ const CustomersView = memo((props: ICustomersViewProps) => {
     <>
       <Row className="customers-list pt-4" >
         {
-          customers?.map(item => (
-            <Col key={item?.id}>
-              <BaseCard
-                title={item?.phone}
-                subTitle={item?.name}
-                description={item?.address}
-                id={item.id}
-                path={ENavigationKeys.Customers}
-                deleteCallback={handleShowModal}
-              />
-            </Col>
-          ))
+          customers?.map((item, index) => {
+            if (index === 0) {
+              return (
+                <Col key={item?.id} ref={callbackRefToFirstElement}>
+                  <BaseCard
+                    title={item?.phone}
+                    subTitle={item?.name}
+                    description={item?.address}
+                    id={item.id}
+                    path={ENavigationKeys.Customers}
+                    deleteCallback={handleShowModal}
+                  />
+                </Col>
+              );
+            }
+            if (customers.length - 1 === index) {
+              return (
+                <Col key={item?.id} ref={callbackRefToLastElement}>
+                  <BaseCard
+                    title={item?.phone}
+                    subTitle={item?.name}
+                    description={item?.address}
+                    id={item.id}
+                    path={ENavigationKeys.Customers}
+                    deleteCallback={handleShowModal}
+                  />
+                </Col>
+              );
+            }
+            return (
+              <Col key={item?.id}>
+                <BaseCard
+                  title={item?.phone}
+                  subTitle={item?.name}
+                  description={item?.address}
+                  id={item.id}
+                  path={ENavigationKeys.Customers}
+                  deleteCallback={handleShowModal}
+                />
+              </Col>
+            );
+          })
         }
       </Row>
       <BaseModal

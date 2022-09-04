@@ -1,2 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const AUTH_DATA = "AUTH_DATA";
+
+export const PAGINATION_LIMIT = 10;

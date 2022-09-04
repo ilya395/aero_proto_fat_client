@@ -2,11 +2,13 @@ import React, { useCallback, useMemo, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { PAGINATION_LIMIT } from "../../../constants/variables.constant";
 import { EInputTypeKeys, EInputTypeTitles } from "../../../enums/inputTypes.enum";
 import { ENavigationKeys } from "../../../enums/navigation.enum";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
-import { IUsersFilter } from "../../../store/models/users.model";
-import { fetchUsersList } from "../../../store/users/action-creators/users.action-creator";
+import { IUsersFilter, IUsersRequest } from "../../../store/models/users.model";
+import { fetchUsersList, updateUsersList } from "../../../store/users/action-creators/users.action-creator";
+import { clearUsers, usersPaginationSelector } from "../../../store/users/reducers/users.reducer";
 import { resetUsersFilterAction, updateUsersFilterAction, usersFilterDataSelector } from "../../../store/usersFilter/reducers/usersFilter.reducer";
 import BaseForm from "../../views/BaseForm/BaseForm.view";
 import { IBaseFormConfig } from "../../views/BaseForm/models/BaseForm.model";
@@ -26,15 +28,29 @@ const CustomerPanel = () => {
 
   // business
   const usersFilter = useSelector(usersFilterDataSelector);
+  const pagination = useSelector(usersPaginationSelector);
+  const filterData: IUsersRequest = useMemo(() => ({
+    filter: usersFilter || undefined,
+    pagination,
+  }), [pagination, usersFilter]);
   const createNew = useCallback(() => navigate(`${ENavigationKeys.Customers}/new`), [navigate]);
-  const handleUpdate = useCallback(() => dispatch(fetchUsersList(usersFilter || {})), [dispatch, usersFilter]);
+  const handleUpdate = useCallback(async () => {
+    await dispatch(clearUsers());
+    await dispatch(updateUsersList({
+      filter: usersFilter || undefined,
+      pagination: {
+        lastVisible: null,
+        limit: PAGINATION_LIMIT,
+      }
+    }))
+  }, [dispatch, usersFilter]);
 
   const changeFilterHandle = useCallback((arg: {[x: string]: string | Date;} | IUsersFilter) => dispatch(updateUsersFilterAction(arg)), [dispatch]);
   const resetFormHandle = useCallback(() => dispatch(resetUsersFilterAction()), [dispatch]);
   const filterHandle = useCallback(() => {
-    dispatch(fetchUsersList(usersFilter || {}));
+    dispatch(fetchUsersList(filterData));
     setVisibleFilter(false);
-  }, [dispatch, usersFilter]);
+  }, [dispatch, filterData]);
   const config: IBaseFormConfig = useMemo(() => ({
     list: [
       {
