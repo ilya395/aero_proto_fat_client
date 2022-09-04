@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import PageSpinner from "./components/views/PageSpinner/PageSpinner.component";
 import AuthContext from "./contexts/Auth/Auth.context";
-import useAuth from "./hooks/auth.hook";
+import useAuth from "./hooks/auth/auth.hook";
 import MainRouter from "./router/MainRouter/MainRouter.router";
 import { userAwaitSelector } from "./store/user/reducers/user.reducer";
 import { usersAwaitSelector } from "./store/users/reducers/users.reducer";
