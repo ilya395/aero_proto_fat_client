@@ -8,6 +8,7 @@ export interface IUsersState {
   usersList: Array<IUser> | null;
   pagination: {
     lastVisible: QueryDocumentSnapshot<DocumentData> | null;
+    limit: number;
   }
 }
 

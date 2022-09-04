@@ -17,6 +17,7 @@ export interface IUsersRequest {
   filter?: IUsersFilter;
   pagination?: {
     lastVisible: QueryDocumentSnapshot<DocumentData> | null;
+    limit: number;
   };
 }
 

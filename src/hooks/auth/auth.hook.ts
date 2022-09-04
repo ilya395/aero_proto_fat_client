@@ -1,6 +1,6 @@
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
-import localAuthDataService from "../services/localAuthData/localAuthData.service";
+import localAuthDataService from "../../services/localAuthData/localAuthData.service";
 
 const useAuth = () => {
   const [authUser, setAuthUser] = useState<User | null>(null);

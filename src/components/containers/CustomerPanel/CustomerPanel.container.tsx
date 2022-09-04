@@ -2,12 +2,13 @@ import React, { useCallback, useMemo, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { PAGINATION_LIMIT } from "../../../constants/variables.constant";
 import { EInputTypeKeys, EInputTypeTitles } from "../../../enums/inputTypes.enum";
 import { ENavigationKeys } from "../../../enums/navigation.enum";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { IUsersFilter, IUsersRequest } from "../../../store/models/users.model";
-import { fetchUsersList } from "../../../store/users/action-creators/users.action-creator";
-import { clearUsersPagination, usersPaginationSelector } from "../../../store/users/reducers/users.reducer";
+import { fetchUsersList, updateUsersList } from "../../../store/users/action-creators/users.action-creator";
+import { clearUsers, usersPaginationSelector } from "../../../store/users/reducers/users.reducer";
 import { resetUsersFilterAction, updateUsersFilterAction, usersFilterDataSelector } from "../../../store/usersFilter/reducers/usersFilter.reducer";
 import BaseForm from "../../views/BaseForm/BaseForm.view";
 import { IBaseFormConfig } from "../../views/BaseForm/models/BaseForm.model";
@@ -27,20 +28,19 @@ const CustomerPanel = () => {
 
   // business
   const usersFilter = useSelector(usersFilterDataSelector);
-  const lastVisible = useSelector(usersPaginationSelector);
+  const pagination = useSelector(usersPaginationSelector);
   const filterData: IUsersRequest = useMemo(() => ({
     filter: usersFilter || undefined,
-    pagination: {
-      lastVisible,
-    }
-  }), [lastVisible, usersFilter]);
+    pagination,
+  }), [pagination, usersFilter]);
   const createNew = useCallback(() => navigate(`${ENavigationKeys.Customers}/new`), [navigate]);
-  const handleUpdate = useCallback(() => {
-    dispatch(clearUsersPagination());
-    dispatch(fetchUsersList({
+  const handleUpdate = useCallback(async () => {
+    await dispatch(clearUsers());
+    await dispatch(updateUsersList({
       filter: usersFilter || undefined,
       pagination: {
         lastVisible: null,
+        limit: PAGINATION_LIMIT,
       }
     }))
   }, [dispatch, usersFilter]);

@@ -17,6 +17,7 @@ class UsersService extends FirestoreService {
       filter = {},
       pagination = {
         lastVisible: null,
+        limit: PAGINATION_LIMIT,
       },
     } = object;
     const collectionKeysWeHave = Object.entries(filter);
@@ -32,14 +33,14 @@ class UsersService extends FirestoreService {
     let q: Query<DocumentData> | null = null;
     if (pagination.lastVisible) {
       if (array.length) {
-        q = query(collection(this.db, "users"), ...array, startAfter(pagination.lastVisible), limit(PAGINATION_LIMIT));
+        q = query(collection(this.db, "users"), ...array, startAfter(pagination.lastVisible), limit(pagination.limit));
       } else {
-        q = query(collection(this.db, "users"), startAfter(pagination.lastVisible), limit(PAGINATION_LIMIT));
+        q = query(collection(this.db, "users"), startAfter(pagination.lastVisible), limit(pagination.limit));
       }
     } else if (array.length) {
-      q = query(collection(this.db, "users"), ...array, limit(PAGINATION_LIMIT));
+      q = query(collection(this.db, "users"), ...array, limit(pagination.limit));
     } else {
-      q = query(collection(this.db, "users"), limit(PAGINATION_LIMIT));
+      q = query(collection(this.db, "users"), limit(pagination.limit));
     }
 
     const querySnapshot = await getDocs(q);
