@@ -1,9 +1,10 @@
-import React, { memo, useCallback, useState } from "react";
+import React, { memo } from "react";
 import { Col, Row } from "react-bootstrap";
 import BaseCard from "../BaseCard/BaseCard.view";
 import BaseModal from "../BaseModal/BaseModal.view";
 import { ICustomersViewProps } from "./models/CustomersView.model";
 import { ENavigationKeys } from "../../../enums/navigation.enum";
+import useModalMoveInList from "../../../hooks/modalMoveInList/modalMoveInList.hook";
 
 const CustomersView = memo((props: ICustomersViewProps) => {
   const {
@@ -15,13 +16,14 @@ const CustomersView = memo((props: ICustomersViewProps) => {
   } = props;
 
   // ui
-  const [showDeleteModalId, setShowDeleteModalId] = useState<string | null>(null);
-  const handleCloseModal = useCallback(() => setShowDeleteModalId(null), []);
-  const handleShowModal = useCallback((id: string) => setShowDeleteModalId(id), []);
-  const handleActionModal = useCallback(() => {
-    deleteCallback && showDeleteModalId && deleteCallback(showDeleteModalId);
-    setShowDeleteModalId(null);
-  }, [deleteCallback, showDeleteModalId]);
+  const {
+    showDeleteModalId,
+    handleCloseModal,
+    handleShowModal,
+    handleActionModal,
+  } = useModalMoveInList({
+    deleteCallback
+  });
 
   return (
     <>

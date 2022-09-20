@@ -4,7 +4,6 @@ import { firebaseInstance } from "../../../services/firebase/firebase.service";
 import ProductsService from "../../../services/Products/Products.service";
 import { IProductsRequest } from "../../models/products.model";
 
-// eslint-disable-next-line import/prefer-default-export
 export const filterProductsList = createAsyncThunk(
   "products/filter",
   async (object: IProductsRequest, thunkAPI) => {
@@ -45,24 +44,24 @@ export const filterProductsList = createAsyncThunk(
 //   },
 // );
 
-// export const fetchDeleteUser = createAsyncThunk(
-//   "users/deleteOneUser",
-//   async (object: { id: string; collection?: string; }, thunkAPI) => {
-//     try {
-//       const {
-//         id,
-//       } = object;
-//       const usersService = new UsersService(firebaseInstance.getFirestore());
-//       await usersService.deleteOne(id);
-//       return true;
+export const fetchDeleteProduct = createAsyncThunk(
+  "products/deleteOneProduct",
+  async (object: { id: string; collection?: string; }, thunkAPI) => {
+    try {
+      const {
+        id,
+      } = object;
+      const productsService = new ProductsService(firebaseInstance.getFirestore());
+      await productsService.delete(id);
+      return true;
 
-//       // return thunkAPI.rejectWithValue({
-//       //   message: EBaseErrorTitles.FailDeleteUser,
-//       // });
-//     } catch (e) {
-//       return thunkAPI.rejectWithValue({
-//         message: EBaseErrorTitles.FailRequestDeleteUser,
-//       });
-//     }
-//   },
-// );
+      // return thunkAPI.rejectWithValue({
+      //   message: EBaseErrorTitles.FailDeleteUser,
+      // });
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: EBaseErrorTitles.FailRequestDeleteUser,
+      });
+    }
+  },
+);

@@ -4,8 +4,8 @@ import { RootState } from "../../root.reducer";
 import { IUsersFilterState } from "../models/usersFilter.model";
 
 const initialUsersFilterState: IUsersFilterState = {
-  await: false,
-  error: null,
+  // await: false,
+  // error: null,
   fields: null,
 }
 
@@ -36,5 +36,5 @@ export const {
 } = UsersFilterSlice.actions;
 
 export const usersFilterDataSelector = (state: RootState) => state.usersFilter.fields;
-export const usersFilterAwaitSelector = (state: RootState) => state.usersFilter.await;
-export const usersFilterErrorSelector = (state: RootState) => state.usersFilter.error;
+// export const usersFilterAwaitSelector = (state: RootState) => state.usersFilter.await;
+// export const usersFilterErrorSelector = (state: RootState) => state.usersFilter.error;

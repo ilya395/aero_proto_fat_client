@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PAGINATION_LIMIT } from "../../../constants/variables.constant";
 import { IProductsError, IProductsResponse } from "../../models/products.model";
 import { RootState } from "../../root.reducer";
-import { filterProductsList } from "../action-creators/products.action-creator";
+import { fetchDeleteProduct, filterProductsList } from "../action-creators/products.action-creator";
 import { IProductsState } from "../models/products.model";
 
 const initialProductsState: IProductsState = {
@@ -48,6 +48,22 @@ export const ProductsSlice = createSlice({
       state.await = true;
     },
     [filterProductsList.rejected.type]: (state, action: PayloadAction<IProductsError>) => {
+      // eslint-disable-next-line no-param-reassign
+      state.await = false;
+      // eslint-disable-next-line no-param-reassign
+      state.error = action.payload;
+    },
+    [fetchDeleteProduct.fulfilled.type]: (state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.await = false;
+      // eslint-disable-next-line no-param-reassign
+      state.error = null;
+    },
+    [fetchDeleteProduct.pending.type]: (state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.await = true;
+    },
+    [fetchDeleteProduct.rejected.type]: (state, action: PayloadAction<IProductsError>) => {
       // eslint-disable-next-line no-param-reassign
       state.await = false;
       // eslint-disable-next-line no-param-reassign
