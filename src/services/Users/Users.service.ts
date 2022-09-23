@@ -53,7 +53,7 @@ class UsersService extends FirestoreService {
       ...doc.data(),
       creationDate: doc.data().creationDate.toDate(),
     }));
-    if (!response.length && !item) {
+    if (!response && !item) {
       return undefined;
     }
     return {

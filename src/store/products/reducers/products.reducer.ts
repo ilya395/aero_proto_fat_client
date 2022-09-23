@@ -74,6 +74,12 @@ export const ProductsSlice = createSlice({
 
 export const ProductsReducer = ProductsSlice.reducer;
 
+export const {
+  clearProducts,
+  clearProductsPagination,
+  changeProductsLimit,
+} = ProductsSlice.actions;
+
 export const productsListSelector = (state: RootState) => state.products.productsList;
 export const productsAwaitSelector = (state: RootState) => state.products.await;
 export const productsErrorSelector = (state: RootState) => state.products.error;

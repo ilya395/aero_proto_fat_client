@@ -3,7 +3,7 @@ import { Row, Col, Button } from "react-bootstrap";
 import { IBasePanelProps } from "./models/BasePanel.model";
 import s from "./BasePanel.module.scss";
 
-const BasePanel = (props: IBasePanelProps) => {
+const BasePanel = memo((props: IBasePanelProps) => {
   const {
     handleCallFilter,
     handleCreate,
@@ -20,6 +20,6 @@ const BasePanel = (props: IBasePanelProps) => {
       </Col>
     </Row>
   );
-}
+})
 
-export default memo(BasePanel);
+export default BasePanel;

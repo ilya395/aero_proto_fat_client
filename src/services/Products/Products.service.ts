@@ -20,7 +20,9 @@ class ProductsService extends FirestoreService {
         limit: PAGINATION_LIMIT,
       },
     } = object;
+
     const collectionKeysWeHave = Object.entries(filter);
+
     const array = collectionKeysWeHave.map(item => {
       if (item[0] === EInputTypeKeys.CreationDateFrom) {
         return where(EInputTypeKeys.CreationDate, ">=", Timestamp.fromDate(new Date(item[1])));
@@ -29,8 +31,10 @@ class ProductsService extends FirestoreService {
         return where(EInputTypeKeys.CreationDate, "<=", Timestamp.fromDate(new Date(item[1])));
       }
       return where(item[0], "==", item[1]);
-    })
+    });
+
     let q: Query<DocumentData> | null = null;
+
     if (pagination.lastVisible) {
       if (array.length) {
         q = query(collection(this.db, "products"), ...array, startAfter(pagination.lastVisible), limit(pagination.limit));
@@ -48,14 +52,17 @@ class ProductsService extends FirestoreService {
     const item = querySnapshot.docs[querySnapshot.docs.length - 1];
 
     const response:Array<DocumentData> = [];
+
     querySnapshot.forEach((doc) => response.push({
       id: doc.id,
       ...doc.data(),
       creationDate: doc.data().creationDate.toDate(),
     }));
-    if (!response.length && !item) {
+
+    if (!response && !item) {
       return undefined;
     }
+
     return {
       response,
       lastVisible: item,

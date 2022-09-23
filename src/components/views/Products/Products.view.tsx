@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { ENavigationKeys } from "../../../enums/navigation.enum";
-import useModalMoveInList from "../../../hooks/modalMoveInList/modalMoveInList.hook";
+import useModalMoveInList from "../../../hooks/ui/modalMoveInList/modalMoveInList.hook";
 import BaseCard from "../BaseCard/BaseCard.view";
 import BaseModal from "../BaseModal/BaseModal.view";
 import { IProductsViewProps } from "./models/Products.model";

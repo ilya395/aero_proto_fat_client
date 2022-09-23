@@ -1,10 +1,11 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PAGINATION_LIMIT } from "../../../constants/variables.constant";
 import { EInputTypeKeys, EInputTypeTitles } from "../../../enums/inputTypes.enum";
 import { ENavigationKeys } from "../../../enums/navigation.enum";
+import useFilterMove from "../../../hooks/ui/filterMove/filterMove.hook";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { IUsersFilter, IUsersRequest } from "../../../store/models/users.model";
 import { fetchUsersList, updateUsersList } from "../../../store/users/action-creators/users.action-creator";
@@ -22,9 +23,11 @@ const CustomerPanel = () => {
   const dispatch = useAppDispatch();
 
   // ui
-  const [visibleFilter, setVisibleFilter] = useState(false);
-  const hideFilterHandle = useCallback(() => setVisibleFilter(false), []);
-  const showFilterHandle = useCallback(() => setVisibleFilter(true), []);
+  const {
+    visibleFilter,
+    hideFilterHandle,
+    showFilterHandle,
+  } = useFilterMove();
 
   // business
   const usersFilter = useSelector(usersFilterDataSelector);
@@ -49,8 +52,8 @@ const CustomerPanel = () => {
   const resetFormHandle = useCallback(() => dispatch(resetUsersFilterAction()), [dispatch]);
   const filterHandle = useCallback(() => {
     dispatch(fetchUsersList(filterData));
-    setVisibleFilter(false);
-  }, [dispatch, filterData]);
+    hideFilterHandle();
+  }, [dispatch, filterData, hideFilterHandle]);
   const config: IBaseFormConfig = useMemo(() => ({
     list: [
       {

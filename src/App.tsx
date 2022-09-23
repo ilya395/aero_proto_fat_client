@@ -4,6 +4,7 @@ import PageSpinner from "./components/views/PageSpinner/PageSpinner.component";
 import AuthContext from "./contexts/Auth/Auth.context";
 import useAuth from "./hooks/auth/auth.hook";
 import MainRouter from "./router/MainRouter/MainRouter.router";
+import { productsAwaitSelector } from "./store/products/reducers/products.reducer";
 import { userAwaitSelector } from "./store/user/reducers/user.reducer";
 import { usersAwaitSelector } from "./store/users/reducers/users.reducer";
 import "./styles/style.scss";
@@ -13,10 +14,16 @@ const App = () => {
   const { isAuth, loading,} = useAuth();
   const usersAwait = useSelector(usersAwaitSelector);
   const userAwait = useSelector(userAwaitSelector);
+  const productsAwait = useSelector(productsAwaitSelector);
   const contextData = useMemo(() => ({
     isAuth,
   }), [isAuth]);
-  const globalLoading = useMemo(() => loading || usersAwait || userAwait, [loading, userAwait, usersAwait]);
+  const globalLoading = useMemo(() =>
+    loading
+    || usersAwait
+    || userAwait
+    || productsAwait,
+  [loading, productsAwait, userAwait, usersAwait]);
 
   return (
     <>
