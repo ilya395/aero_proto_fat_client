@@ -32,7 +32,7 @@ const CustomersView = memo((props: ICustomersViewProps) => {
           customers?.map((item, index) => {
             if (index === 0) {
               return (
-                <Col key={item?.id} ref={callbackRefToFirstElement}>
+                <Col xs={12} sm={6} lg={4} key={item?.id} ref={callbackRefToFirstElement}>
                   <BaseCard
                     title={item?.phone}
                     subTitle={item?.name}
@@ -46,7 +46,7 @@ const CustomersView = memo((props: ICustomersViewProps) => {
             }
             if (customers.length - 1 === index) {
               return (
-                <Col key={item?.id} ref={callbackRefToLastElement}>
+                <Col xs={12} sm={6} lg={4} key={item?.id} ref={callbackRefToLastElement}>
                   <BaseCard
                     title={item?.phone}
                     subTitle={item?.name}
@@ -59,7 +59,7 @@ const CustomersView = memo((props: ICustomersViewProps) => {
               );
             }
             return (
-              <Col key={item?.id}>
+              <Col xs={12} sm={6} lg={4} key={item?.id}>
                 <BaseCard
                   title={item?.phone}
                   subTitle={item?.name}

@@ -29,11 +29,15 @@ const BaseCard = memo((props: IBaseCardProps) => {
   return (
     <Card>
       <Card.Body>
-        <Card.Title>{title || "-"}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">{subTitle || "-"}</Card.Subtitle>
-        <Card.Text>
-          {description || "-"}
-        </Card.Text>
+        {
+          title && <Card.Title>{title}</Card.Title>
+        }
+        {
+          subTitle && <Card.Subtitle className="mb-2 text-muted">{subTitle}</Card.Subtitle>
+        }
+        {
+          description && <Card.Text>{description}</Card.Text>
+        }
         <div className="card-footer">
           <Card.Link onClick={handleClick}>Перейти</Card.Link>
           <Card.Link onClick={handleDelete}>

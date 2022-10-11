@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { EInputTypeKeys, EInputTypeTitles } from "../../../enums/inputTypes.enum";
@@ -10,6 +9,7 @@ import { createUser, fetchOneUser, updateUser } from "../../../store/user/action
 import { userAddNewAction, userAddressMemoSelector, userChangeDataAction, userCreationDateMemoSelector, userEmailMemoSelector, userNameMemoSelector, userPhoneMemoSelector, userRedirectIdMemoSelector, userResetAction } from "../../../store/user/reducers/user.reducer";
 import BaseForm from "../../views/BaseForm/BaseForm.view";
 import { IBaseFormConfig } from "../../views/BaseForm/models/BaseForm.model";
+import FormPanel from "../../views/FormPanel/FormPanel.view";
 import BaseDateTimePicker from "../../views/inputs/BaseDateTimePicker/BaseDateTimePicker.component";
 import BaseTextInput from "../../views/inputs/BaseTextInput/BaseTextInput.component";
 
@@ -67,7 +67,10 @@ const CustomerContainer = () => {
     },
   })), [dispatch, id, isNew, userAddress, userCreationDate, userEmail, userName, userPhone]);
 
-  const returnHandle = useCallback(() => navigate(ENavigationKeys.Customers), [navigate]);
+  const returnHandle = useCallback(() => {
+    navigate(ENavigationKeys.Customers);
+    clearFormHandle();
+  }, [clearFormHandle, navigate]);
 
   const config: IBaseFormConfig = useMemo(() => ({
     list: [
@@ -131,30 +134,15 @@ const CustomerContainer = () => {
   }), [changeHandle, userAddress, userCreationDate, userEmail, userName, userPhone]);
 
   return (
-    <div className="base-form">
-      <div className="base-form__management-buttons">
-        <div className="management-button">
-          <Button variant="outline-primary" onClick={clearFormHandle}>
-            Очистить форму
-          </Button>
-        </div>
-      </div>
+    <FormPanel
+      clearFormHandle={clearFormHandle}
+      saveFormHandle={saveDataHandle}
+      cancelFormHandle={returnHandle}
+    >
       <BaseForm
         config={config}
       />
-      <div className="base-form__management-buttons">
-        <div className="management-button">
-          <Button variant="primary" onClick={saveDataHandle}>
-            Сохранить
-          </Button>
-        </div>
-        <div className="management-button">
-          <Button variant="outline-danger" onClick={returnHandle}>
-            Отмена
-          </Button>
-        </div>
-      </div>
-    </div>
+    </FormPanel>
   );
 }
 

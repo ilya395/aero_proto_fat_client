@@ -18,4 +18,8 @@ export enum EBaseErrorTitles {
   FailUpdateUser = "Ошибка при обновлении покупателя...",
 
   FailGetProductsList = "Ошибка при запросе продуктов...",
+
+  FailGetProduct = "Ошибка при запросе продукта...",
+  FailPutProduct = "Ошибка при создании продукта...",
+  FailUpdateProduct = "Ошибка при обновлении продукта...",
 }

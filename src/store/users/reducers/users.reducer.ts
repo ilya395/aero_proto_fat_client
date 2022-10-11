@@ -44,8 +44,10 @@ export const UsersSlice = createSlice({
         ...state.usersList || [],
         ...action.payload.response || []
       ];
-      // eslint-disable-next-line no-param-reassign
-      state.pagination.lastVisible = action.payload.lastVisible || null;
+      if (action.payload.lastVisible) {
+        // eslint-disable-next-line no-param-reassign
+        state.pagination.lastVisible = action.payload.lastVisible;
+      }
     },
     [fetchUsersList.pending.type]: (state) => {
       // eslint-disable-next-line no-param-reassign

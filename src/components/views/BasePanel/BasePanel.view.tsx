@@ -11,11 +11,11 @@ const BasePanel = memo((props: IBasePanelProps) => {
   } = props;
   return (
     <Row className="pt-4">
-      <Col>
+      <Col xs={8}>
         <Button variant="primary" onClick={handleCreate}>Создать</Button>
         <Button variant="outline-primary ms-2" onClick={handleUpdate}>Обновить</Button>
       </Col>
-      <Col className={s["panel-column_left"]}>
+      <Col xs={4} className={s["panel-column_left"]}>
         <Button variant="primary" onClick={handleCallFilter}>Фильтр</Button>
       </Col>
     </Row>

@@ -40,7 +40,7 @@ class UserService extends FirestoreService {
     return docRef.id;
   }
 
-  public async updateOne(user: IUser) {
+  public async updateOne(user: IUser): Promise<IUser | undefined> {
     const {
       id,
       ...rest

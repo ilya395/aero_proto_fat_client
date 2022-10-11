@@ -6,7 +6,7 @@ export interface IBaseFormProps {
     xs: number;
     sm: number;
     xl: number;
-  }
+  } | false;
 }
 
 export interface IBaseFormConfig {

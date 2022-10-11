@@ -7,6 +7,12 @@ export enum EInputTypeKeys {
 
   CreationDateFrom = "creationDateFrom",
   CreationDateTo = "creationDateTo",
+
+  Diameter = "diameter",
+  Material = "material",
+  Price = "price",
+  PurchasePrice = "purchasePrice",
+  Quantity = "quantity",
 }
 
 export enum EInputTypeTitles {
@@ -14,8 +20,14 @@ export enum EInputTypeTitles {
   Phone = "Телефон",
   Email = "Email",
   Address = "Адрес доставки",
-  CreationDate = "Дата регистрации пользователя",
+  CreationDate = "Дата регистрации",
 
   CreationDateFrom = "Дата регистрации c",
   CreationDateTo = "Дата регистрации до",
+
+  Diameter = "Диаметр",
+  Material = "Материал",
+  Price = "Стоимость",
+  PurchasePrice = "Цена закупки",
+  Quantity = "Количество",
 }

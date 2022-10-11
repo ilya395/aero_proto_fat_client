@@ -43,6 +43,7 @@ module.exports = {
     'arrow-body-style': ['error', 'as-needed', {
       requireReturnForObjectLiteral: false,
     }],
+    'no-param-reassign': ["error", { "props": false }],
   },
   settings: {
     'import/resolver': {

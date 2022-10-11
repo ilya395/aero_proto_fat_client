@@ -1,8 +1,8 @@
-import React, { Fragment } from "react";
+import React, { Fragment, memo } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { IBaseFormProps } from "./models/BaseForm.model";
 
-const BaseForm = (props: IBaseFormProps) => {
+const BaseForm = memo((props: IBaseFormProps) => {
   const {
     config,
     col = {
@@ -12,21 +12,35 @@ const BaseForm = (props: IBaseFormProps) => {
     },
   } = props;
 
+  if (!col) {
+    return (
+      <Form>
+        <Row>
+          {
+            config?.list?.map(item => (
+              <Fragment key={item.id}>
+                {item.component}
+              </Fragment>
+            ))
+          }
+        </Row>
+      </Form>
+    );
+  }
+
   return (
     <Form>
       <Row>
         {
           config?.list?.map(item => (
             <Col xs={col.xs} sm={col.sm} xl={col.xl} key={item.id}>
-              <Fragment key={item.id}>
-                {item.component}
-              </Fragment>
+              {item.component}
             </Col>
           ))
         }
       </Row>
     </Form>
   );
-}
+});
 
 export default BaseForm;

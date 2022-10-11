@@ -65,7 +65,6 @@ const ProductsPanelContainer = () => {
   const resetFormHandle = useCallback(() => dispatch(resetProductsFilterAction()), [dispatch]);
 
   const filterHandle = useCallback(() => {
-    console.log(filterData)
     dispatch(filterProductsList(filterData));
     hideFilterHandle();
   }, [dispatch, filterData, hideFilterHandle]);

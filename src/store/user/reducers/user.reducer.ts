@@ -16,35 +16,10 @@ export const UserSlice = createSlice({
   name: "user",
   initialState: initialUserState,
   reducers: {
-    // userAwaitAction(state) {
-    //   // eslint-disable-next-line no-param-reassign
-    //   state.await = true;
-    // },
-    // userErrorAction(state, action: PayloadAction<IUserError>) {
-    //   // eslint-disable-next-line no-param-reassign
-    //   state.await = false;
-    //   // eslint-disable-next-line no-param-reassign
-    //   state.error = action.payload;
-    // },
-    // userSuccessAction(state, action: PayloadAction<IUser>) {
-    //   // eslint-disable-next-line no-param-reassign
-    //   state.await = false;
-    //   // eslint-disable-next-line no-param-reassign
-    //   state.error = null;
-    //   // eslint-disable-next-line no-param-reassign
-    //   state.userData = action.payload;
-    // },
     userResetAction (state) {
       // eslint-disable-next-line no-param-reassign
       state.userData = state.defaultUserData;
     },
-    // updateUserAction(state, action: PayloadAction<IUser>) {
-    //   // eslint-disable-next-line no-param-reassign
-    //   state.userData = {
-    //     ...state.userData,
-    //     ...action.payload,
-    //   };
-    // },
     userAddNewAction(state) {
       // eslint-disable-next-line no-param-reassign
       state.userData = {};
@@ -124,11 +99,7 @@ export const UserSlice = createSlice({
 export const UserReducer = UserSlice.reducer;
 
 export const {
-  // userAwaitAction,
-  // userErrorAction,
   userResetAction,
-  // userSuccessAction,
-  // updateUserAction,
   userAddNewAction,
   userChangeDataAction,
 } = UserSlice.actions;

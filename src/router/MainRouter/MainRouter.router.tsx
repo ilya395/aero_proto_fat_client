@@ -8,6 +8,7 @@ import LoginPage from "../../pages/Login/Login.page";
 import NotFoundPage from "../../pages/NotFound/NotFound.page";
 import OrderPage from "../../pages/Order/Order.page";
 import OrdersPage from "../../pages/Orders/Orders.page";
+import ProductPage from "../../pages/Product/Product.page";
 import ProductsPage from "../../pages/Products/Products.page";
 
 const MainRouter = () => {
@@ -38,6 +39,14 @@ const MainRouter = () => {
       <Route
         path={ENavigationKeys.Products}
         element={context?.isAuth ? <ProductsPage /> : <Navigate to={ENavigationKeys.Login} />}
+      />
+      <Route
+        path={`${ENavigationKeys.Products}/:id`}
+        element={context?.isAuth ? <ProductPage /> : <Navigate to={ENavigationKeys.Login} />}
+      />
+      <Route
+        path={`${ENavigationKeys.Products}/new`}
+        element={context?.isAuth ? <ProductPage /> : <Navigate to={ENavigationKeys.Login} />}
       />
       <Route
         path={ENavigationKeys.Login}
