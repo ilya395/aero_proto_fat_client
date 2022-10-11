@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useCallback } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Col, Container, Dropdown, Row } from "react-bootstrap";
@@ -7,16 +7,16 @@ import "./Main.style.scss";
 import { ENavigationKeys, ENavigationTitles } from "../../enums/navigation.enum";
 import BreadcrumbsContainer from "../../components/containers/Breadcrumbs/Breadcrumbs.container";
 
-const MainLayout = (props: IMainLayoutProps) => {
+const MainLayout = memo((props: IMainLayoutProps) => {
   const {
     children,
   } = props;
 
   const navigate = useNavigate();
 
-  const handleSingOut = () => {
-    signOut(getAuth());
-  }
+  const handleSingOut = useCallback(() => signOut(getAuth()), []);
+
+  const handleRedirect = useCallback((arg: ENavigationKeys) => () => navigate(arg), [navigate]);
 
   return (
     <div className="layout">
@@ -35,9 +35,9 @@ const MainLayout = (props: IMainLayoutProps) => {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => navigate(ENavigationKeys.Orders)}>{ENavigationTitles.Orders}</Dropdown.Item>
-                    <Dropdown.Item onClick={() => navigate(ENavigationKeys.Products)}>{ENavigationTitles.Products}</Dropdown.Item>
-                    <Dropdown.Item onClick={() => navigate(ENavigationKeys.Customers)}>{ENavigationTitles.Customers}</Dropdown.Item>
+                    <Dropdown.Item onClick={handleRedirect(ENavigationKeys.Orders)}>{ENavigationTitles.Orders}</Dropdown.Item>
+                    <Dropdown.Item onClick={handleRedirect(ENavigationKeys.Products)}>{ENavigationTitles.Products}</Dropdown.Item>
+                    <Dropdown.Item onClick={handleRedirect(ENavigationKeys.Customers)}>{ENavigationTitles.Customers}</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
@@ -73,6 +73,6 @@ const MainLayout = (props: IMainLayoutProps) => {
       </main>
     </div>
   );
-}
+});
 
 export default MainLayout;
