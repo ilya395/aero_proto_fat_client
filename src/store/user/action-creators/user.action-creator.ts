@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { EBaseErrorTitles } from "../../../enums/errors.enum";
+import { EBaseErrorTitles } from "../../../types/enums/errors.enum";
 import { firebaseInstance } from "../../../services/firebase/firebase.service";
 import UserService from "../../../services/User/User.service";
 import { IUser } from "../../models/users.model";

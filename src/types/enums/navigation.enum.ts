@@ -10,6 +10,6 @@ export enum ENavigationTitles {
   Main = "Главная",
   Orders = "Заказы",
   Customers = "Заказчики",
-  Products = "Продукты",
+  Products = "Товары",
   Login = "Страница входа"
 }

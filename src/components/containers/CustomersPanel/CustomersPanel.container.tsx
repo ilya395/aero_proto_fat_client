@@ -3,8 +3,8 @@ import { Button, Col, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PAGINATION_LIMIT } from "../../../constants/variables.constant";
-import { EInputTypeKeys, EInputTypeTitles } from "../../../enums/inputTypes.enum";
-import { ENavigationKeys } from "../../../enums/navigation.enum";
+import { EInputTypeKeys, EInputTypeTitles } from "../../../types/enums/inputTypes.enum";
+import { ENavigationKeys } from "../../../types/enums/navigation.enum";
 import useFilterMove from "../../../hooks/ui/filterMove/filterMove.hook";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { IUsersFilter, IUsersRequest } from "../../../store/models/users.model";
@@ -18,7 +18,7 @@ import BasePanel from "../../views/BasePanel/BasePanel.view";
 import BaseDateTimePicker from "../../views/inputs/BaseDateTimePicker/BaseDateTimePicker.component";
 import BaseTextInput from "../../views/inputs/BaseTextInput/BaseTextInput.component";
 
-const CustomerPanel = () => {
+const CustomersPanel = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -138,6 +138,8 @@ const CustomerPanel = () => {
         show={visibleFilter}
         handleClose={hideFilterHandle}
         handleAction={filterHandle}
+        actionWord="Поиск"
+        closeWord="Отмена"
       >
         <div>
           <Row>
@@ -168,4 +170,4 @@ const CustomerPanel = () => {
   );
 };
 
-export default CustomerPanel;
+export default CustomersPanel;

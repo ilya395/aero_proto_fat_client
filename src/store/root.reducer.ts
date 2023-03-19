@@ -1,5 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { combineReducers } from "redux";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { AuthReducer } from "./auth/reducers/auth.reducer";
 import { ProductReducer } from "./product/reducers/product.reducer";
 import { ProductsReducer } from "./products/reducers/products.reducer";

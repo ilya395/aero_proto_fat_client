@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { EBaseErrorTitles } from "../../../enums/errors.enum";
+import { EBaseErrorTitles } from "../../../types/enums/errors.enum";
 import { firebaseInstance } from "../../../services/firebase/firebase.service";
 import ProductsService from "../../../services/Products/Products.service";
 import { IProductsRequest } from "../../models/products.model";
+import ProductService from "../../../services/Product/Producr.service";
 
 export const filterProductsList = createAsyncThunk(
   "products/filter",
@@ -35,9 +36,9 @@ export const fetchDeleteProduct = createAsyncThunk(
         id,
       } = object;
 
-      const productsService = new ProductsService(firebaseInstance.getFirestore());
+      const productService = new ProductService(firebaseInstance.getFirestore());
 
-      await productsService.delete(id);
+      await productService.delete(id);
 
       return true;
 

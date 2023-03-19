@@ -3,7 +3,7 @@ import { AppDispatch } from "../../root.reducer";
 import { firebaseInstance } from "../../../services/firebase/firebase.service";
 import { ISignWithEmail } from "../../../services/firebase/models/firebase.model";
 import { AuthSlice } from "../reducers/auth.reducer";
-import { EBaseErrorTitles } from "../../../enums/errors.enum";
+import { EBaseErrorTitles } from "../../../types/enums/errors.enum";
 import { IAuthData, IAuthResponse } from "../models/auth.model";
 import localAuthDataService from "../../../services/localAuthData/localAuthData.service";
 

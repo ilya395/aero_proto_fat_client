@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { EInputTypeKeys, EInputTypeTitles } from "../../../enums/inputTypes.enum";
-import { ENavigationKeys } from "../../../enums/navigation.enum";
+import { EInputTypeKeys, EInputTypeTitles } from "../../../types/enums/inputTypes.enum";
+import { ENavigationKeys } from "../../../types/enums/navigation.enum";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { IUser } from "../../../store/models/users.model";
 import { createUser, fetchOneUser, updateUser } from "../../../store/user/action-creators/user.action-creator";

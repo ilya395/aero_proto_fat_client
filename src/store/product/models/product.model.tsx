@@ -1,4 +1,4 @@
-import { IBaseError } from "../../../models/error.model";
+import { IBaseError } from "../../../types/models/error.model";
 import { IProduct } from "../../models/products.model";
 
 export interface IProductError extends IBaseError {}

@@ -5,7 +5,7 @@ const LoginLayout = (props: ILoginLayoutProps) => {
   const { children } = props;
   return (
     <div className="layout">
-      <main className="main">
+      <main className="main bg-light">
         <div className="login-form">
           {children}
         </div>

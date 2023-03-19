@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { ENavigationKeys, ENavigationTitles } from "../../../../enums/navigation.enum";
+import { ENavigationKeys, ENavigationTitles } from "../../../../types/enums/navigation.enum";
 import { IBreadcrumb } from "../model/Breadcrumbs.model";
 
 const useRoutePath = () => {

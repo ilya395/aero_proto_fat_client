@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { EBaseErrorTitles } from "../../../enums/errors.enum";
+import { EBaseErrorTitles } from "../../../types/enums/errors.enum";
 import { firebaseInstance } from "../../../services/firebase/firebase.service";
 import UsersService from "../../../services/Users/Users.service";
 import { IUsersRequest } from "../../models/users.model";
+import UserService from "../../../services/User/User.service";
 
 export const fetchUsersList = createAsyncThunk(
   "users/fetchAll",
@@ -51,8 +52,8 @@ export const fetchDeleteUser = createAsyncThunk(
       const {
         id,
       } = object;
-      const usersService = new UsersService(firebaseInstance.getFirestore());
-      await usersService.deleteOne(id);
+      const userService = new UserService(firebaseInstance.getFirestore());
+      await userService.deleteOne(id);
       return true;
 
       // return thunkAPI.rejectWithValue({

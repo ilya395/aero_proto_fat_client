@@ -3,8 +3,8 @@ import { Button, Col, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PAGINATION_LIMIT } from "../../../constants/variables.constant";
-import { ENavigationKeys } from "../../../enums/navigation.enum";
-import { EProductsInputTypeKeys, EProductsInputTypeTitles } from "../../../enums/productsInputTypes.enum";
+import { ENavigationKeys } from "../../../types/enums/navigation.enum";
+import { EProductsInputTypeKeys, EProductsInputTypeTitles } from "../../../types/enums/productsInputTypes.enum";
 import useFilterMove from "../../../hooks/ui/filterMove/filterMove.hook";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { IProductsFilter, IProductsRequest } from "../../../store/models/products.model";
@@ -115,7 +115,7 @@ const ProductsPanelContainer = () => {
         handleCallFilter={showFilterHandle}
       />
       <BaseModal
-        title="Поиск покупателей"
+        title="Поиск товаров"
         show={visibleFilter}
         handleClose={hideFilterHandle}
         handleAction={filterHandle}

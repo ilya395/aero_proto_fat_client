@@ -1,5 +1,5 @@
 import React from "react";
-import CustomerPanel from "../../components/containers/CustomerPanel/CustomerPanel.container";
+import CustomerPanel from "../../components/containers/CustomersPanel/CustomersPanel.container";
 import CustomersContainer from "../../components/containers/Customers/Customers.container";
 import MainLayout from "../../layouts/Main/Main.layout";
 

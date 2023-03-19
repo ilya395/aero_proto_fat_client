@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ENavigationKeys } from "../../../enums/navigation.enum";
+import { ENavigationKeys } from "../../../types/enums/navigation.enum";
 import useProductFormConfig from "../../../hooks/ui/productFormConfig/productFormConfig.hook";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { getProduct, putProduct, updateProduct } from "../../../store/product/action-creators/product.action-creator";

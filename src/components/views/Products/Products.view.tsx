@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
-import { ENavigationKeys } from "../../../enums/navigation.enum";
+import { ENavigationKeys } from "../../../types/enums/navigation.enum";
 import useModalMoveInList from "../../../hooks/ui/modalMoveInList/modalMoveInList.hook";
 import BaseCard from "../BaseCard/BaseCard.view";
 import BaseModal from "../BaseModal/BaseModal.view";
@@ -29,7 +29,7 @@ const ProductsView = (props: IProductsViewProps) => {
           products?.map((item, index) => {
             if (products.length - 1 === index) {
               return (
-                <Col key={item?.id} ref={callbackRefToLastElement}>
+                <Col xs={12} sm={6} lg={4} key={item?.id} ref={callbackRefToLastElement} className="mt-3">
                   <BaseCard
                     title={item?.name}
                     description={`Кол-во: ${item?.quantity || "-"}; Стоимость: ${item?.price || "-"}`}
@@ -41,7 +41,7 @@ const ProductsView = (props: IProductsViewProps) => {
               );
             }
             return (
-              <Col key={item?.id}>
+              <Col xs={12} sm={6} lg={4} key={item?.id} className="mt-3">
                 <BaseCard
                   title={item?.name}
                   description={`Кол-во: ${item?.quantity || "-"}; Стоимость: ${item?.price || "-"}`}

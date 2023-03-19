@@ -2,7 +2,7 @@ import React, { memo, useCallback } from "react";
 import { Card } from "react-bootstrap";
 import { BsPrefixRefForwardingComponent } from "react-bootstrap/esm/helpers";
 import { useNavigate } from "react-router-dom";
-import { ENavigationKeys } from "../../../enums/navigation.enum";
+import { ENavigationKeys } from "../../../types/enums/navigation.enum";
 import { ICustomerCardProps } from "./models/CustomerCard.model";
 
 const CustomerCard = (props: ICustomerCardProps) => {

@@ -1,6 +1,6 @@
-import { addDoc, collection, doc, Firestore, getDoc, setDoc, Timestamp } from "firebase/firestore";
-import { PRODUCTS_DATA_BASE_KEY } from "../../constants/variables.constant";
+import { addDoc, collection, deleteDoc, doc, Firestore, getDoc, setDoc, Timestamp } from "firebase/firestore";
 import { IProduct } from "../../store/models/products.model";
+import { EModelKeys } from "../../types/enums/models.enum";
 import FirestoreService from "../Firestore/Firestore.service";
 
 class ProductService extends FirestoreService {
@@ -11,7 +11,7 @@ class ProductService extends FirestoreService {
   }
 
   public async getProduct(id: string): Promise<IProduct | undefined> {
-    const docRef = doc(this.db, PRODUCTS_DATA_BASE_KEY, id);
+    const docRef = doc(this.db, EModelKeys.Products, id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const toData = docSnap.data();
@@ -30,15 +30,15 @@ class ProductService extends FirestoreService {
       ...rest
     } = user;
     const data = {
-      name: rest.name || "",
-      price: rest.price || "",
-      purchasePrice: rest.purchasePrice || "",
-      quantity: rest.quantity || "",
-      diameter: rest.diameter || "",
-      material: rest.material || "",
+      name: rest.name ?? null,
+      price: rest.price ?? null,
+      purchasePrice: rest.purchasePrice ?? null,
+      quantity: rest.quantity ?? null,
+      diameter: rest.diameter ?? null,
+      material: rest.material ?? null,
       creationDate: rest.creationDate ? Timestamp.fromDate(new Date(rest.creationDate)) : Timestamp.fromDate(new Date()),
     };
-    const docRef = await addDoc(collection(this.db, PRODUCTS_DATA_BASE_KEY), data);
+    const docRef = await addDoc(collection(this.db, EModelKeys.Products), data);
     const userData = await this.getProduct(docRef.id);
     return userData;
   }
@@ -49,7 +49,7 @@ class ProductService extends FirestoreService {
       ...rest
     } = user;
     if (id) {
-      const docRef = doc(this.db, PRODUCTS_DATA_BASE_KEY, id);
+      const docRef = doc(this.db, EModelKeys.Products, id);
       const data = {
         ...rest,
         creationDate: rest.creationDate ? Timestamp.fromDate(new Date(rest.creationDate)) : Timestamp.fromDate(new Date()),
@@ -59,6 +59,10 @@ class ProductService extends FirestoreService {
       return user;
     }
     return undefined;
+  }
+
+  public async delete(id: string) {
+    await deleteDoc(doc(this.db, EModelKeys.Products, id));
   }
 }
 

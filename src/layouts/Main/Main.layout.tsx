@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Col, Container, Dropdown, Row } from "react-bootstrap";
 import { IMainLayoutProps } from "./models/Main.model";
 import "./Main.style.scss";
-import { ENavigationKeys, ENavigationTitles } from "../../enums/navigation.enum";
+import { ENavigationKeys, ENavigationTitles } from "../../types/enums/navigation.enum";
 import BreadcrumbsContainer from "../../components/containers/Breadcrumbs/Breadcrumbs.container";
 
 const MainLayout = memo((props: IMainLayoutProps) => {
@@ -20,7 +20,7 @@ const MainLayout = memo((props: IMainLayoutProps) => {
 
   return (
     <div className="layout">
-      <header className="header">
+      <header className="header bg-light">
         <Container>
           <Row>
             <Col>
@@ -63,7 +63,7 @@ const MainLayout = memo((props: IMainLayoutProps) => {
           </Row>
         </Container>
       </header>
-      <main className="main">
+      <main className="main bg-light">
         <Container>
           <Row>
             <BreadcrumbsContainer />

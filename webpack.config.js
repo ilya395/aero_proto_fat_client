@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const path  = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');                             // работай с html
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');                       // очистка кеша
-const CopyWebpackPlugin = require('copy-webpack-plugin');                             // копируй-перетаскивай
+// const CopyWebpackPlugin = require('copy-webpack-plugin'); // ? plagin need delete                            // копируй-перетаскивай
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');                      // работай с css (вставляй стили в файл css)
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin'); // минифицируй css
 const TerserWebpackPlugin = require('terser-webpack-plugin');                         // минифицируй js
@@ -76,14 +76,14 @@ const plugins = () => {
       inject: true,
     }),
     new CleanWebpackPlugin(),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, './src/images/**/*').replace(/\\/g, "/"), // в win пути с другими слэшами,
-          to: path.resolve(__dirname, './dist/assets/'),
-        },
-      ]
-    }),
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     {
+    //       from: path.resolve(__dirname, './src/images/**/*').replace(/\\/g, "/"), // в win пути с другими слэшами,
+    //       to: path.resolve(__dirname, './dist/assets/'),
+    //     },
+    //   ]
+    // }),
     new MiniCssExtractPlugin({
       filename: `assets/css/${filename('css')}`,
     }),

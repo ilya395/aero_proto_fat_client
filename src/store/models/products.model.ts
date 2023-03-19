@@ -1,5 +1,5 @@
 import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
-import { IBaseError } from "../../models/error.model";
+import { IBaseError } from "../../types/models/error.model";
 import { IBaseCreationDate, IBaseId } from "./base.model";
 
 export interface IProductsError extends IBaseError {}

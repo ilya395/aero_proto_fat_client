@@ -3,7 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import BaseCard from "../BaseCard/BaseCard.view";
 import BaseModal from "../BaseModal/BaseModal.view";
 import { ICustomersViewProps } from "./models/CustomersView.model";
-import { ENavigationKeys } from "../../../enums/navigation.enum";
+import { ENavigationKeys } from "../../../types/enums/navigation.enum";
 import useModalMoveInList from "../../../hooks/ui/modalMoveInList/modalMoveInList.hook";
 
 const CustomersView = memo((props: ICustomersViewProps) => {
@@ -32,7 +32,7 @@ const CustomersView = memo((props: ICustomersViewProps) => {
           customers?.map((item, index) => {
             if (index === 0) {
               return (
-                <Col xs={12} sm={6} lg={4} key={item?.id} ref={callbackRefToFirstElement}>
+                <Col xs={12} sm={6} lg={4} key={item?.id} ref={callbackRefToFirstElement} className="mt-3">
                   <BaseCard
                     title={item?.phone}
                     subTitle={item?.name}
@@ -46,7 +46,7 @@ const CustomersView = memo((props: ICustomersViewProps) => {
             }
             if (customers.length - 1 === index) {
               return (
-                <Col xs={12} sm={6} lg={4} key={item?.id} ref={callbackRefToLastElement}>
+                <Col xs={12} sm={6} lg={4} key={item?.id} ref={callbackRefToLastElement} className="mt-3">
                   <BaseCard
                     title={item?.phone}
                     subTitle={item?.name}
@@ -59,7 +59,7 @@ const CustomersView = memo((props: ICustomersViewProps) => {
               );
             }
             return (
-              <Col xs={12} sm={6} lg={4} key={item?.id}>
+              <Col xs={12} sm={6} lg={4} key={item?.id} className="mt-3">
                 <BaseCard
                   title={item?.phone}
                   subTitle={item?.name}

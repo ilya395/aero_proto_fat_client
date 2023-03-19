@@ -36,7 +36,7 @@ const LoginForm = (props: ILoginFormProps) => {
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" className="mt-1">
         Войти
       </Button>
     </Form>

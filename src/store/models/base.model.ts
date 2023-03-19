@@ -1,8 +1,4 @@
 export interface IBaseCreationDate {
-  // creationDate?: {
-  //   nanoseconds?: number;
-  //   seconds?: number;
-  // }
   creationDate?: Date;
 }
 

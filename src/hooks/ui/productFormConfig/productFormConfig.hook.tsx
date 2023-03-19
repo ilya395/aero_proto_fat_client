@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { IBaseFormConfig } from "../../../components/views/BaseForm/models/BaseForm.model";
 import BaseDateTimePicker from "../../../components/views/inputs/BaseDateTimePicker/BaseDateTimePicker.component";
 import BaseTextInput from "../../../components/views/inputs/BaseTextInput/BaseTextInput.component";
-import { EInputTypeKeys, EInputTypeTitles } from "../../../enums/inputTypes.enum";
+import { EInputTypeKeys, EInputTypeTitles } from "../../../types/enums/inputTypes.enum";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { IProduct } from "../../../store/models/products.model";
 import { changeProductDataAction, productCreationDateMemoSelector, productDiameterMemoSelector, productMaterialMemoSelector, productNameMemoSelector, productPriceMemoSelector, productPurchasePriceMemoSelector, productQuantityMemoSelector, productRedirectIdMemoSelector } from "../../../store/product/reducers/product.reducer";

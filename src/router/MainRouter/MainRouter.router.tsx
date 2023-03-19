@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import AuthContext from "../../contexts/Auth/Auth.context";
-import { ENavigationKeys } from "../../enums/navigation.enum";
+import { ENavigationKeys } from "../../types/enums/navigation.enum";
 import CustomerPage from "../../pages/Customer/Customer.page";
 import CustomersPage from "../../pages/Customers/Customers.page";
 import LoginPage from "../../pages/Login/Login.page";

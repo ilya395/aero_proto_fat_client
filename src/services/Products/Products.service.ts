@@ -1,14 +1,14 @@
-import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, limit, query, Query, startAfter, Timestamp, where } from "firebase/firestore";
-import { PAGINATION_LIMIT, PRODUCTS_DATA_BASE_KEY } from "../../constants/variables.constant";
-import { EInputTypeKeys } from "../../enums/inputTypes.enum";
+import { collection, DocumentData, Firestore, getDocs, limit, query, Query, startAfter, Timestamp, where } from "firebase/firestore";
+import { PAGINATION_LIMIT } from "../../constants/variables.constant";
+import { EInputTypeKeys } from "../../types/enums/inputTypes.enum";
 import { IProductsRequest, IProductsResponse } from "../../store/models/products.model";
 import FirestoreService from "../Firestore/Firestore.service";
+import { EModelKeys } from "../../types/enums/models.enum";
 
 class ProductsService extends FirestoreService {
   constructor(firestore: Firestore) {
     super(firestore);
 
-    this.delete = this.delete.bind(this);
     this.filter = this.filter.bind(this);
   }
 
@@ -37,14 +37,14 @@ class ProductsService extends FirestoreService {
 
     if (pagination.lastVisible) {
       if (array.length) {
-        q = query(collection(this.db, PRODUCTS_DATA_BASE_KEY), ...array, startAfter(pagination.lastVisible), limit(pagination.limit));
+        q = query(collection(this.db, EModelKeys.Products), ...array, startAfter(pagination.lastVisible), limit(pagination.limit));
       } else {
-        q = query(collection(this.db, PRODUCTS_DATA_BASE_KEY), startAfter(pagination.lastVisible), limit(pagination.limit));
+        q = query(collection(this.db, EModelKeys.Products), startAfter(pagination.lastVisible), limit(pagination.limit));
       }
     } else if (array.length) {
-      q = query(collection(this.db, PRODUCTS_DATA_BASE_KEY), ...array, limit(pagination.limit));
+      q = query(collection(this.db, EModelKeys.Products), ...array, limit(pagination.limit));
     } else {
-      q = query(collection(this.db, PRODUCTS_DATA_BASE_KEY), limit(pagination.limit));
+      q = query(collection(this.db, EModelKeys.Products), limit(pagination.limit));
     }
 
     const querySnapshot = await getDocs(q);
@@ -67,10 +67,6 @@ class ProductsService extends FirestoreService {
       response,
       lastVisible: item,
     };
-  }
-
-  public async delete(id: string) {
-    await deleteDoc(doc(this.db, PRODUCTS_DATA_BASE_KEY, id));
   }
 }
 
