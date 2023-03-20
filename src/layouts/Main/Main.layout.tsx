@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { Col, Container, Dropdown, Row } from "react-bootstrap";
 import { IMainLayoutProps } from "./models/Main.model";
 import "./Main.style.scss";
-import { ENavigationKeys, ENavigationTitles } from "../../types/enums/navigation.enum";
+import { ENavigationKeys } from "../../types/enums/navigation.enum";
 import BreadcrumbsContainer from "../../components/containers/Breadcrumbs/Breadcrumbs.container";
+import { menuList } from "../../constants/variables.constant";
 
 const MainLayout = memo((props: IMainLayoutProps) => {
   const {
@@ -35,9 +36,9 @@ const MainLayout = memo((props: IMainLayoutProps) => {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={handleRedirect(ENavigationKeys.Orders)}>{ENavigationTitles.Orders}</Dropdown.Item>
-                    <Dropdown.Item onClick={handleRedirect(ENavigationKeys.Products)}>{ENavigationTitles.Products}</Dropdown.Item>
-                    <Dropdown.Item onClick={handleRedirect(ENavigationKeys.Customers)}>{ENavigationTitles.Customers}</Dropdown.Item>
+                    {
+                      menuList.map((item) => (<Dropdown.Item key={item.key} onClick={handleRedirect(item.key)}>{item.title}</Dropdown.Item>))
+                    }
                   </Dropdown.Menu>
                 </Dropdown>
               </div>

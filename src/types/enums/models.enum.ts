@@ -2,4 +2,6 @@
 export enum EModelKeys {
   Users = 'users',
   Products = 'products',
+  Orders = 'orders',
+  Kits = 'kits',
 }

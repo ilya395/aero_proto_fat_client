@@ -4,6 +4,7 @@ export enum ENavigationKeys {
   Customers = "/customers",
   Products = "/products",
   Login = "/login",
+  Kits = "/kits",
 }
 
 export enum ENavigationTitles {
@@ -11,5 +12,6 @@ export enum ENavigationTitles {
   Orders = "Заказы",
   Customers = "Заказчики",
   Products = "Товары",
-  Login = "Страница входа"
+  Login = "Страница входа",
+  Kits = "Наборы",
 }

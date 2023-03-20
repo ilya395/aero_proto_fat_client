@@ -10,11 +10,26 @@ import OrderPage from "../../pages/Order/Order.page";
 import OrdersPage from "../../pages/Orders/Orders.page";
 import ProductPage from "../../pages/Product/Product.page";
 import ProductsPage from "../../pages/Products/Products.page";
+import KitsPage from "../../pages/Kits/Kits.page";
+import KitPage from "../../pages/Kit/Kit.page";
 
 const MainRouter = () => {
   const context = useContext(AuthContext);
   return (
     <Routes>
+      <Route
+        path={ENavigationKeys.Kits}
+        element={context?.isAuth ? <KitsPage /> : <Navigate to={ENavigationKeys.Login} />}
+      >
+        <Route
+          path=":id"
+          element={context?.isAuth ? <KitPage /> : <Navigate to={ENavigationKeys.Login} />}
+        />
+        <Route
+          path="new"
+          element={context?.isAuth ? <KitPage /> : <Navigate to={ENavigationKeys.Login} />}
+        />
+      </Route>
       <Route
         path={ENavigationKeys.Orders}
         element={context?.isAuth ? <OrdersPage /> : <Navigate to={ENavigationKeys.Login} />}
