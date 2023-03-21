@@ -2,11 +2,11 @@ import { collection, DocumentData, Firestore, getDocs, limit, Query, query, star
 import { PAGINATION_LIMIT } from "../../../constants/variables.constant";
 import { EInputTypeKeys } from "../../../types/enums/inputTypes.enum";
 import { EModelKeys } from "../../../types/enums/models.enum";
-import { IBaseListRequest, IBaseListResponse } from "../../../types/models/error.model";
+import { IBaseListRequest, IBaseListResponse } from "../../../types/models/base.model";
 import FirestoreService from "../../Firestore/Firestore.service";
 
 
-class ListService<Q extends {[x: string | EInputTypeKeys]: any}, S> extends FirestoreService {
+class ListService<Q extends {[x: string | EInputTypeKeys]: any}> extends FirestoreService {
   key: EModelKeys;
 
   constructor(firestore: Firestore, key: EModelKeys) {
@@ -15,7 +15,7 @@ class ListService<Q extends {[x: string | EInputTypeKeys]: any}, S> extends Fire
     this.filter = this.filter.bind(this);
   }
 
-  public async filter(object: IBaseListRequest<Q>): Promise<IBaseListResponse<S> | undefined> {
+  public async filter(object: IBaseListRequest<Q>): Promise<IBaseListResponse<Q> | undefined> {
     const {
       filter = {},
       pagination = {
@@ -67,7 +67,7 @@ class ListService<Q extends {[x: string | EInputTypeKeys]: any}, S> extends Fire
     }
 
     return {
-      response: response as S[],
+      response: response as Q[],
       lastVisible: item,
     };
   }

@@ -22,4 +22,8 @@ export enum EBaseErrorTitles {
   FailGetProduct = "Ошибка при запросе продукта...",
   FailPutProduct = "Ошибка при создании продукта...",
   FailUpdateProduct = "Ошибка при обновлении продукта...",
+
+  FailGetKitsList = "Ошибка при запросе наборов...",
+
+  FailRequestDeleteKit = "Ошибка при запросе на удаление набора...",
 }
