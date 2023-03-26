@@ -49,6 +49,8 @@ export const ProductSlice = createSlice({
       state.await = true;
     },
     [putProduct.fulfilled.type]: (state, action: PayloadAction<IProduct>) => {
+      state.await = false;
+      state.error = null;
       state.redirectId = action.payload.id;
     },
     [putProduct.rejected.type]: (state, action: PayloadAction<IProductError>) => {

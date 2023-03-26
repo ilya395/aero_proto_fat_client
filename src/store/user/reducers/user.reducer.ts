@@ -36,61 +36,43 @@ export const UserSlice = createSlice({
   },
   extraReducers: {
     [fetchOneUser.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = false;
-      // eslint-disable-next-line no-param-reassign
       state.error = null;
-      // eslint-disable-next-line no-param-reassign
       state.userData = action.payload;
-      // eslint-disable-next-line no-param-reassign
       state.defaultUserData = action.payload;
-      // eslint-disable-next-line no-param-reassign
       state.redirectId = null;
     },
     [fetchOneUser.pending.type]: (state) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = true;
     },
     [fetchOneUser.rejected.type]: (state, action: PayloadAction<IUserError>) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = false;
-      // eslint-disable-next-line no-param-reassign
       state.error = action.payload;
     },
     [updateUser.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = false;
-      // eslint-disable-next-line no-param-reassign
       state.error = null;
-      // eslint-disable-next-line no-param-reassign
       state.userData = action.payload;
-      // eslint-disable-next-line no-param-reassign
       state.defaultUserData = action.payload;
-      // eslint-disable-next-line no-param-reassign
       state.redirectId = null;
     },
     [updateUser.pending.type]: (state) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = true;
     },
     [updateUser.rejected.type]: (state, action: PayloadAction<IUserError>) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = false;
-      // eslint-disable-next-line no-param-reassign
       state.error = action.payload;
     },
     [createUser.fulfilled.type]: (state, action: PayloadAction<string>) => {
-      // eslint-disable-next-line no-param-reassign
+      state.await = false;
+      state.error = null;
       state.redirectId = action.payload;
     },
     [createUser.pending.type]: (state) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = true;
     },
     [createUser.rejected.type]: (state, action: PayloadAction<IUserError>) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = false;
-      // eslint-disable-next-line no-param-reassign
       state.error = action.payload;
     },
   },

@@ -61,7 +61,7 @@ export const updateProduct = createAsyncThunk(
       const productService = new ProductService(firebaseInstance.getFirestore());
 
       const data = await productService.updateProduct(object);
-      console.log(data)
+
       if (data) {
         return data;
       }

@@ -26,4 +26,8 @@ export enum EBaseErrorTitles {
   FailGetKitsList = "Ошибка при запросе наборов...",
 
   FailRequestDeleteKit = "Ошибка при запросе на удаление набора...",
+
+  FailGetKit = "Ошибка при запросе набора...",
+  FailPutKit = "Ошибка при создании набора...",
+  FailUpdateKit = "Ошибка при обновлении набора...",
 }

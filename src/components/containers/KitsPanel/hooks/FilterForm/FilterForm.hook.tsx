@@ -12,7 +12,6 @@ const useKitsFilterForm = () => {
   const dispatch = useAppDispatch();
 
   const kitsFilter = useSelector(kitsFilterDataSelector);
-  console.log(kitsFilter);
 
   const changeNumberFilterHandle = useCallback((arg: {[x: string]: string;} & IKitsFilter) => {
     const keys = Object.keys(arg);
