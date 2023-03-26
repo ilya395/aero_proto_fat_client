@@ -12,6 +12,7 @@ const useKitsFilterForm = () => {
   const dispatch = useAppDispatch();
 
   const kitsFilter = useSelector(kitsFilterDataSelector);
+  console.log(kitsFilter);
 
   const changeNumberFilterHandle = useCallback((arg: {[x: string]: string;} & IKitsFilter) => {
     const keys = Object.keys(arg);
@@ -27,7 +28,7 @@ const useKitsFilterForm = () => {
         id: "kit-number",
         component: <BaseTextInput
           id="kit-number-field"
-          value={kitsFilter?.kitNumber ? kitsFilter.kitNumber.toString() : null}
+          value={(kitsFilter?.kitNumber ?? '').toString()}
           callback={changeNumberFilterHandle}
           objectKey={EKitsInputTypeKeys.KitNumber}
           placeholder={EKitsInputTypeTitles.KitNumber}
@@ -38,7 +39,7 @@ const useKitsFilterForm = () => {
         id: "price",
         component: <BaseTextInput
           id="price-field"
-          value={kitsFilter?.price ? kitsFilter.price.toString() : null}
+          value={(kitsFilter?.price ?? '').toString()}
           callback={changeNumberFilterHandle}
           objectKey={EProductsInputTypeKeys.Price}
           placeholder={EProductsInputTypeTitles.Price}
