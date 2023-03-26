@@ -26,7 +26,7 @@ const BaseTextInput = memo((props: IBaseTextInputProps) => {
       <Form.Control
         type={type}
         placeholder={placeholder}
-        value={value}
+        value={value ?? undefined}
         onChange={handleChange}
       />
     </Form.Group>

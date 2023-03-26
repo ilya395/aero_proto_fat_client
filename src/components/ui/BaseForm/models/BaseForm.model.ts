@@ -1,4 +1,4 @@
-import BaseTextInput from "../../inputs/BaseTextInput/BaseTextInput.component";
+import BaseTextInput from "../../BaseTextInput/BaseTextInput.ui";
 
 export interface IBaseFormProps {
   config?: IBaseFormConfig;
@@ -20,6 +20,5 @@ export interface IBaseFormConfig {
 }
 
 export interface IBaseFormConfigItem {
-  component: null | typeof BaseTextInput
-
+  component: null | typeof BaseTextInput;
 }

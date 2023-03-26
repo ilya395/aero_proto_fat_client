@@ -9,7 +9,7 @@ const useModalMoveInList = (arg: { deleteCallback?: (id: string) => void; }) => 
   const handleCloseModal = useCallback(() => setShowDeleteModalId(null), []);
   const handleShowModal = useCallback((id: string) => setShowDeleteModalId(id), []);
   const handleActionModal = useCallback(() => {
-    deleteCallback && showDeleteModalId && deleteCallback(showDeleteModalId);
+    showDeleteModalId && deleteCallback?.(showDeleteModalId);
     setShowDeleteModalId(null);
   }, [deleteCallback, showDeleteModalId]);
 

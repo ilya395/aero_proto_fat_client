@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo } from "react";
 import { Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { IBaseFormConfig } from "../../../components/views/BaseForm/models/BaseForm.model";
-import BaseDateTimePicker from "../../../components/views/inputs/BaseDateTimePicker/BaseDateTimePicker.component";
-import BaseTextInput from "../../../components/views/inputs/BaseTextInput/BaseTextInput.component";
 import { EInputTypeKeys, EInputTypeTitles } from "../../../types/enums/inputTypes.enum";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { IProduct } from "../../../store/models/products.model";
 import { changeProductDataAction, productCreationDateMemoSelector, productDiameterMemoSelector, productMaterialMemoSelector, productNameMemoSelector, productPriceMemoSelector, productPurchasePriceMemoSelector, productQuantityMemoSelector, productRedirectIdMemoSelector } from "../../../store/product/reducers/product.reducer";
+import { IBaseFormConfig } from "../../../components/ui/BaseForm/models/BaseForm.model";
+import BaseTextInput from "../../../components/ui/BaseTextInput/BaseTextInput.ui";
+import BaseDateTimePicker from "../../../components/ui/BaseDateTimePicker/BaseDateTimePicker.ui";
 
 const useProductFormConfig = () => {
   const dispatch = useAppDispatch();
@@ -98,7 +98,7 @@ const useProductFormConfig = () => {
     component: <Col xs={12} sm={6} xl={4}>
       <BaseDateTimePicker
         id="creation-date-field"
-        value={productCreationDate}
+        value={productCreationDate ?? undefined}
         callback={changeHandle}
         objectKey={EInputTypeKeys.CreationDate}
         placeholder={EInputTypeTitles.CreationDate}

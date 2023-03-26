@@ -11,12 +11,12 @@ import { IUsersFilter, IUsersRequest } from "../../../store/models/users.model";
 import { fetchUsersList, updateUsersList } from "../../../store/users/action-creators/users.action-creator";
 import { clearUsers, usersPaginationSelector } from "../../../store/users/reducers/users.reducer";
 import { resetUsersFilterAction, updateUsersFilterAction, usersFilterDataSelector } from "../../../store/usersFilter/reducers/usersFilter.reducer";
-import BaseForm from "../../views/BaseForm/BaseForm.view";
-import { IBaseFormConfig } from "../../views/BaseForm/models/BaseForm.model";
-import BaseModal from "../../views/BaseModal/BaseModal.view";
-import BasePanel from "../../views/BasePanel/BasePanel.view";
-import BaseDateTimePicker from "../../views/inputs/BaseDateTimePicker/BaseDateTimePicker.component";
-import BaseTextInput from "../../views/inputs/BaseTextInput/BaseTextInput.component";
+import { IBaseFormConfig } from "../../ui/BaseForm/models/BaseForm.model";
+import BasePanel from "../../ui/BasePanel/BasePanel.ui";
+import BaseModal from "../../ui/BaseModal/BaseModal.ui";
+import BaseForm from "../../ui/BaseForm/BaseForm.ui";
+import BaseTextInput from "../../ui/BaseTextInput/BaseTextInput.ui";
+import BaseDateTimePicker from "../../ui/BaseDateTimePicker/BaseDateTimePicker.ui";
 
 const CustomersPanel = () => {
   const navigate = useNavigate();

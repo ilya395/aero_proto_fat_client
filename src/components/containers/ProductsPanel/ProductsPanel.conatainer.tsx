@@ -11,11 +11,11 @@ import { IProductsFilter, IProductsRequest } from "../../../store/models/product
 import { filterProductsList } from "../../../store/products/action-creators/products.action-creator";
 import { clearProducts, productsPaginationSelector } from "../../../store/products/reducers/products.reducer";
 import { productsFilterDataSelector, resetProductsFilterAction, updateProductsFilterAction } from "../../../store/productsFilter/reducers/productsFilter.reducer";
-import BaseForm from "../../views/BaseForm/BaseForm.view";
-import { IBaseFormConfig } from "../../views/BaseForm/models/BaseForm.model";
-import BaseModal from "../../views/BaseModal/BaseModal.view";
-import BasePanel from "../../views/BasePanel/BasePanel.view";
-import BaseTextInput from "../../views/inputs/BaseTextInput/BaseTextInput.component";
+import { IBaseFormConfig } from "../../ui/BaseForm/models/BaseForm.model";
+import BasePanel from "../../ui/BasePanel/BasePanel.ui";
+import BaseModal from "../../ui/BaseModal/BaseModal.ui";
+import BaseForm from "../../ui/BaseForm/BaseForm.ui";
+import BaseTextInput from "../../ui/BaseTextInput/BaseTextInput.ui";
 
 const ProductsPanelContainer = () => {
   const navigate = useNavigate();

@@ -7,11 +7,11 @@ import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { IUser } from "../../../store/models/users.model";
 import { createUser, fetchOneUser, updateUser } from "../../../store/user/action-creators/user.action-creator";
 import { userAddNewAction, userAddressMemoSelector, userChangeDataAction, userCreationDateMemoSelector, userEmailMemoSelector, userNameMemoSelector, userPhoneMemoSelector, userRedirectIdMemoSelector, userResetAction } from "../../../store/user/reducers/user.reducer";
-import BaseForm from "../../views/BaseForm/BaseForm.view";
-import { IBaseFormConfig } from "../../views/BaseForm/models/BaseForm.model";
 import FormPanel from "../../views/FormPanel/FormPanel.view";
-import BaseDateTimePicker from "../../views/inputs/BaseDateTimePicker/BaseDateTimePicker.component";
-import BaseTextInput from "../../views/inputs/BaseTextInput/BaseTextInput.component";
+import { IBaseFormConfig } from "../../ui/BaseForm/models/BaseForm.model";
+import BaseForm from "../../ui/BaseForm/BaseForm.ui";
+import BaseTextInput from "../../ui/BaseTextInput/BaseTextInput.ui";
+import BaseDateTimePicker from "../../ui/BaseDateTimePicker/BaseDateTimePicker.ui";
 
 const CustomerContainer = () => {
   const dispatch = useAppDispatch();
@@ -123,7 +123,7 @@ const CustomerContainer = () => {
         id: "creationDate",
         component: <BaseDateTimePicker
           id="creation-date-field"
-          value={userCreationDate}
+          value={userCreationDate ?? undefined}
           callback={changeHandle}
           objectKey={EInputTypeKeys.CreationDate}
           placeholder={EInputTypeTitles.CreationDate}

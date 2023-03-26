@@ -20,16 +20,15 @@ const MainRouter = () => {
       <Route
         path={ENavigationKeys.Kits}
         element={context?.isAuth ? <KitsPage /> : <Navigate to={ENavigationKeys.Login} />}
-      >
-        <Route
-          path=":id"
-          element={context?.isAuth ? <KitPage /> : <Navigate to={ENavigationKeys.Login} />}
-        />
-        <Route
-          path="new"
-          element={context?.isAuth ? <KitPage /> : <Navigate to={ENavigationKeys.Login} />}
-        />
-      </Route>
+      />
+      <Route
+        path={`${ENavigationKeys.Kits}/:id`}
+        element={context?.isAuth ? <KitPage /> : <Navigate to={ENavigationKeys.Login} />}
+      />
+      <Route
+        path={`${ENavigationKeys.Kits}/new`}
+        element={context?.isAuth ? <KitPage /> : <Navigate to={ENavigationKeys.Login} />}
+      />
       <Route
         path={ENavigationKeys.Orders}
         element={context?.isAuth ? <OrdersPage /> : <Navigate to={ENavigationKeys.Login} />}

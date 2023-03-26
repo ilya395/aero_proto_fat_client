@@ -5,8 +5,8 @@ import useProductFormConfig from "../../../hooks/ui/productFormConfig/productFor
 import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { getProduct, putProduct, updateProduct } from "../../../store/product/action-creators/product.action-creator";
 import { addNewProductAction, resetProductDataAction } from "../../../store/product/reducers/product.reducer";
-import BaseForm from "../../views/BaseForm/BaseForm.view";
 import FormPanel from "../../views/FormPanel/FormPanel.view";
+import BaseForm from "../../ui/BaseForm/BaseForm.ui";
 
 const ProductContainer = () => {
   const dispatch = useAppDispatch();

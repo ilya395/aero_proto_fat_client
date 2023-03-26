@@ -7,6 +7,6 @@ export interface IDefaultTextInputProps {
 }
 
 export interface IBaseTextInputProps extends IDefaultTextInputProps {
-  value?: string;
+  value?: string | null;
   callback?: (arg: {[x: string]: string}) => void;
 }

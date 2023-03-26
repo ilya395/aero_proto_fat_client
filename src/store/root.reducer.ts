@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { AuthReducer } from "./auth/reducers/auth.reducer";
 import { KitsReducer } from "./kits/reducers/kits.reducer";
+import { KitsFilterReducer } from "./kitsFilter/reducers/kitsFilter.reducer";
 import { ProductReducer } from "./product/reducers/product.reducer";
 import { ProductsReducer } from "./products/reducers/products.reducer";
 import { ProductsFilterReducer } from "./productsFilter/reducers/productsFilter.reducer";
@@ -19,6 +20,7 @@ const RootReducer = combineReducers({
   productsFilter: ProductsFilterReducer,
   product: ProductReducer,
   kits: KitsReducer,
+  kitsFilter: KitsFilterReducer,
 });
 
 export const setupStore = () => configureStore({

@@ -1,10 +1,10 @@
 import React, { memo } from "react";
 import { Col, Row } from "react-bootstrap";
-import BaseCard from "../BaseCard/BaseCard.view";
-import BaseModal from "../BaseModal/BaseModal.view";
 import { ICustomersViewProps } from "./models/CustomersView.model";
 import { ENavigationKeys } from "../../../types/enums/navigation.enum";
 import useModalMoveInList from "../../../hooks/ui/modalMoveInList/modalMoveInList.hook";
+import BaseCard from "../../ui/BaseCard/BaseCard.ui";
+import BaseModal from "../../ui/BaseModal/BaseModal.ui";
 
 const CustomersView = memo((props: ICustomersViewProps) => {
   const {

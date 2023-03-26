@@ -2,9 +2,9 @@ import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { ENavigationKeys } from "../../../types/enums/navigation.enum";
 import useModalMoveInList from "../../../hooks/ui/modalMoveInList/modalMoveInList.hook";
-import BaseCard from "../BaseCard/BaseCard.view";
-import BaseModal from "../BaseModal/BaseModal.view";
 import { IProductsViewProps } from "./models/Products.model";
+import BaseCard from "../../ui/BaseCard/BaseCard.ui";
+import BaseModal from "../../ui/BaseModal/BaseModal.ui";
 
 const ProductsView = (props: IProductsViewProps) => {
   const {

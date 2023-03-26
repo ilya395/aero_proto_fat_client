@@ -1,5 +1,5 @@
 import React, { memo, useCallback } from "react";
-import BaseTextInput from "../BaseTextInput/BaseTextInput.component";
+import BaseTextInput from "../BaseTextInput/BaseTextInput.ui";
 import { IBaseNumberInputProps } from "./models/BaseNumberInput.model";
 
 const BaseNumberInput = memo((props: IBaseNumberInputProps) => {

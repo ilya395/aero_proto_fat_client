@@ -1,8 +1,9 @@
 import { addDoc, collection, deleteDoc, doc, Firestore, getDoc, setDoc, Timestamp } from "firebase/firestore";
+import { IBaseCreationDate, IBaseId } from "../../../store/models/base.model";
 import { EModelKeys } from "../../../types/enums/models.enum";
 import FirestoreService from "../../Firestore/Firestore.service";
 
-class BaseItemService<T extends { id?: string; creationDate?: Date | null; }> extends FirestoreService {
+class BaseItemService<T extends IBaseId & IBaseCreationDate> extends FirestoreService {
   key: EModelKeys;
 
   constructor(firestore: Firestore, key: EModelKeys) {

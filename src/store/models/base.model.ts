@@ -1,7 +1,7 @@
 export interface IBaseCreationDate {
-  creationDate?: Date;
+  creationDate?: Date | null;
 }
 
 export interface IBaseId {
-  id?: string;
+  id?: string | null;
 }
