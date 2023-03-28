@@ -13,7 +13,7 @@ export interface IKit extends IBaseCreationDate, IBaseId {
   }>;
 }
 
-export interface IKitsFilter extends IKit{
+export interface IKitsFilter extends IKit {
   creationDateFrom?: Date;
   creationDateTo?: Date;
 }

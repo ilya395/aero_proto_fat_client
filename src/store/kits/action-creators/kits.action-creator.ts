@@ -27,25 +27,25 @@ export const fetchKitsList = createAsyncThunk(
   },
 );
 
-export const updateKitsList = createAsyncThunk(
-  "kits/updateAll",
-  async (object: IBaseListRequest<IKit>, thunkAPI) => {
-    try {
-      const kitsService = new KitsService(firebaseInstance.getFirestore(), EModelKeys.Kits);
-      const data = await kitsService.filter(object);
-      if (data) {
-        return data;
-      }
-      return thunkAPI.rejectWithValue({
-        message: EBaseErrorTitles.FailGetKitsList,
-      });
-    } catch (e) {
-      return thunkAPI.rejectWithValue({
-        message: EBaseErrorTitles.FailGetKitsList,
-      });
-    }
-  },
-);
+// export const updateKitsList = createAsyncThunk(
+//   "kits/updateAll",
+//   async (object: IBaseListRequest<IKit>, thunkAPI) => {
+//     try {
+//       const kitsService = new KitsService(firebaseInstance.getFirestore(), EModelKeys.Kits);
+//       const data = await kitsService.filter(object);
+//       if (data) {
+//         return data;
+//       }
+//       return thunkAPI.rejectWithValue({
+//         message: EBaseErrorTitles.FailGetKitsList,
+//       });
+//     } catch (e) {
+//       return thunkAPI.rejectWithValue({
+//         message: EBaseErrorTitles.FailGetKitsList,
+//       });
+//     }
+//   },
+// );
 
 export const fetchDeleteKit = createAsyncThunk(
   "kits/deleteOneKit",

@@ -3,6 +3,8 @@ import { AuthReducer } from "./auth/reducers/auth.reducer";
 import { KitReducer } from "./kit/reducers/kit.reducer";
 import { KitsReducer } from "./kits/reducers/kits.reducer";
 import { KitsFilterReducer } from "./kitsFilter/reducers/kitsFilter.reducer";
+import { OrdersReducer } from "./orders/reducers/orders.reducer";
+import { OrdersFilterReducer } from "./ordersFilter/reducers/ordersFilter.reducer";
 import { ProductReducer } from "./product/reducers/product.reducer";
 import { ProductsReducer } from "./products/reducers/products.reducer";
 import { ProductsFilterReducer } from "./productsFilter/reducers/productsFilter.reducer";
@@ -23,6 +25,8 @@ const RootReducer = combineReducers({
   kits: KitsReducer,
   kitsFilter: KitsFilterReducer,
   kit: KitReducer,
+  orders: OrdersReducer,
+  ordersFilter: OrdersFilterReducer,
 });
 
 export const setupStore = () => configureStore({
