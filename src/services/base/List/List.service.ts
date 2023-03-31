@@ -15,7 +15,7 @@ class ListService<Q extends {[x: string | EInputTypeKeys]: any}> extends Firesto
     this.filter = this.filter.bind(this);
   }
 
-  public async filter(object: IBaseListRequest<Q>): Promise<IBaseListResponse<Q> | undefined> {
+  public async filter(object: IBaseListRequest<Q>): Promise<IBaseListResponse<DocumentData> | undefined> { // Q -> DocumentData
     const {
       filter = {},
       pagination = {
@@ -62,12 +62,14 @@ class ListService<Q extends {[x: string | EInputTypeKeys]: any}> extends Firesto
       creationDate: doc.data().creationDate.toDate(),
     }));
 
+    // const response = await this.parseSnapShot(querySnapshot);
+
     if (!response && !item) {
       return undefined;
     }
 
     return {
-      response: response as Q[],
+      response, // as Q[],
       lastVisible: item,
     };
   }

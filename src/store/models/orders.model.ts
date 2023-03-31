@@ -16,4 +16,6 @@ export interface IOrder extends IBaseCreationDate, IBaseId {
 export interface IOrdersFilter extends IOrder {
   creationDateFrom?: Date;
   creationDateTo?: Date;
+  deliveryDateFrom?: Date;
+  deliveryDateTo?: Date;
 }

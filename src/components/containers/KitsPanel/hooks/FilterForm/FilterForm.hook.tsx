@@ -4,7 +4,6 @@ import { useAppDispatch } from "../../../../../store/hooks/store.hook"
 import { kitsFilterDataSelector, updateKitsFilterAction } from "../../../../../store/kitsFilter/reducers/kitsFilter.reducer"
 import { IKitsFilter } from "../../../../../store/models/kits.model"
 import { EKitsInputTypeKeys, EKitsInputTypeTitles } from "../../../../../types/enums/kitsInputTypes.enum"
-import { EProductsInputTypeKeys, EProductsInputTypeTitles } from "../../../../../types/enums/productsInputTypes.enum"
 import { IBaseFormConfig } from "../../../../ui/BaseForm/models/BaseForm.model"
 import BaseTextInput from "../../../../ui/BaseTextInput/BaseTextInput.ui"
 
@@ -24,7 +23,7 @@ const useKitsFilterForm = () => {
   const config: IBaseFormConfig = useMemo(() => ({
     list: [
       {
-        id: "kit-number",
+        id: EKitsInputTypeKeys.KitNumber,
         component: <BaseTextInput
           id="kit-number-field"
           value={(kitsFilter?.kitNumber ?? '').toString()}
@@ -35,14 +34,14 @@ const useKitsFilterForm = () => {
         />,
       },
       {
-        id: "price",
+        id: EKitsInputTypeKeys.Price,
         component: <BaseTextInput
           id="price-field"
           value={(kitsFilter?.price ?? '').toString()}
           callback={changeNumberFilterHandle}
-          objectKey={EProductsInputTypeKeys.Price}
-          placeholder={EProductsInputTypeTitles.Price}
-          label={EProductsInputTypeTitles.Price}
+          objectKey={EKitsInputTypeKeys.Price}
+          placeholder={EKitsInputTypeTitles.Price}
+          label={EKitsInputTypeTitles.Price}
         />,
       },
     ],
