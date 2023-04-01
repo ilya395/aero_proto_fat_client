@@ -17,8 +17,8 @@ const OrdersPage = () => {
   }, []);
   return (
     <MainLayout>
-      <OrdersContainer />
       <OrdersPanel />
+      <OrdersContainer />
     </MainLayout>
   );
 }

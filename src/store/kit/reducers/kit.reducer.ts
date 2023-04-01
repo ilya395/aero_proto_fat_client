@@ -84,7 +84,7 @@ export const KitReducer = KitSlice.reducer;
 
 export const kitAwaitSelector = (state: RootState) => state.kit.await;
 export const kitErrorSelector = (state: RootState) => state.kit.error;
-export const kitRedirectIdSelect = (state: RootState) => state.kit.redirectId;
+export const kitRedirectIdSelector = (state: RootState) => state.kit.redirectId;
 export const kitDataSelect = (state: RootState) => state.kit.kitData;
 
 export const kitCreationDateSelector = (state: RootState) => state.kit.kitData?.creationDate;
@@ -104,7 +104,7 @@ export const kitPriceMemoSelector = createSelector(
   (price) => price,
 );
 
-export const kitRedirectIdSelector = createSelector(
-  [kitRedirectIdSelect],
+export const kitRedirectIdMemoSelector = createSelector(
+  [kitRedirectIdSelector],
   (id) => id,
 );

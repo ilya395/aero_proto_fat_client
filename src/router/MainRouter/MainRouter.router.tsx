@@ -32,12 +32,15 @@ const MainRouter = () => {
       <Route
         path={ENavigationKeys.Orders}
         element={context?.isAuth ? <OrdersPage /> : <Navigate to={ENavigationKeys.Login} />}
-      >
-        <Route
-          path=":id"
-          element={context?.isAuth ? <OrderPage /> : <Navigate to={ENavigationKeys.Login} />}
-        />
-      </Route>
+      />
+      <Route
+        path={`${ENavigationKeys.Orders}/:id`}
+        element={context?.isAuth ? <OrderPage /> : <Navigate to={ENavigationKeys.Login} />}
+      />
+      <Route
+        path={`${ENavigationKeys.Orders}/new`}
+        element={context?.isAuth ? <OrderPage /> : <Navigate to={ENavigationKeys.Login} />}
+      />
       <Route
         path={ENavigationKeys.Customers}
         element={context?.isAuth ? <CustomersPage /> : <Navigate to={ENavigationKeys.Login} />}

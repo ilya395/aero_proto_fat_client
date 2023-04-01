@@ -12,21 +12,13 @@ class ListService<Q extends {[x: string | EInputTypeKeys]: any}> extends Firesto
   constructor(firestore: Firestore, key: EModelKeys) {
     super(firestore);
     this.key = key;
+    this.getQueryConstraintList = this.getQueryConstraintList.bind(this);
     this.filter = this.filter.bind(this);
   }
 
-  public async filter(object: IBaseListRequest<Q>): Promise<IBaseListResponse<DocumentData> | undefined> { // Q -> DocumentData
-    const {
-      filter = {},
-      pagination = {
-        lastVisible: null,
-        limit: PAGINATION_LIMIT,
-      },
-    } = object;
-
+  public getQueryConstraintList(filter: Q) {
     const collectionKeysWeHave: [string, any][] = Object.entries(filter);
-
-    const array = collectionKeysWeHave.map(item => {
+    return collectionKeysWeHave.map(item => {
       if (item[0] === EInputTypeKeys.CreationDateFrom) {
         return where(EInputTypeKeys.CreationDate, ">=", Timestamp.fromDate(new Date(item[1])));
       }
@@ -35,6 +27,30 @@ class ListService<Q extends {[x: string | EInputTypeKeys]: any}> extends Firesto
       }
       return where(item[0], "==", item[1]);
     });
+  }
+
+  public async filter(object: IBaseListRequest<Q>): Promise<IBaseListResponse<DocumentData> | undefined> { // Q -> DocumentData
+    const {
+      filter = {} as Q,
+      pagination = {
+        lastVisible: null,
+        limit: PAGINATION_LIMIT,
+      },
+    } = object;
+
+    // const collectionKeysWeHave: [string, any][] = Object.entries(filter);
+
+    // const array = collectionKeysWeHave.map(item => {
+    //   if (item[0] === EInputTypeKeys.CreationDateFrom) {
+    //     return where(EInputTypeKeys.CreationDate, ">=", Timestamp.fromDate(new Date(item[1])));
+    //   }
+    //   if (item[0] === EInputTypeKeys.CreationDateTo) {
+    //     return where(EInputTypeKeys.CreationDate, "<=", Timestamp.fromDate(new Date(item[1])));
+    //   }
+    //   return where(item[0], "==", item[1]);
+    // });
+
+    const array = this.getQueryConstraintList(filter);
 
     let q: Query<DocumentData> | null = null;
 

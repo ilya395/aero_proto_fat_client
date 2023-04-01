@@ -1,16 +1,31 @@
-import { DocumentData, DocumentSnapshot, Firestore, getDoc } from "firebase/firestore";
-import { IOrder } from "../../store/models/orders.model";
+import { DocumentData, DocumentSnapshot, Firestore, Timestamp, getDoc, where } from "firebase/firestore";
+import { IOrder, IOrdersFilter } from "../../store/models/orders.model";
 import { EModelKeys } from "../../types/enums/models.enum";
 import ListService from "../base/List/List.service";
 import { IBaseListRequest, IBaseListResponse } from "../../types/models/base.model";
+import { EOrdersInputTypeKeys } from "../../types/enums/ordersInputTypes";
 
-class OrdersService extends ListService<IOrder> {
+class OrdersService extends ListService<IOrdersFilter> {
   constructor(firestore: Firestore, key: EModelKeys) {
     super(firestore, key);
+    this.getQueryConstraintList = this.getQueryConstraintList.bind(this);
     this.filter = this.filter.bind(this);
   }
 
-  public async filter(object: IBaseListRequest<IOrder>): Promise<IBaseListResponse<IOrder> | undefined> {
+  public getQueryConstraintList(filter: IOrdersFilter) {
+    const collectionKeysWeHave: [string, any][] = Object.entries(filter);
+    return collectionKeysWeHave.map(item => {
+      if (item[0] === EOrdersInputTypeKeys.DeliveryDayFrom) {
+        return where(EOrdersInputTypeKeys.DeliveryDay, ">=", Timestamp.fromDate(new Date(item[1])));
+      }
+      if (item[0] === EOrdersInputTypeKeys.DeliveryDayTo) {
+        return where(EOrdersInputTypeKeys.DeliveryDay, "<=", Timestamp.fromDate(new Date(item[1])));
+      }
+      return where(item[0], "==", item[1]);
+    });
+  }
+
+  public async filter(object: IBaseListRequest<IOrdersFilter>): Promise<IBaseListResponse<IOrder> | undefined> {
     const data = await super.filter(object);
     if (data) {
       const { response = [], ...rest } = data;

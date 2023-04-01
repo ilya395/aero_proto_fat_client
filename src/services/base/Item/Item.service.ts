@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, Firestore, getDoc, setDoc, Timestamp } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, DocumentData, Firestore, getDoc, setDoc, Timestamp } from "firebase/firestore";
 import { IBaseCreationDate, IBaseId } from "../../../store/models/base.model";
 import { EModelKeys } from "../../../types/enums/models.enum";
 import FirestoreService from "../../Firestore/Firestore.service";
@@ -15,7 +15,7 @@ class BaseItemService<T extends IBaseId & IBaseCreationDate> extends FirestoreSe
     this.deleteOne = this.deleteOne.bind(this);
   }
 
-  public async getOne(id: string): Promise<T | undefined> {
+  public async getOne(id: string): Promise<T | DocumentData | undefined> { // TODO?
     const docRef = doc(this.db, this.key, id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -24,7 +24,7 @@ class BaseItemService<T extends IBaseId & IBaseCreationDate> extends FirestoreSe
         id,
         ...toData,
         creationDate: toData.creationDate.toDate(),
-      } as T;
+      } as T | DocumentData;
     }
     return undefined;
   }
@@ -42,7 +42,7 @@ class BaseItemService<T extends IBaseId & IBaseCreationDate> extends FirestoreSe
     return docRef.id;
   }
 
-  public async updateOne(user: T): Promise<T | undefined> {
+  public async updateOne(user: T): Promise<T | DocumentData | undefined> { // TODO?
     const {
       id,
       ...rest

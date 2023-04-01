@@ -32,4 +32,8 @@ export enum EBaseErrorTitles {
   FailUpdateKit = "Ошибка при обновлении набора...",
 
   FailGetOrdersList = "Ошибка при запросе заказов...",
+
+  FailGetOrder = "Ошибка при запросе заказа...",
+  FailPutOrder = "Ошибка при создании заказа...",
+  FailUpdateOrder = "Ошибка при обновлении заказа...",
 }

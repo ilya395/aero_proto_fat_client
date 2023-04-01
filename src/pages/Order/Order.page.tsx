@@ -1,12 +1,7 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import MainLayout from "../../layouts/Main/Main.layout";
+import OrderContainer from "../../components/containers/Order/Order.container";
 
-const OrderPage = () => {
-  const {
-    pathname,
-  } = useLocation();
-  console.log(pathname)
-  return (<div>Order</div>);
-}
+const OrderPage = () => (<MainLayout><OrderContainer /></MainLayout>)
 
 export default OrderPage;

@@ -29,18 +29,18 @@ const useOrdersFilterForm = () => {
         id: EOrdersInputTypeKeys.DeliveryDayFrom,
         component: <BaseDateTimePicker
           id="delivery-date-field"
-          value={ordersFilter?.creationDateFrom}
+          value={ordersFilter?.deliveryDateFrom}
           callback={changeFilterHandle}
           objectKey={EOrdersInputTypeKeys.DeliveryDayFrom}
-          placeholder={EOrdersInputTypeKeys.DeliveryDayFrom}
-          label={EOrdersInputTypeKeys.DeliveryDayFrom}
+          placeholder={EOrdersInputTypeTitles.DeliveryDayFrom}
+          label={EOrdersInputTypeTitles.DeliveryDayFrom}
         />,
       },
       {
         id: EOrdersInputTypeKeys.DeliveryDayTo,
         component: <BaseDateTimePicker
           id="delivery-date-field"
-          value={ordersFilter?.creationDateTo}
+          value={ordersFilter?.deliveryDateTo}
           callback={changeFilterHandle}
           objectKey={EOrdersInputTypeKeys.DeliveryDayTo}
           placeholder={EOrdersInputTypeTitles.DeliveryDayTo}
@@ -59,7 +59,7 @@ const useOrdersFilterForm = () => {
         />,
       },
     ],
-  }), [changeFilterHandle, changeNumberFilterHandle, ordersFilter?.creationDateFrom, ordersFilter?.creationDateTo, ordersFilter?.price]);
+  }), [changeFilterHandle, changeNumberFilterHandle, ordersFilter?.deliveryDateFrom, ordersFilter?.deliveryDateTo, ordersFilter?.price]);
 
   return {
     config,
