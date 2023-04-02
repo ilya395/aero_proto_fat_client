@@ -16,8 +16,6 @@ const OrdersContainer = () => {
     callback: fetchOrders,
   });
 
-  // console.log(orders);
-
   if (!orders.length) {
     return (
       <div>

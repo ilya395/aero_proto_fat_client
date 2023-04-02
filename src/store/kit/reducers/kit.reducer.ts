@@ -90,6 +90,7 @@ export const kitDataSelect = (state: RootState) => state.kit.kitData;
 export const kitCreationDateSelector = (state: RootState) => state.kit.kitData?.creationDate;
 export const kitNumberSelector = (state: RootState) => state.kit.kitData?.kitNumber;
 export const kitPriceSelector = (state: RootState) => state.kit.kitData?.price;
+export const kitUrlSelector = (state: RootState) => state.kit.kitData?.url;
 
 export const kitCreationDateMemoSelector = createSelector(
   [kitCreationDateSelector],
@@ -102,6 +103,10 @@ export const kitNumberMemoSelector = createSelector(
 export const kitPriceMemoSelector = createSelector(
   [kitPriceSelector],
   (price) => price,
+);
+export const kitUrlMemoSelector = createSelector(
+  [kitUrlSelector],
+  (url) => url,
 );
 
 export const kitRedirectIdMemoSelector = createSelector(

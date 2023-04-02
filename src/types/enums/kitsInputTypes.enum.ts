@@ -3,6 +3,7 @@ export enum EKitsInputTypeKeys {
   Price = "price",
   Products = "products",
   CreationDate = "creationDate",
+  Image = "url",
 }
 
 export enum EKitsInputTypeTitles {
@@ -10,4 +11,5 @@ export enum EKitsInputTypeTitles {
   Price = "Цена",
   Products = "Товары",
   CreationDate = "Дата создания",
+  Image = "Картинка",
 }

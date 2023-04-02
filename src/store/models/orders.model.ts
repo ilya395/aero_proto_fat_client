@@ -6,11 +6,11 @@ import { IUser } from "./users.model";
 export interface IOrdersError extends IBaseError {}
 
 export interface IOrder extends IBaseCreationDate, IBaseId {
-  deliveryDate?: string | Date;
-  price?: number;
-  comment?: string;
-  customer?: IUser;
-  order?: Array<IKit>;
+  deliveryDate?: string | Date | null;
+  price?: number | null;
+  comment?: string | null;
+  customer?: IUser | null;
+  order?: Array<IKit> | null;
 }
 
 export interface IOrdersFilter extends IOrder {

@@ -5,12 +5,13 @@ import { IProduct } from "./products.model";
 export interface IKitsError extends IBaseError {}
 
 export interface IKit extends IBaseCreationDate, IBaseId {
-  kitNumber?: number;
-  price?: number;
+  kitNumber?: number | null;
+  price?: number | null;
   products?: Array<{
     quantity?: number;
     productId?: IProduct;
-  }>;
+  }> | null;
+  url?: string | null;
 }
 
 export interface IKitsFilter extends IKit {

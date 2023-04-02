@@ -5,12 +5,12 @@ import { IBaseCreationDate, IBaseId } from "./base.model";
 export interface IProductsError extends IBaseError {}
 
 export interface IProduct extends IBaseCreationDate, IBaseId {
-  name?: string;
-  purchasePrice?: number;
-  price?: number;
-  diameter?: string;
-  quantity?: number;
-  material?: string;
+  name?: string | null;
+  purchasePrice?: number | null;
+  price?: number | null;
+  diameter?: string | null;
+  quantity?: number | null;
+  material?: string | null;
 }
 
 export interface IProductsFilter extends IProduct {

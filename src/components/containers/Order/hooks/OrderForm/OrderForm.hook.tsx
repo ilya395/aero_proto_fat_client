@@ -18,7 +18,6 @@ const useOrderForm = () => {
   const navigate = useNavigate();
 
   const orderDeliveryDate = useSelector(orderDeliveryDateMemoSelector);
-  console.log(orderDeliveryDate);
   const orderComment = useSelector(orderCommentMemoSelector);
   const orderPrice = useSelector(orderPriceMemoSelector);
 

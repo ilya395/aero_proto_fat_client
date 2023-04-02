@@ -46,7 +46,6 @@ const KitContainer = () => {
   },
   [handlePut, handleUpdate, isNew]);
 
-
   return (
     <FormPanel
       clearFormHandle={handleClear}

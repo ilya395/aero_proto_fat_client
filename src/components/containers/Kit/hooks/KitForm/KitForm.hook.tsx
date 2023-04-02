@@ -4,13 +4,15 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../../../store/hooks/store.hook";
 import { putKit, updateKit } from "../../../../../store/kit/action-creators/kit.action-creator";
-import { changeKitDataAction, kitCreationDateMemoSelector, kitDataSelect, kitNumberMemoSelector, kitPriceMemoSelector, kitRedirectIdSelector, resetKitDataAction } from "../../../../../store/kit/reducers/kit.reducer";
+import { changeKitDataAction, kitCreationDateMemoSelector, kitDataSelect, kitNumberMemoSelector, kitPriceMemoSelector, kitRedirectIdSelector, kitUrlMemoSelector, resetKitDataAction } from "../../../../../store/kit/reducers/kit.reducer";
 import { IKit } from "../../../../../store/models/kits.model";
 import { EKitsInputTypeKeys, EKitsInputTypeTitles } from "../../../../../types/enums/kitsInputTypes.enum";
 import { ENavigationKeys } from "../../../../../types/enums/navigation.enum";
 import BaseDateTimePicker from "../../../../ui/BaseDateTimePicker/BaseDateTimePicker.ui";
 import { IBaseFormConfig } from "../../../../ui/BaseForm/models/BaseForm.model";
 import BaseTextInput from "../../../../ui/BaseTextInput/BaseTextInput.ui";
+import { imageCoder } from "../../../../../services/ImageCoder/ImageCoder.service";
+import ImageField from "../../../../views/ImageField/ImageField.view";
 
 const useKitForm = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +22,7 @@ const useKitForm = () => {
   const kitCreationDate = useSelector(kitCreationDateMemoSelector);
   const kitNumber = useSelector(kitNumberMemoSelector);
   const kitPrice = useSelector(kitPriceMemoSelector);
+  const kitUrl = useSelector(kitUrlMemoSelector);
 
   const redirectId = useSelector(kitRedirectIdSelector);
   const kitData = useSelector(kitDataSelect);
@@ -31,6 +34,18 @@ const useKitForm = () => {
       [key]: Number(arg[key]),
     }));
   }, [dispatch]);
+
+  const imageHandle = useCallback(async (arg: {[x: string | EKitsInputTypeKeys.Image]: File}) => {
+    const file = arg[EKitsInputTypeKeys.Image];
+    const string = await imageCoder.codeToBase64(file);
+    typeof string === 'string' && changeHandle({
+      [EKitsInputTypeKeys.Image]: string,
+    });
+  }, [changeHandle]);
+
+  const resetImagehandle = () => changeHandle({
+    [EKitsInputTypeKeys.Image]: null,
+  });
 
   const creationDate = useMemo(() => ({
     id: "creation-date",
@@ -71,14 +86,29 @@ const useKitForm = () => {
       />
     </Col>,
   }), [changeNumberHandle, kitPrice]);
+  const image = useMemo(() => ({
+    id: "image",
+    component: <Col xs={12} sm={6} xl={4}>
+      <ImageField
+        id="image-field"
+        value={kitUrl}
+        callback={imageHandle}
+        objectKey={EKitsInputTypeKeys.Image}
+        placeholder={EKitsInputTypeTitles.Image}
+        label={EKitsInputTypeTitles.Image}
+        resetHandle={resetImagehandle}
+      />
+    </Col>,
+  }), [imageHandle, kitUrl, resetImagehandle]);
 
   const config: IBaseFormConfig = useMemo(() => ({
     list: [
       number,
       price,
       creationDate,
+      image,
     ],
-  }), [creationDate, number, price]);
+  }), [creationDate, image, number, price]);
 
   const handleClear = useCallback(() => dispatch(resetKitDataAction()), [dispatch]);
 
