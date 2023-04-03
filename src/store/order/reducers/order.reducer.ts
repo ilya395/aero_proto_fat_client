@@ -110,3 +110,7 @@ export const orderCommentMemoSelector = createSelector(
   [orderCommentSelector],
   (arg) => arg,
 );
+export const orderCustomerMemoSelector = createSelector(
+  [orderCustomerSelector],
+  (arg) => arg,
+);
