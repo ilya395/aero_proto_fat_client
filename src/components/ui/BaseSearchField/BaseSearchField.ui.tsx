@@ -18,7 +18,6 @@ const BaseSearchField = <T extends Object, >(props: IBaseSearchFieldProps<T>) =>
 
   // TODO
   const [onDelay, setOnDelay] = useState(false);
-  useEffect(() => console.log(items), [items]);
   useEffect(() => {
     if (search) {
       if (!onDelay) {

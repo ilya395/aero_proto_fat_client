@@ -26,6 +26,8 @@ const useFilterMethods = () => {
 
   const handleCreateNew = useCallback(() => navigate(`${ENavigationKeys.Kits}/new`), [navigate]);
 
+  const handleClearList = useCallback(() => dispatch(clearKits()), [dispatch]);
+
   const handleUpdate = useCallback(async () => {
     await dispatch(clearKits());
     await dispatch(fetchKitsList({
@@ -46,6 +48,7 @@ const useFilterMethods = () => {
     handleUpdate,
     handleFilter,
     handleResetForm,
+    handleClearList,
   };
 }
 

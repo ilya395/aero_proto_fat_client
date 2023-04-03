@@ -3,7 +3,7 @@ import { PAGINATION_LIMIT } from "../../../constants/variables.constant";
 import { IAuthError } from "../../auth/models/auth.model";
 import { IUsersResponse } from "../../models/users.model";
 import { RootState } from "../../root.reducer";
-import { fetchUsersList, updateUsersList } from "../action-creators/users.action-creator";
+import { fetchNextUsersList, fetchUsersList, updateUsersList } from "../action-creators/users.action-creator";
 import { IUsersState } from "../models/users.model";
 
 const initialUsersState: IUsersState = {
@@ -35,17 +35,13 @@ export const UsersSlice = createSlice({
   },
   extraReducers: {
     [fetchUsersList.fulfilled.type]: (state, action: PayloadAction<IUsersResponse>) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = false;
-      // eslint-disable-next-line no-param-reassign
       state.error = null;
-      // eslint-disable-next-line no-param-reassign
       state.usersList = [
-        ...state.usersList || [],
+        // ...state.usersList || [],
         ...action.payload.response || []
       ];
       if (action.payload.lastVisible) {
-        // eslint-disable-next-line no-param-reassign
         state.pagination.lastVisible = action.payload.lastVisible;
       }
     },
@@ -53,7 +49,22 @@ export const UsersSlice = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.await = true;
     },
-    [fetchUsersList.rejected.type]: (state, action: PayloadAction<IAuthError>) => {
+    [fetchNextUsersList.fulfilled.type]: (state, action: PayloadAction<IUsersResponse>) => {
+      state.await = false;
+      state.error = null;
+      state.usersList = [
+        ...state.usersList || [],
+        ...action.payload.response || []
+      ];
+      if (action.payload.lastVisible) {
+        state.pagination.lastVisible = action.payload.lastVisible;
+      }
+    },
+    [fetchNextUsersList.pending.type]: (state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.await = true;
+    },
+    [fetchNextUsersList.rejected.type]: (state, action: PayloadAction<IAuthError>) => {
       // eslint-disable-next-line no-param-reassign
       state.await = false;
       // eslint-disable-next-line no-param-reassign

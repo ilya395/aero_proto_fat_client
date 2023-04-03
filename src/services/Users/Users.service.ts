@@ -32,7 +32,6 @@ class UsersService extends FirestoreService {
       }
       return where(item[0], "==", item[1]);
     });
-    console.log(collectionKeysWeHave, array);
 
     let q: Query<DocumentData> | null = null;
 
@@ -49,7 +48,6 @@ class UsersService extends FirestoreService {
     }
 
     const querySnapshot = await getDocs(q);
-    console.log(querySnapshot);
 
     const item = querySnapshot.docs[querySnapshot.docs.length - 1];
 
@@ -60,8 +58,6 @@ class UsersService extends FirestoreService {
       ...doc.data(),
       creationDate: doc.data().creationDate.toDate(),
     }));
-
-    console.log(response);
 
     if (!response && !item) {
       return undefined;
