@@ -20,15 +20,12 @@ export const UsersSlice = createSlice({
   name: "users",
   initialState: initialUsersState,
   reducers: {
-    clearUsers(state) {
-      // eslint-disable-next-line no-param-reassign
-      state = initialUsersState;
-    },
-    clearUsersPagination(state) {
+    clearUsers: () => initialUsersState,
+    clearUsersPagination: (state) => {
       // eslint-disable-next-line no-param-reassign
       state.pagination.lastVisible = null;
     },
-    changeUsersLimit(state, action: PayloadAction<number>) {
+    changeUsersLimit: (state, action: PayloadAction<number>) => {
       // eslint-disable-next-line no-param-reassign
       state.pagination.limit = action.payload;
     },
@@ -37,10 +34,7 @@ export const UsersSlice = createSlice({
     [fetchUsersList.fulfilled.type]: (state, action: PayloadAction<IUsersResponse>) => {
       state.await = false;
       state.error = null;
-      state.usersList = [
-        // ...state.usersList || [],
-        ...action.payload.response || []
-      ];
+      state.usersList = action.payload.response || [];
       if (action.payload.lastVisible) {
         state.pagination.lastVisible = action.payload.lastVisible;
       }
@@ -82,14 +76,10 @@ export const UsersSlice = createSlice({
       state.pagination.lastVisible = action.payload.lastVisible || null;
     },
     [updateUsersList.pending.type]: (state) => {
-      // eslint-disable-next-line no-param-reassign
-      state.await = true;
+      Object.assign(state, { await: true, });
     },
     [updateUsersList.rejected.type]: (state, action: PayloadAction<IAuthError>) => {
-      // eslint-disable-next-line no-param-reassign
-      state.await = false;
-      // eslint-disable-next-line no-param-reassign
-      state.error = action.payload;
+      Object.assign(state, { await: false, error: action.payload, });
     },
   },
 });
@@ -103,6 +93,7 @@ export const {
 } = UsersSlice.actions;
 
 export const usersListSelector = (state: RootState) => state.users.usersList;
+export const usersListDataSelector = (state: RootState) => state.users;
 export const usersAwaitSelector = (state: RootState) => state.users.await;
 export const usersErrorSelector = (state: RootState) => state.users.error;
 export const usersPaginationSelector = (state: RootState) => state.users.pagination;

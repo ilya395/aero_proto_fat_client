@@ -7,13 +7,13 @@ import BaseList from "../../ui/BaseList/BaseList.ui";
 import useOrders from "./hooks/Orders.hook";
 
 const OrdersContainer = () => {
-  const { orders, handleDelete, fetchOrders } = useOrders();
+  const { orders, handleDelete, fetchNextOrders } = useOrders();
 
   const {
     setLastElement,
   } = useInfiniteScroll({
     dataLength: orders.length,
-    callback: fetchOrders,
+    callback: fetchNextOrders,
   });
 
   if (!orders.length) {

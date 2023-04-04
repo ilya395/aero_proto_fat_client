@@ -28,6 +28,29 @@ export const filterProductsList = createAsyncThunk(
   },
 );
 
+export const filterNextProductsList = createAsyncThunk(
+  "products/filterNext",
+  async (object: IProductsRequest, thunkAPI) => {
+    try {
+      const productsService = new ProductsService(firebaseInstance.getFirestore());
+
+      const data = await productsService.filter(object);
+
+      if (data) {
+        return data;
+      }
+
+      return thunkAPI.rejectWithValue({
+        message: EBaseErrorTitles.FailGetProductsList,
+      });
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: EBaseErrorTitles.FailGetProductsList,
+      });
+    }
+  },
+);
+
 export const fetchDeleteProduct = createAsyncThunk(
   "products/deleteOneProduct",
   async (object: { id: string; collection?: string; }, thunkAPI) => {

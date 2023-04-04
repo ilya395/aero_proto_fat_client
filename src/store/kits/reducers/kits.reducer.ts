@@ -20,9 +20,8 @@ export const KitsSlice = createSlice({
   name: "kits",
   initialState: initialKitsState,
   reducers: {
-    clearKits(state) {
-      // eslint-disable-next-line no-param-reassign
-      state = initialKitsState;
+    clearKits() {
+      return initialKitsState;
     },
     clearKitsPagination(state) {
       // eslint-disable-next-line no-param-reassign
@@ -35,39 +34,43 @@ export const KitsSlice = createSlice({
   },
   extraReducers: {
     [fetchKitsList.fulfilled.type]: (state, action: PayloadAction<IBaseListResponse<IKit>>) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = false;
-      // eslint-disable-next-line no-param-reassign
       state.error = null;
-      // eslint-disable-next-line no-param-reassign
       state.kitsList = action.payload.response || [];
-      // eslint-disable-next-line no-param-reassign
       state.pagination.lastVisible = action.payload.lastVisible || null;
     },
     [fetchKitsList.pending.type]: (state) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = true;
     },
     [fetchKitsList.rejected.type]: (state, action: PayloadAction<IKitsError>) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = false;
-      // eslint-disable-next-line no-param-reassign
+      state.error = action.payload;
+    },
+    [fetchKitsList.fulfilled.type]: (state, action: PayloadAction<IBaseListResponse<IKit>>) => {
+      state.await = false;
+      state.error = null;
+      state.kitsList = [
+        ...state.kitsList || [],
+        ...action.payload.response || []
+      ];
+      state.pagination.lastVisible = action.payload.lastVisible || null;
+    },
+    [fetchKitsList.pending.type]: (state) => {
+      state.await = true;
+    },
+    [fetchKitsList.rejected.type]: (state, action: PayloadAction<IKitsError>) => {
+      state.await = false;
       state.error = action.payload;
     },
     [fetchDeleteKit.fulfilled.type]: (state) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = false;
-      // eslint-disable-next-line no-param-reassign
       state.error = null;
     },
     [fetchDeleteKit.pending.type]: (state) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = true;
     },
     [fetchDeleteKit.rejected.type]: (state, action: PayloadAction<IKitsError>) => {
-      // eslint-disable-next-line no-param-reassign
       state.await = false;
-      // eslint-disable-next-line no-param-reassign
       state.error = action.payload;
     },
   },

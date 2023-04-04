@@ -11,7 +11,6 @@ import CustomersView from "../../views/Customers/Customers.view";
 const CustomersContainer = () => {
   const dispatch = useAppDispatch();
   const customers = useSelector(usersListSelector);
-  console.log(customers);
 
   // business
   const filterFields = useSelector(usersFilterDataSelector);

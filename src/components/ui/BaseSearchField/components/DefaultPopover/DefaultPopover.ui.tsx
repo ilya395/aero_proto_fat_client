@@ -16,7 +16,7 @@ const DefaultPopover = <T extends Object, >(props: IDefaultPopoverProps<T>) => {
 
   return (
     <Popover id="popover">
-      {/* <Popover.Header as="h3">Popover right</Popover.Header> */}
+      <Popover.Header as="h3">Popover right</Popover.Header>
       <Popover.Body>
         <ListGroup>
           {

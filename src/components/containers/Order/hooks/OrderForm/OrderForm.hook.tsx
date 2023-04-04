@@ -12,11 +12,12 @@ import BaseTextInput from "../../../../ui/BaseTextInput/BaseTextInput.ui";
 import { putOrder, updateOrder } from "../../../../../store/order/action-creators/order.action-creator";
 import { ENavigationKeys } from "../../../../../types/enums/navigation.enum";
 import BaseSearchField from "../../../../ui/BaseSearchField/BaseSearchField.ui";
-import { usersAwaitSelector, usersListSelector } from "../../../../../store/users/reducers/users.reducer";
+import { clearUsers, usersAwaitSelector, usersListDataSelector, usersListSelector } from "../../../../../store/users/reducers/users.reducer";
 // import { usersFilterDataSelector } from "../../../../../store/usersFilter/reducers/usersFilter.reducer";
 // import { IUsersRequest } from "../../../../../store/models/users.model";
 import { fetchUsersList } from "../../../../../store/users/action-creators/users.action-creator";
 import { PAGINATION_LIMIT } from "../../../../../constants/variables.constant";
+import { IUser } from "../../../../../store/models/users.model";
 
 const useOrderForm = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +30,8 @@ const useOrderForm = () => {
   const orderCustomer = useSelector(orderCustomerMemoSelector);
 
   const customers = useSelector(usersListSelector);
+  const customersData = useSelector(usersListDataSelector);
+  console.log('#### ', customers, customersData);
 
   const redirectId = useSelector(orderRedirectIdSelector);
   const orderData = useSelector(orderDataSelect);
@@ -99,6 +102,8 @@ const useOrderForm = () => {
     </Col>,
   }), [changeNumberHandle, orderPrice]);
 
+  const onReset = useCallback(() => dispatch(clearUsers()), [dispatch]);
+
   const customer = useMemo(() => ({
     id: "customer",
     component: <Col xs={12} sm={6} xl={4}>
@@ -124,9 +129,14 @@ const useOrderForm = () => {
         items={customers}
         onSearch={filterHandle}
         await={usersAwait}
+        renderProps={(item: IUser) => `${item.name || "-"} ${item.phone || "-"}`}
+        callback={(item: IUser) => changeHandle({
+          customer: item,
+        })}
+        reset={onReset}
       />
     </Col>
-  }), [customers, filterHandle, orderCustomer, usersAwait]);
+  }), [changeHandle, customers, filterHandle, onReset, orderCustomer, usersAwait]);
 
   const config: IBaseFormConfig = useMemo(() => ({
     list: [

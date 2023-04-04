@@ -1,11 +1,19 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Form, OverlayTrigger } from "react-bootstrap";
+import React, { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
+import { Form, ListGroup, OverlayTrigger, Popover, Spinner } from "react-bootstrap";
 import { IBaseSearchFieldProps } from "./models/BaseSearchField.model";
-import DefaultPopover from "./components/DefaultPopover/DefaultPopover.ui";
+
+const ForwardedFormControl = forwardRef<HTMLDivElement, any>((props, ref) => ( // React.ForwardedRef<HTMLInputElement> |
+  <div ref={ref}>
+    <Form.Control
+      {...props}
+    />
+  </div>
+));
 
 const BaseSearchField = <T extends Object, >(props: IBaseSearchFieldProps<T>) => {
-  const { id, onSearch, items, value, computedValueHandle, label, placeholder, delay = 2000, callback } = props;
+  const { id, onSearch, items, value, computedValueHandle, label, placeholder, delay = 2000, callback, await, renderProps, reset } = props;
   const show = useMemo(() => !!items?.length, [items?.length]);
+  console.log(value, items);
 
   const [search, setSearch] = useState<string | null>(null);
   const setComputedSearch = useMemo(() => computedValueHandle?.(value) ?? null, [computedValueHandle, value]);
@@ -19,7 +27,7 @@ const BaseSearchField = <T extends Object, >(props: IBaseSearchFieldProps<T>) =>
   // TODO
   const [onDelay, setOnDelay] = useState(false);
   useEffect(() => {
-    if (search) {
+    if (search && !value) {
       if (!onDelay) {
         setOnDelay(true);
 
@@ -31,19 +39,71 @@ const BaseSearchField = <T extends Object, >(props: IBaseSearchFieldProps<T>) =>
           .then(() => setOnDelay(false))
       }
     }
-  }, [delay, onDelay, onSearch, search]);
+  }, [delay, onDelay, onSearch, search, value]);
+
+  const computedEndElement = useMemo(() => {
+    if (await) {
+      return (
+        <ListGroup.Item key="await"><Spinner animation="border" size="sm" /></ListGroup.Item>
+      );
+    }
+    return !items?.length ? <ListGroup.Item key="end">Нет данных для отображения...</ListGroup.Item> : null;
+  }, [await, items?.length]);
+
+  const popover = useMemo(() => (
+    <Popover id="popover">
+      <Popover.Header as="h3">Popover right</Popover.Header>
+      <Popover.Body>
+        <ListGroup>
+          {
+            items?.map((item, index) => (
+              // 'id' in item ? item?.id as string | number : index
+              // eslint-disable-next-line react/no-array-index-key
+              <ListGroup.Item key={index} action onClick={() => {
+                callback?.(item);
+                reset?.();
+              }}>
+                {renderProps?.(item)}
+              </ListGroup.Item>
+            ))
+          }
+          {
+            computedEndElement
+          }
+        </ListGroup>
+      </Popover.Body>
+    </Popover>
+  ), [callback, computedEndElement, items, renderProps, reset]);
 
   return (
     <>
       <Form.Label htmlFor={id}>{label}</Form.Label>
-      <OverlayTrigger show={show} placement="bottom" overlay={<DefaultPopover items={items} callback={callback} />}>
-        <Form.Control
+      <OverlayTrigger
+        show={show}
+        placement="bottom"
+        overlay={popover}
+        // overlay={<DefaultPopover items={items} callback={callback} />}
+        >
+        <ForwardedFormControl
           type="text"
           placeholder={placeholder ?? ""}
           id={id}
           value={search ?? undefined}
           onChange={onChange}
         />
+        {/* {
+          forwardRef((props, ref) => (
+            <Form.Control
+              {...props}
+              type="text"
+              placeholder={placeholder ?? ""}
+              id={id}
+              value={search ?? undefined}
+              onChange={onChange}
+              ref={ref}
+            />
+          ))
+        } */}
       </OverlayTrigger>
     </>
   );

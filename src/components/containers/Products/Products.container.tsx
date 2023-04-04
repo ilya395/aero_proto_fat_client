@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import useInfiniteScroll from "../../../hooks/infiniteScroll/infiniteScroll.hook";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { IProductsRequest } from "../../../store/models/products.model";
-import { fetchDeleteProduct, filterProductsList } from "../../../store/products/action-creators/products.action-creator";
+import { fetchDeleteProduct, filterNextProductsList, filterProductsList } from "../../../store/products/action-creators/products.action-creator";
 import { productsListSelector, productsPaginationSelector } from "../../../store/products/reducers/products.reducer";
 import { productsFilterDataSelector } from "../../../store/productsFilter/reducers/productsFilter.reducer";
 import ProductsView from "../../views/Products/Products.view";
@@ -21,6 +21,7 @@ const ProductsContainer = () => {
     pagination,
   }), [filterFields, pagination]);
   const fetchProducts = useCallback(() => dispatch(filterProductsList(filterData)), [dispatch, filterData]);
+  const fetchNextProducts = useCallback(() => dispatch(filterNextProductsList(filterData)), [dispatch, filterData]);
   const handleDelete = useCallback(async (id: string) => {
     await dispatch(fetchDeleteProduct({
       id,
@@ -33,7 +34,7 @@ const ProductsContainer = () => {
     setLastElement,
   } = useInfiniteScroll({
     dataLength: products.length,
-    callback: fetchProducts,
+    callback: fetchNextProducts,
   });
 
   if (!products.length) {

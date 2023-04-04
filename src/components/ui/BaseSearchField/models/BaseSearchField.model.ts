@@ -8,4 +8,5 @@ export interface IBaseSearchFieldProps<T> extends IDefaultPopoverProps<T> {
   value?: T | null;
   computedValueHandle?: (arg?: T | null) => string | undefined | null;
   delay?: number;
+  reset?: () => void;
 }
