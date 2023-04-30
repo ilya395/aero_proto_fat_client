@@ -29,6 +29,15 @@ export const OrderSlice = createSlice({
         ...action.payload,
       };
     },
+    changeOrderCustomerDataAction(state, action: PayloadAction<IOrder>) {
+      state.orderData = {
+        ...state.orderData,
+        customer: {
+          ...state.orderData?.customer,
+          ...action.payload,
+        },
+      };
+    },
   },
   extraReducers: {
     [getOrder.pending.type]: (state) => {
@@ -78,6 +87,7 @@ export const {
   resetOrderDataAction,
   addNewOrderAction,
   changeOrderDataAction,
+  changeOrderCustomerDataAction,
 } = OrderSlice.actions;
 
 export const OrderReducer = OrderSlice.reducer;

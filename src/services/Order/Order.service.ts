@@ -1,9 +1,10 @@
 import { DocumentData, Firestore } from "firebase/firestore";
 import { IOrder } from "../../store/models/orders.model";
-import ItemService from "../base/Item/Item.service";
 import { EModelKeys } from "../../types/enums/models.enum";
+import { firebaseInstance } from "../firebase/firebase.service";
+import BaseItemService from "../base/Item/Item.service";
 
-class OrderService extends ItemService<IOrder> {
+class OrderService extends BaseItemService<IOrder> {
   constructor(firestore: Firestore, key: EModelKeys) {
     super(firestore, key);
     this.getOne = this.getOne.bind(this);
@@ -14,21 +15,19 @@ class OrderService extends ItemService<IOrder> {
     if (!response) {
       return response;
     }
-    return {
+    const object = {
       ...response,
       deliveryDate: response?.deliveryDate?.toDate(),
-    };
-    // const docRef = doc(this.db, this.key, id);
-    // const docSnap = await getDoc(docRef);
-    // if (docSnap.exists()) {
-    //   const toData = docSnap.data();
-    //   return {
-    //     id,
-    //     ...toData,
-    //     creationDate: toData.creationDate.toDate(),
-    //   } as T;
-    // }
-    // return undefined;
+    } as IOrder;
+
+    const customerId = object.customer?.id;
+    if (customerId) {
+      const userService = new BaseItemService(firebaseInstance.getFirestore(), EModelKeys.Users);
+      const response = await userService.getOne(customerId);
+      object.customer = response;
+    }
+
+    return object;
   }
 }
 

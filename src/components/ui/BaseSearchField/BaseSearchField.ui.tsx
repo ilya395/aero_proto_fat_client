@@ -13,7 +13,6 @@ const ForwardedFormControl = forwardRef<HTMLDivElement, any>((props, ref) => ( /
 const BaseSearchField = <T extends Object, >(props: IBaseSearchFieldProps<T>) => {
   const { id, onSearch, items, value, computedValueHandle, label, placeholder, delay = 2000, callback, await, renderProps, reset } = props;
   const show = useMemo(() => !!items?.length, [items?.length]);
-  console.log(value, items);
 
   const [search, setSearch] = useState<string | null>(null);
   const setComputedSearch = useMemo(() => computedValueHandle?.(value) ?? null, [computedValueHandle, value]);
@@ -90,6 +89,7 @@ const BaseSearchField = <T extends Object, >(props: IBaseSearchFieldProps<T>) =>
           id={id}
           value={search ?? undefined}
           onChange={onChange}
+          className="mb-3"
         />
         {/* {
           forwardRef((props, ref) => (

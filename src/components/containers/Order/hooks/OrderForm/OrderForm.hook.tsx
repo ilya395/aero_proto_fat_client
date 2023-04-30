@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Col } from "react-bootstrap";
 import { useAppDispatch } from "../../../../../store/hooks/store.hook";
-import { changeOrderDataAction, orderCommentMemoSelector, orderCustomerMemoSelector, orderDataSelect, orderDeliveryDateMemoSelector, orderPriceMemoSelector, orderRedirectIdSelector, resetOrderDataAction } from "../../../../../store/order/reducers/order.reducer";
+import { changeOrderDataAction, orderCommentMemoSelector, orderDataSelect, orderDeliveryDateMemoSelector, orderPriceMemoSelector, orderRedirectIdSelector, resetOrderDataAction } from "../../../../../store/order/reducers/order.reducer";
 import { IOrder } from "../../../../../store/models/orders.model";
 import BaseDateTimePicker from "../../../../ui/BaseDateTimePicker/BaseDateTimePicker.ui";
 import { EOrdersInputTypeKeys, EOrdersInputTypeTitles } from "../../../../../types/enums/ordersInputTypes";
@@ -11,13 +11,6 @@ import { IBaseFormConfig } from "../../../../ui/BaseForm/models/BaseForm.model";
 import BaseTextInput from "../../../../ui/BaseTextInput/BaseTextInput.ui";
 import { putOrder, updateOrder } from "../../../../../store/order/action-creators/order.action-creator";
 import { ENavigationKeys } from "../../../../../types/enums/navigation.enum";
-import BaseSearchField from "../../../../ui/BaseSearchField/BaseSearchField.ui";
-import { clearUsers, usersAwaitSelector, usersListDataSelector, usersListSelector } from "../../../../../store/users/reducers/users.reducer";
-// import { usersFilterDataSelector } from "../../../../../store/usersFilter/reducers/usersFilter.reducer";
-// import { IUsersRequest } from "../../../../../store/models/users.model";
-import { fetchUsersList } from "../../../../../store/users/action-creators/users.action-creator";
-import { PAGINATION_LIMIT } from "../../../../../constants/variables.constant";
-import { IUser } from "../../../../../store/models/users.model";
 
 const useOrderForm = () => {
   const dispatch = useAppDispatch();
@@ -27,31 +20,10 @@ const useOrderForm = () => {
   const orderDeliveryDate = useSelector(orderDeliveryDateMemoSelector);
   const orderComment = useSelector(orderCommentMemoSelector);
   const orderPrice = useSelector(orderPriceMemoSelector);
-  const orderCustomer = useSelector(orderCustomerMemoSelector);
-
-  const customers = useSelector(usersListSelector);
-  const customersData = useSelector(usersListDataSelector);
-  console.log('#### ', customers, customersData);
+  // const orderCustomer = useSelector(orderCustomerMemoSelector);
 
   const redirectId = useSelector(orderRedirectIdSelector);
   const orderData = useSelector(orderDataSelect);
-
-  const usersAwait = useSelector(usersAwaitSelector);
-  // const usersFilter = useSelector(usersFilterDataSelector);
-  // const usersPagination = useSelector(usersPaginationSelector);
-  // const filterData: IUsersRequest = useMemo(() => ({
-  //   filter: usersFilter || undefined,
-  //   pagination: usersPagination,
-  // }), [usersFilter, usersPagination]);
-  const filterHandle = useCallback((arg: string) => dispatch(fetchUsersList({
-    filter: {
-      name: arg
-    },
-    pagination: {
-      lastVisible: null,
-      limit: PAGINATION_LIMIT,
-    },
-  })), [dispatch]);
 
   const changeHandle = useCallback((arg: IOrder) => dispatch(changeOrderDataAction(arg)), [dispatch]);
   const changeNumberHandle = useCallback((arg: IOrder) => {
@@ -102,50 +74,13 @@ const useOrderForm = () => {
     </Col>,
   }), [changeNumberHandle, orderPrice]);
 
-  const onReset = useCallback(() => dispatch(clearUsers()), [dispatch]);
-
-  const customer = useMemo(() => ({
-    id: "customer",
-    component: <Col xs={12} sm={6} xl={4}>
-      <BaseSearchField
-        id="customer"
-        label="Заказчик"
-        placeholder="Поиск по имени или телефону"
-        value={orderCustomer ?? null}
-        computedValueHandle={(arg) => {
-          if (arg) {
-            if (arg.name && arg.phone) {
-              return `${arg?.phone} ${arg?.name}`;
-            }
-            if (arg.name) {
-              return `${arg?.name}`;
-            }
-            if (arg.phone) {
-              return `${arg?.phone}`;
-            }
-          }
-          return null;
-        }}
-        items={customers}
-        onSearch={filterHandle}
-        await={usersAwait}
-        renderProps={(item: IUser) => `${item.name || "-"} ${item.phone || "-"}`}
-        callback={(item: IUser) => changeHandle({
-          customer: item,
-        })}
-        reset={onReset}
-      />
-    </Col>
-  }), [changeHandle, customers, filterHandle, onReset, orderCustomer, usersAwait]);
-
   const config: IBaseFormConfig = useMemo(() => ({
     list: [
       price,
       creationDate,
       comment,
-      customer,
     ],
-  }), [comment, creationDate, customer, price]);
+  }), [comment, creationDate, price]);
 
   const handleClear = useCallback(() => dispatch(resetOrderDataAction()), [dispatch]);
 
