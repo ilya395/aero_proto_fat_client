@@ -6,6 +6,7 @@ import { EBaseErrorTitles } from "../../../types/enums/errors.enum";
 import { IOrder } from "../../models/orders.model";
 import UserService from "../../../services/User/User.service";
 import { IUser } from "../../models/users.model";
+import BaseItemService from "../../../services/base/Item/Item.service";
 
 export const getOrder = createAsyncThunk(
   "order/get",
@@ -58,10 +59,12 @@ export const putOrder = createAsyncThunk(
 
       const orderService = new OrderService(firebaseInstance.getFirestore(), EModelKeys.Orders);
 
+      const customerService = new BaseItemService(firebaseInstance.getFirestore(), EModelKeys.Users);
+
       const data = await orderService.createOne({
         ...object,
-        customer: customerModel,
-      });
+        customer: customerModel?.id ? customerService.getDocRef(customerModel.id) : null, // customerModel,
+      } as Omit<IOrder, 'customer'>);
 
       if (data) {
         return data;
@@ -102,10 +105,12 @@ export const updateOrder = createAsyncThunk(
 
       const orderService = new OrderService(firebaseInstance.getFirestore(), EModelKeys.Orders);
 
-      const data = await orderService.updateOne({
+      const customerService = new BaseItemService(firebaseInstance.getFirestore(), EModelKeys.Users);
+
+      const data = await orderService.createOne({
         ...object,
-        customer: customerModel,
-      });
+        customer: customerModel?.id ? customerService.getDocRef(customerModel.id) : null, // customerModel,
+      } as Omit<IOrder, 'customer'>);
 
       if (data) {
         return data;

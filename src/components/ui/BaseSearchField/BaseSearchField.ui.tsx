@@ -25,20 +25,20 @@ const BaseSearchField = <T extends Object, >(props: IBaseSearchFieldProps<T>) =>
 
   // TODO
   const [onDelay, setOnDelay] = useState(false);
+  const [searchLenght, setSearchLenght] = useState(search?.length ?? 0);
   useEffect(() => {
-    if (search && !value) {
-      if (!onDelay) {
-        setOnDelay(true);
+    if (((search?.length ?? 0) > searchLenght) && !value && !onDelay) {
+      setOnDelay(true);
 
-        const promise = new Promise<void>((resolve) => {
-          setTimeout(() => resolve(), delay);
-        });
-        promise
-          .then(() => onSearch?.(search))
-          .then(() => setOnDelay(false))
-      }
+      const promise = new Promise<void>((resolve) => {
+        setTimeout(() => resolve(), delay);
+      });
+      promise
+        .then(() => search && onSearch?.(search))
+        .then(() => setSearchLenght(search?.length ?? 0))
+        .then(() => setOnDelay(false));
     }
-  }, [delay, onDelay, onSearch, search, value]);
+  }, [delay, onDelay, onSearch, search, searchLenght, value]);
 
   const computedEndElement = useMemo(() => {
     if (await) {
@@ -61,6 +61,7 @@ const BaseSearchField = <T extends Object, >(props: IBaseSearchFieldProps<T>) =>
               <ListGroup.Item key={index} action onClick={() => {
                 callback?.(item);
                 reset?.();
+                setSearch(null);
               }}>
                 {renderProps?.(item)}
               </ListGroup.Item>
@@ -87,7 +88,7 @@ const BaseSearchField = <T extends Object, >(props: IBaseSearchFieldProps<T>) =>
           type="text"
           placeholder={placeholder ?? ""}
           id={id}
-          value={search ?? undefined}
+          value={search ?? ""}
           onChange={onChange}
           className="mb-3"
         />

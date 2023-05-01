@@ -83,9 +83,9 @@ const useOrderForm = () => {
   }), [comment, creationDate, price]);
 
   const handleClear = useCallback(() => dispatch(resetOrderDataAction()), [dispatch]);
-
+  // TODO: заполнить null отсутвующие поля...
   const handlePut = useCallback(() => orderData && dispatch(putOrder(orderData)), [dispatch, orderData]);
-
+// TODO: заполнить null отсутвующие поля...
   const handleUpdate = useCallback(() => orderData && dispatch(updateOrder(orderData)), [dispatch, orderData]);
 
   const handleReturn = useCallback(() => {

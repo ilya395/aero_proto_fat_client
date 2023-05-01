@@ -46,26 +46,26 @@ const CustomerContainer = () => {
   const changeHandle = useCallback((arg: IUser) => dispatch(userChangeDataAction(arg)), [dispatch]);
   const clearFormHandle = useCallback(() => dispatch(userResetAction()), [dispatch]);
   const saveDataHandle = useCallback(() => isNew ?
-  dispatch(createUser({
-    user: {
-      name: userName,
-      phone: userPhone,
-      email: userEmail,
-      address: userAddress,
-      creationDate: userCreationDate,
-      id,
-    },
-  })) :
-  dispatch(updateUser({
-    user: {
-      name: userName,
-      phone: userPhone,
-      email: userEmail,
-      address: userAddress,
-      creationDate: userCreationDate,
-      id,
-    },
-  })), [dispatch, id, isNew, userAddress, userCreationDate, userEmail, userName, userPhone]);
+    dispatch(createUser({
+      user: {
+        name: userName,
+        phone: userPhone,
+        email: userEmail,
+        address: userAddress,
+        creationDate: userCreationDate,
+        id,
+      },
+    })) :
+    dispatch(updateUser({
+      user: {
+        name: userName,
+        phone: userPhone,
+        email: userEmail,
+        address: userAddress,
+        creationDate: userCreationDate,
+        id,
+      },
+    })), [dispatch, id, isNew, userAddress, userCreationDate, userEmail, userName, userPhone]);
 
   const returnHandle = useCallback(() => {
     navigate(ENavigationKeys.Customers);

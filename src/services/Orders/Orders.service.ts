@@ -12,6 +12,7 @@ class OrdersService extends ListService<IOrdersFilter> {
     this.filter = this.filter.bind(this);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   public getQueryConstraintList(filter: IOrdersFilter) {
     const collectionKeysWeHave: [string, any][] = Object.entries(filter);
     return collectionKeysWeHave.map(item => {
