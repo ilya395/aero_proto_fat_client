@@ -39,7 +39,7 @@ class ListService<Q extends {[x: string | EInputTypeKeys]: any}> extends Firesto
     } = object;
 
     const array = this.getQueryConstraintList(filter);
-    console.log(array);
+
     let q: Query<DocumentData> | null = null;
 
     if (pagination.lastVisible) {

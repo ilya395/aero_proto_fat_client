@@ -28,6 +28,7 @@ class OrdersService extends ListService<IOrdersFilter> {
 
   public async filter(object: IBaseListRequest<IOrdersFilter>): Promise<IBaseListResponse<IOrder> | undefined> {
     const data = await super.filter(object);
+
     if (data) {
       const { response = [], ...rest } = data;
 
@@ -47,6 +48,11 @@ class OrdersService extends ListService<IOrdersFilter> {
             };
             responseWithNormalCustomers.push(newData);
           }
+        } else {
+          responseWithNormalCustomers.push({
+            ...i,
+            customer: null,
+          });
         }
       }
 
@@ -71,6 +77,11 @@ class OrdersService extends ListService<IOrdersFilter> {
             order: normalOrders,
           };
           responseWithNormalOrders.push(newData);
+        } else {
+          responseWithNormalOrders.push({
+            ...i,
+            order: null,
+          });
         }
       }
       return {

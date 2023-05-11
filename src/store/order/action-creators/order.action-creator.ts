@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { DocumentData, DocumentReference } from "firebase/firestore";
 import OrderService from "../../../services/Order/Order.service";
 import { firebaseInstance } from "../../../services/firebase/firebase.service";
 import { EModelKeys } from "../../../types/enums/models.enum";
@@ -61,10 +62,19 @@ export const putOrder = createAsyncThunk(
 
       const customerService = new BaseItemService(firebaseInstance.getFirestore(), EModelKeys.Users);
 
-      const data = await orderService.createOne({
+      // чтобы положить в бд модкль со всеми полями...
+      const dataObject: Omit<Required<IOrder>, 'customer'> & { customer: DocumentReference<DocumentData> | null } = {
         ...object,
+        id: object.id ?? null,
+        deliveryDate: object.deliveryDate ?? null,
+        price: object.price ?? null,
+        comment: object.comment ?? null,
+        order: object.order ?? null,
+        creationDate: object.creationDate ?? null,
         customer: customerModel?.id ? customerService.getDocRef(customerModel.id) : null, // customerModel,
-      } as Omit<IOrder, 'customer'>);
+      };
+
+      const data = await orderService.createOne(dataObject);
 
       if (data) {
         return data;
