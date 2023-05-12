@@ -29,7 +29,6 @@ const useInfiniteScroll = (object: IInfiniteScroll) => {
 
   useEffect(() => {
     const currentObserver = observer.current;
-
     if (lastElement) {
       currentObserver.observe(lastElement);
     }
@@ -46,7 +45,7 @@ const useInfiniteScroll = (object: IInfiniteScroll) => {
       setPaginationCount(0);
     }
     if (paginationCount === dataLength) {
-      callback && callback();
+      callback?.();
     }
   }, [callback, dataLength, paginationCount]);
 

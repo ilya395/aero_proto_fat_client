@@ -101,7 +101,7 @@ export const orderDeliveryDateSelector = (state: RootState) => state.order.order
 export const orderPriceSelector = (state: RootState) => state.order.orderData?.price;
 export const orderCommentSelector = (state: RootState) => state.order.orderData?.comment;
 export const orderCustomerSelector = (state: RootState) => state.order.orderData?.customer;
-export const orderOrderSelector = (state: RootState) => state.order.orderData?.order;
+export const orderOrdersSelector = (state: RootState) => state.order.orderData?.order;
 
 export const orderRedirectIdSelector = createSelector(
   [orderRedirectIdSelect],
@@ -122,5 +122,9 @@ export const orderCommentMemoSelector = createSelector(
 );
 export const orderCustomerMemoSelector = createSelector(
   [orderCustomerSelector],
+  (arg) => arg,
+);
+export const orderOrdersMemoSelector = createSelector(
+  [orderOrdersSelector],
   (arg) => arg,
 );

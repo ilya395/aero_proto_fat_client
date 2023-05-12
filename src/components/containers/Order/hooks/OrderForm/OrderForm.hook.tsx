@@ -53,13 +53,13 @@ const useOrderForm = () => {
       <BaseTextInput
         id="comment-field"
         value={(orderComment ?? '').toString()}
-        callback={changeNumberHandle}
+        callback={changeHandle}
         objectKey={EOrdersInputTypeKeys.Comment}
         placeholder={EOrdersInputTypeTitles.Comment}
         label={EOrdersInputTypeTitles.Comment}
       />
     </Col>,
-  }), [changeNumberHandle, orderComment]);
+  }), [changeHandle, orderComment]);
   const price = useMemo(() => ({
     id: "price",
     component: <Col xs={12} sm={6} xl={4}>

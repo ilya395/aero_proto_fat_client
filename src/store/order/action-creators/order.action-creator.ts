@@ -117,7 +117,7 @@ export const updateOrder = createAsyncThunk(
 
       const customerService = new BaseItemService(firebaseInstance.getFirestore(), EModelKeys.Users);
 
-      const data = await orderService.createOne({
+      const data = await orderService.updateOne({
         ...object,
         customer: customerModel?.id ? customerService.getDocRef(customerModel.id) : null, // customerModel,
       } as Omit<IOrder, 'customer'>);

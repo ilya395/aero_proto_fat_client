@@ -112,7 +112,7 @@ const useOrderCustomer = () => {
       <BaseSearchField
         id="customer"
         label="Заказчик"
-        placeholder="Поиск по имени или телефону"
+        placeholder="Поиск по имени и хотелось бы по телефону, но нетъ..."
         // value={orderCustomer ?? null}
         // computedValueHandle={(arg) => {
         //   if (arg) {
