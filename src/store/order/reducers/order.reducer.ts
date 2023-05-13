@@ -3,6 +3,7 @@ import { IOrderError, IOrderState } from "../models/order.model";
 import { IOrder } from "../../models/orders.model";
 import { getOrder, putOrder, updateOrder } from "../action-creators/order.action-creator";
 import { RootState } from "../../root.reducer";
+import { IKit } from "../../models/kits.model";
 
 const initialOrderState: IOrderState = {
   await: false,
@@ -36,6 +37,21 @@ export const OrderSlice = createSlice({
           ...state.orderData?.customer,
           ...action.payload,
         },
+      };
+    },
+    addOrderKitAction(state, action: PayloadAction<IKit>) {
+      state.orderData = {
+        ...state.orderData,
+        order: [
+          ...state.orderData?.order ?? [],
+          action.payload,
+        ],
+      };
+    },
+    deleteOrderKitAction(state, action: PayloadAction<IKit>) {
+      state.orderData = {
+        ...state.orderData,
+        order: state.orderData?.order?.filter((item) => item.id !== action.payload.id),
       };
     },
   },
@@ -88,6 +104,8 @@ export const {
   addNewOrderAction,
   changeOrderDataAction,
   changeOrderCustomerDataAction,
+  addOrderKitAction,
+  deleteOrderKitAction,
 } = OrderSlice.actions;
 
 export const OrderReducer = OrderSlice.reducer;

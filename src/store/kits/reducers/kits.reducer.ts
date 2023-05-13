@@ -3,7 +3,7 @@ import { PAGINATION_LIMIT } from "../../../constants/variables.constant";
 import { IBaseListResponse } from "../../../types/models/base.model";
 import { IKit, IKitsError } from "../../models/kits.model";
 import { RootState } from "../../root.reducer";
-import { fetchDeleteKit, fetchKitsList } from "../action-creators/kits.action-creator";
+import { fetchDeleteKit, fetchKitsList, fetcNextKitsList } from "../action-creators/kits.action-creator";
 import { IKitsState } from "../models/kits.model";
 
 const initialKitsState: IKitsState = {
@@ -46,7 +46,7 @@ export const KitsSlice = createSlice({
       state.await = false;
       state.error = action.payload;
     },
-    [fetchKitsList.fulfilled.type]: (state, action: PayloadAction<IBaseListResponse<IKit>>) => {
+    [fetcNextKitsList.fulfilled.type]: (state, action: PayloadAction<IBaseListResponse<IKit>>) => {
       state.await = false;
       state.error = null;
       state.kitsList = [
@@ -55,10 +55,10 @@ export const KitsSlice = createSlice({
       ];
       state.pagination.lastVisible = action.payload.lastVisible || null;
     },
-    [fetchKitsList.pending.type]: (state) => {
+    [fetcNextKitsList.pending.type]: (state) => {
       state.await = true;
     },
-    [fetchKitsList.rejected.type]: (state, action: PayloadAction<IKitsError>) => {
+    [fetcNextKitsList.rejected.type]: (state, action: PayloadAction<IKitsError>) => {
       state.await = false;
       state.error = action.payload;
     },

@@ -8,6 +8,7 @@ import { IOrder } from "../../models/orders.model";
 import UserService from "../../../services/User/User.service";
 import { IUser } from "../../models/users.model";
 import BaseItemService from "../../../services/base/Item/Item.service";
+import KitService from "../../../services/Kit/Kit.service";
 
 export const getOrder = createAsyncThunk(
   "order/get",
@@ -62,14 +63,18 @@ export const putOrder = createAsyncThunk(
 
       const customerService = new BaseItemService(firebaseInstance.getFirestore(), EModelKeys.Users);
 
+      const kitService = new KitService(firebaseInstance.getFirestore(), EModelKeys.Kits);
+
+      const order = object.order?.filter((item) => item.id) as Array<Omit<IOrder, 'id'> & {id: string}>;
+
       // чтобы положить в бд модкль со всеми полями...
-      const dataObject: Omit<Required<IOrder>, 'customer'> & { customer: DocumentReference<DocumentData> | null } = {
+      const dataObject: Omit<Required<IOrder>, 'customer' | 'order'> & { customer: DocumentReference<DocumentData> | null; order: Array<DocumentReference<DocumentData>> | null } = {
         ...object,
         id: object.id ?? null,
         deliveryDate: object.deliveryDate ?? null,
         price: object.price ?? null,
         comment: object.comment ?? null,
-        order: object.order ?? null,
+        order: order.map((item) => kitService.getDocRef(item.id)) ?? null,
         creationDate: object.creationDate ?? null,
         customer: customerModel?.id ? customerService.getDocRef(customerModel.id) : null, // customerModel,
       };
@@ -95,7 +100,7 @@ export const updateOrder = createAsyncThunk(
   "order/update",
   async (object: IOrder, thunkAPI) => {
     try {
-      const { customer } = object;
+      const { customer, order } = object;
 
       const userService = new UserService(firebaseInstance.getFirestore());
 
@@ -117,8 +122,11 @@ export const updateOrder = createAsyncThunk(
 
       const customerService = new BaseItemService(firebaseInstance.getFirestore(), EModelKeys.Users);
 
+      const kitService = new KitService(firebaseInstance.getFirestore(), EModelKeys.Kits);
+
       const data = await orderService.updateOne({
         ...object,
+        order: order?.filter((item) => item.id).map((item) => item.id && kitService.getDocRef(item.id)),
         customer: customerModel?.id ? customerService.getDocRef(customerModel.id) : null, // customerModel,
       } as Omit<IOrder, 'customer'>);
 

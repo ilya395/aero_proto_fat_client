@@ -27,7 +27,7 @@ export const fetchKitsList = createAsyncThunk(
   },
 );
 
-export const fetcNexthKitsList = createAsyncThunk(
+export const fetcNextKitsList = createAsyncThunk(
   "kits/fetchNext",
   async (object: IBaseListRequest<IKit | IKitsFilter>, thunkAPI) => {
     try {
