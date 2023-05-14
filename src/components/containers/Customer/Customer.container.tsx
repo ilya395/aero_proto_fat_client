@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { EInputTypeKeys, EInputTypeTitles } from "../../../enums/inputTypes.enum";
-import { ENavigationKeys } from "../../../enums/navigation.enum";
+import { EInputTypeKeys, EInputTypeTitles } from "../../../types/enums/inputTypes.enum";
+import { ENavigationKeys } from "../../../types/enums/navigation.enum";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { IUser } from "../../../store/models/users.model";
 import { createUser, fetchOneUser, updateUser } from "../../../store/user/action-creators/user.action-creator";
 import { userAddNewAction, userAddressMemoSelector, userChangeDataAction, userCreationDateMemoSelector, userEmailMemoSelector, userNameMemoSelector, userPhoneMemoSelector, userRedirectIdMemoSelector, userResetAction } from "../../../store/user/reducers/user.reducer";
-import BaseForm from "../../views/BaseForm/BaseForm.view";
-import { IBaseFormConfig } from "../../views/BaseForm/models/BaseForm.model";
-import BaseDateTimePicker from "../../views/inputs/BaseDateTimePicker/BaseDateTimePicker.component";
-import BaseTextInput from "../../views/inputs/BaseTextInput/BaseTextInput.component";
+import FormPanel from "../../views/FormPanel/FormPanel.view";
+import { IBaseFormConfig } from "../../ui/BaseForm/models/BaseForm.model";
+import BaseForm from "../../ui/BaseForm/BaseForm.ui";
+import BaseTextInput from "../../ui/BaseTextInput/BaseTextInput.ui";
+import BaseDateTimePicker from "../../ui/BaseDateTimePicker/BaseDateTimePicker.ui";
 
 const CustomerContainer = () => {
   const dispatch = useAppDispatch();
@@ -46,28 +46,31 @@ const CustomerContainer = () => {
   const changeHandle = useCallback((arg: IUser) => dispatch(userChangeDataAction(arg)), [dispatch]);
   const clearFormHandle = useCallback(() => dispatch(userResetAction()), [dispatch]);
   const saveDataHandle = useCallback(() => isNew ?
-  dispatch(createUser({
-    user: {
-      name: userName,
-      phone: userPhone,
-      email: userEmail,
-      address: userAddress,
-      creationDate: userCreationDate,
-      id,
-    },
-  })) :
-  dispatch(updateUser({
-    user: {
-      name: userName,
-      phone: userPhone,
-      email: userEmail,
-      address: userAddress,
-      creationDate: userCreationDate,
-      id,
-    },
-  })), [dispatch, id, isNew, userAddress, userCreationDate, userEmail, userName, userPhone]);
+    dispatch(createUser({
+      user: {
+        name: userName,
+        phone: userPhone,
+        email: userEmail,
+        address: userAddress,
+        creationDate: userCreationDate,
+        id,
+      },
+    })) :
+    dispatch(updateUser({
+      user: {
+        name: userName,
+        phone: userPhone,
+        email: userEmail,
+        address: userAddress,
+        creationDate: userCreationDate,
+        id,
+      },
+    })), [dispatch, id, isNew, userAddress, userCreationDate, userEmail, userName, userPhone]);
 
-  const returnHandle = useCallback(() => navigate(ENavigationKeys.Customers), [navigate]);
+  const returnHandle = useCallback(() => {
+    navigate(ENavigationKeys.Customers);
+    clearFormHandle();
+  }, [clearFormHandle, navigate]);
 
   const config: IBaseFormConfig = useMemo(() => ({
     list: [
@@ -120,7 +123,7 @@ const CustomerContainer = () => {
         id: "creationDate",
         component: <BaseDateTimePicker
           id="creation-date-field"
-          value={userCreationDate}
+          value={userCreationDate ?? undefined}
           callback={changeHandle}
           objectKey={EInputTypeKeys.CreationDate}
           placeholder={EInputTypeTitles.CreationDate}
@@ -131,30 +134,15 @@ const CustomerContainer = () => {
   }), [changeHandle, userAddress, userCreationDate, userEmail, userName, userPhone]);
 
   return (
-    <div className="base-form">
-      <div className="base-form__management-buttons">
-        <div className="management-button">
-          <Button variant="outline-primary" onClick={clearFormHandle}>
-            Очистить форму
-          </Button>
-        </div>
-      </div>
+    <FormPanel
+      clearFormHandle={clearFormHandle}
+      saveFormHandle={saveDataHandle}
+      cancelFormHandle={returnHandle}
+    >
       <BaseForm
         config={config}
       />
-      <div className="base-form__management-buttons">
-        <div className="management-button">
-          <Button variant="primary" onClick={saveDataHandle}>
-            Сохранить
-          </Button>
-        </div>
-        <div className="management-button">
-          <Button variant="outline-danger" onClick={returnHandle}>
-            Отмена
-          </Button>
-        </div>
-      </div>
-    </div>
+    </FormPanel>
   );
 }
 

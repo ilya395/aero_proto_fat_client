@@ -1,5 +1,5 @@
 import { UserCredential } from "firebase/auth";
-import { IBaseError } from "../../../models/error.model";
+import { IBaseError } from "../../../types/models/error.model";
 
 export interface IAuthData  {
   accessToken?: string;

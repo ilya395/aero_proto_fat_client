@@ -1,12 +1,14 @@
 import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import { IBaseCreationDate, IBaseId } from "./base.model";
 
-export interface IUser extends IBaseCreationDate, IBaseId {
-  name?: string;
-  phone?: string;
-  email?: string;
-  address?: string;
+export interface IBaseUser extends IBaseCreationDate {
+  name?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  address?: string | null;
 }
+
+export interface IUser extends IBaseId, IBaseUser {}
 
 export interface IUsersFilter extends IUser {
   creationDateFrom?: Date;

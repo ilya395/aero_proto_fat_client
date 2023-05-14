@@ -4,8 +4,6 @@ import { RootState } from "../../root.reducer";
 import { IUsersFilterState } from "../models/usersFilter.model";
 
 const initialUsersFilterState: IUsersFilterState = {
-  await: false,
-  error: null,
   fields: null,
 }
 
@@ -14,14 +12,12 @@ export const UsersFilterSlice = createSlice({
   initialState: initialUsersFilterState,
   reducers: {
     updateUsersFilterAction(state, action: PayloadAction<IUsersFilter>) {
-      // eslint-disable-next-line no-param-reassign
       state.fields = {
         ...state.fields,
         ...action.payload,
       };
     },
     resetUsersFilterAction(state) {
-      // eslint-disable-next-line no-param-reassign
       state.fields = null;
     },
   },
@@ -36,5 +32,3 @@ export const {
 } = UsersFilterSlice.actions;
 
 export const usersFilterDataSelector = (state: RootState) => state.usersFilter.fields;
-export const usersFilterAwaitSelector = (state: RootState) => state.usersFilter.await;
-export const usersFilterErrorSelector = (state: RootState) => state.usersFilter.error;

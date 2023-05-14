@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { ENavigationKeys, ENavigationTitles } from "../../../../enums/navigation.enum";
+import { ENavigationKeys, ENavigationTitles } from "../../../../types/enums/navigation.enum";
 import { IBreadcrumb } from "../model/Breadcrumbs.model";
 
 const useRoutePath = () => {
@@ -41,6 +41,15 @@ const useRoutePath = () => {
         })
         return accum;
 
+      case ENavigationKeys.Kits.replace("/", ""):
+        accum.push({
+          title: ENavigationTitles.Kits,
+          path: ENavigationKeys.Kits,
+          disabled: false,
+          active: false,
+        })
+        return accum;
+
       default:
         if (
           (accum.length > 0) &&
@@ -72,6 +81,17 @@ const useRoutePath = () => {
           accum.push({
             path: prevUrl ? `${prevUrl}/${item}` : `/${item}`,
             title: item === "new" ? "Новый продукт" : `Продукт № ${item}`,
+            active: false,
+            disabled: false,
+          });
+        } else if (
+          (accum.length > 0) &&
+          (accum[accum.length - 1].path === ENavigationKeys.Kits)
+        ) {
+          const prevUrl = accum[index - 1] && accum[index - 1].path;
+          accum.push({
+            path: prevUrl ? `${prevUrl}/${item}` : `/${item}`,
+            title: item === "new" ? "Новый набор" : `Набор № ${item}`,
             active: false,
             disabled: false,
           });

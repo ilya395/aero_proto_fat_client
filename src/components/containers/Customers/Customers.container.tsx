@@ -3,14 +3,15 @@ import { useSelector } from "react-redux";
 import useInfiniteScroll from "../../../hooks/infiniteScroll/infiniteScroll.hook";
 import { useAppDispatch } from "../../../store/hooks/store.hook";
 import { IUsersRequest } from "../../../store/models/users.model";
-import { fetchDeleteUser, fetchUsersList } from "../../../store/users/action-creators/users.action-creator";
-import { usersListSelector, usersPaginationSelector } from "../../../store/users/reducers/users.reducer";
+import { fetchDeleteUser, fetchUsersList, fetchNextUsersList } from "../../../store/users/action-creators/users.action-creator";
+import { clearUsers, clearUsersPagination, usersListSelector, usersPaginationSelector } from "../../../store/users/reducers/users.reducer";
 import { usersFilterDataSelector } from "../../../store/usersFilter/reducers/usersFilter.reducer";
 import CustomersView from "../../views/Customers/Customers.view";
+import { PAGINATION_LIMIT } from "../../../constants/variables.constant";
 
 const CustomersContainer = () => {
   const dispatch = useAppDispatch();
-  const customers = useSelector(usersListSelector) || [];
+  const customers = useSelector(usersListSelector);
 
   // business
   const filterFields = useSelector(usersFilterDataSelector);
@@ -19,20 +20,29 @@ const CustomersContainer = () => {
     filter: filterFields || undefined,
     pagination,
   }), [filterFields, pagination]);
-  const fetchUsers = useCallback(() => dispatch(fetchUsersList(filterData)), [dispatch, filterData]);
+  // const fetchUsers = useCallback(() => dispatch(fetchUsersList(filterData)), [dispatch, filterData]);
+  const fetchNextUsers = useCallback(() => dispatch(fetchNextUsersList(filterData)), [dispatch, filterData]);
   const handleDelete = useCallback(async (id: string) => {
     await dispatch(fetchDeleteUser({
       id,
     }));
-    await fetchUsers();
-  }, [dispatch, fetchUsers]);
+    await dispatch(clearUsers());
+    await dispatch(clearUsersPagination());
+    await fetchUsersList({
+      filter: filterFields || undefined,
+      pagination: {
+        lastVisible: null,
+        limit: PAGINATION_LIMIT,
+      },
+    });
+  }, [dispatch, filterFields]);
 
   // ? отдельный хук для получения при скролле
   const {
     setLastElement,
   } = useInfiniteScroll({
-    dataLength: customers.length,
-    callback: fetchUsers,
+    dataLength: customers?.length,
+    callback: fetchNextUsers,
   });
   // const [lastElement, setLastElement] = useState<null | Element>(null);
   // const [paginationCount, setPaginationCount] = useState<number>(0);
@@ -199,7 +209,7 @@ const CustomersContainer = () => {
   //   }));
   // }, [setLastElement]);
 
-  if (!customers.length) {
+  if (!customers?.length) {
     return (
       <div>
         Нету...

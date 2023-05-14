@@ -1,9 +1,10 @@
-import React, { memo, useCallback, useState } from "react";
+import React, { memo } from "react";
 import { Col, Row } from "react-bootstrap";
-import BaseCard from "../BaseCard/BaseCard.view";
-import BaseModal from "../BaseModal/BaseModal.view";
 import { ICustomersViewProps } from "./models/CustomersView.model";
-import { ENavigationKeys } from "../../../enums/navigation.enum";
+import { ENavigationKeys } from "../../../types/enums/navigation.enum";
+import useModalMoveInList from "../../../hooks/ui/modalMoveInList/modalMoveInList.hook";
+import BaseCard from "../../ui/BaseCard/BaseCard.ui";
+import BaseModal from "../../ui/BaseModal/BaseModal.ui";
 
 const CustomersView = memo((props: ICustomersViewProps) => {
   const {
@@ -15,13 +16,14 @@ const CustomersView = memo((props: ICustomersViewProps) => {
   } = props;
 
   // ui
-  const [showDeleteModalId, setShowDeleteModalId] = useState<string | null>(null);
-  const handleCloseModal = useCallback(() => setShowDeleteModalId(null), []);
-  const handleShowModal = useCallback((id: string) => setShowDeleteModalId(id), []);
-  const handleActionModal = useCallback(() => {
-    deleteCallback && showDeleteModalId && deleteCallback(showDeleteModalId);
-    setShowDeleteModalId(null);
-  }, [deleteCallback, showDeleteModalId]);
+  const {
+    showDeleteModalId,
+    handleCloseModal,
+    handleShowModal,
+    handleActionModal,
+  } = useModalMoveInList({
+    deleteCallback
+  });
 
   return (
     <>
@@ -30,7 +32,7 @@ const CustomersView = memo((props: ICustomersViewProps) => {
           customers?.map((item, index) => {
             if (index === 0) {
               return (
-                <Col key={item?.id} ref={callbackRefToFirstElement}>
+                <Col xs={12} sm={6} lg={4} key={item?.id} ref={callbackRefToFirstElement} className="mt-3">
                   <BaseCard
                     title={item?.phone}
                     subTitle={item?.name}
@@ -44,7 +46,7 @@ const CustomersView = memo((props: ICustomersViewProps) => {
             }
             if (customers.length - 1 === index) {
               return (
-                <Col key={item?.id} ref={callbackRefToLastElement}>
+                <Col xs={12} sm={6} lg={4} key={item?.id} ref={callbackRefToLastElement} className="mt-3">
                   <BaseCard
                     title={item?.phone}
                     subTitle={item?.name}
@@ -57,7 +59,7 @@ const CustomersView = memo((props: ICustomersViewProps) => {
               );
             }
             return (
-              <Col key={item?.id}>
+              <Col xs={12} sm={6} lg={4} key={item?.id} className="mt-3">
                 <BaseCard
                   title={item?.phone}
                   subTitle={item?.name}

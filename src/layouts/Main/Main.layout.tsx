@@ -1,26 +1,27 @@
-import React from "react";
+import React, { memo, useCallback } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Col, Container, Dropdown, Row } from "react-bootstrap";
 import { IMainLayoutProps } from "./models/Main.model";
 import "./Main.style.scss";
-import { ENavigationKeys, ENavigationTitles } from "../../enums/navigation.enum";
+import { ENavigationKeys } from "../../types/enums/navigation.enum";
 import BreadcrumbsContainer from "../../components/containers/Breadcrumbs/Breadcrumbs.container";
+import { menuList } from "../../constants/variables.constant";
 
-const MainLayout = (props: IMainLayoutProps) => {
+const MainLayout = memo((props: IMainLayoutProps) => {
   const {
     children,
   } = props;
 
   const navigate = useNavigate();
 
-  const handleSingOut = () => {
-    signOut(getAuth());
-  }
+  const handleSingOut = useCallback(() => signOut(getAuth()), []);
+
+  const handleRedirect = useCallback((arg: ENavigationKeys) => () => navigate(arg), [navigate]);
 
   return (
     <div className="layout">
-      <header className="header">
+      <header className="header bg-light">
         <Container>
           <Row>
             <Col>
@@ -35,9 +36,9 @@ const MainLayout = (props: IMainLayoutProps) => {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => navigate(ENavigationKeys.Orders)}>{ENavigationTitles.Orders}</Dropdown.Item>
-                    <Dropdown.Item onClick={() => navigate(ENavigationKeys.Products)}>{ENavigationTitles.Products}</Dropdown.Item>
-                    <Dropdown.Item onClick={() => navigate(ENavigationKeys.Customers)}>{ENavigationTitles.Customers}</Dropdown.Item>
+                    {
+                      menuList.map((item) => (<Dropdown.Item key={item.key} onClick={handleRedirect(item.key)}>{item.title}</Dropdown.Item>))
+                    }
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
@@ -63,7 +64,7 @@ const MainLayout = (props: IMainLayoutProps) => {
           </Row>
         </Container>
       </header>
-      <main className="main">
+      <main className="main bg-light">
         <Container>
           <Row>
             <BreadcrumbsContainer />
@@ -73,6 +74,6 @@ const MainLayout = (props: IMainLayoutProps) => {
       </main>
     </div>
   );
-}
+});
 
 export default MainLayout;
