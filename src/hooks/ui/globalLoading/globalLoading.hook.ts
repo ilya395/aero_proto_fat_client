@@ -7,6 +7,8 @@ import { productsAwaitSelector } from "../../../store/products/reducers/products
 import { userAwaitSelector } from "../../../store/user/reducers/user.reducer";
 import { usersAwaitSelector } from "../../../store/users/reducers/users.reducer";
 import useAuth from "../../auth/auth.hook";
+import { ordersAwaitSelector } from "../../../store/orders/reducers/orders.reducer";
+import { orderAwaitSelector } from "../../../store/order/reducers/order.reducer";
 
 const useGlobalLoading = () => {
   const { loading,} = useAuth();
@@ -16,6 +18,8 @@ const useGlobalLoading = () => {
   const productAwait = useSelector(productAwaitSelector);
   const kitsAwait = useSelector(kitsAwaitSelector);
   const kitAwait = useSelector(kitAwaitSelector);
+  const ordersAwait = useSelector(ordersAwaitSelector);
+  const orderAwait = useSelector(orderAwaitSelector);
 
   const globalLoading = useMemo(() =>
     loading
@@ -24,8 +28,10 @@ const useGlobalLoading = () => {
     || productsAwait
     || productAwait
     || kitsAwait
-    || kitAwait,
-  [kitAwait, kitsAwait, loading, productAwait, productsAwait, userAwait, usersAwait]);
+    || kitAwait
+    || ordersAwait
+    || orderAwait,
+  [kitAwait, kitsAwait, loading, orderAwait, ordersAwait, productAwait, productsAwait, userAwait, usersAwait]);
 
   return { globalLoading };
 };

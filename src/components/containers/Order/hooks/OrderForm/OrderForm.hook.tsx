@@ -20,6 +20,7 @@ const useOrderForm = () => {
   const orderDeliveryDate = useSelector(orderDeliveryDateMemoSelector);
   const orderComment = useSelector(orderCommentMemoSelector);
   const orderPrice = useSelector(orderPriceMemoSelector);
+  // const orderCustomer = useSelector(orderCustomerMemoSelector);
 
   const redirectId = useSelector(orderRedirectIdSelector);
   const orderData = useSelector(orderDataSelect);
@@ -52,13 +53,13 @@ const useOrderForm = () => {
       <BaseTextInput
         id="comment-field"
         value={(orderComment ?? '').toString()}
-        callback={changeNumberHandle}
+        callback={changeHandle}
         objectKey={EOrdersInputTypeKeys.Comment}
         placeholder={EOrdersInputTypeTitles.Comment}
         label={EOrdersInputTypeTitles.Comment}
       />
     </Col>,
-  }), [changeNumberHandle, orderComment]);
+  }), [changeHandle, orderComment]);
   const price = useMemo(() => ({
     id: "price",
     component: <Col xs={12} sm={6} xl={4}>
@@ -82,9 +83,9 @@ const useOrderForm = () => {
   }), [comment, creationDate, price]);
 
   const handleClear = useCallback(() => dispatch(resetOrderDataAction()), [dispatch]);
-
+  // TODO: заполнить null отсутвующие поля...
   const handlePut = useCallback(() => orderData && dispatch(putOrder(orderData)), [dispatch, orderData]);
-
+// TODO: заполнить null отсутвующие поля...
   const handleUpdate = useCallback(() => orderData && dispatch(updateOrder(orderData)), [dispatch, orderData]);
 
   const handleReturn = useCallback(() => {

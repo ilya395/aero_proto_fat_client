@@ -38,18 +38,6 @@ class ListService<Q extends {[x: string | EInputTypeKeys]: any}> extends Firesto
       },
     } = object;
 
-    // const collectionKeysWeHave: [string, any][] = Object.entries(filter);
-
-    // const array = collectionKeysWeHave.map(item => {
-    //   if (item[0] === EInputTypeKeys.CreationDateFrom) {
-    //     return where(EInputTypeKeys.CreationDate, ">=", Timestamp.fromDate(new Date(item[1])));
-    //   }
-    //   if (item[0] === EInputTypeKeys.CreationDateTo) {
-    //     return where(EInputTypeKeys.CreationDate, "<=", Timestamp.fromDate(new Date(item[1])));
-    //   }
-    //   return where(item[0], "==", item[1]);
-    // });
-
     const array = this.getQueryConstraintList(filter);
 
     let q: Query<DocumentData> | null = null;
@@ -77,8 +65,6 @@ class ListService<Q extends {[x: string | EInputTypeKeys]: any}> extends Firesto
       ...doc.data(),
       creationDate: doc.data().creationDate.toDate(),
     }));
-
-    // const response = await this.parseSnapShot(querySnapshot);
 
     if (!response && !item) {
       return undefined;

@@ -50,9 +50,16 @@ const CustomersPanel = () => {
 
   const changeFilterHandle = useCallback((arg: {[x: string]: string | Date;} | IUsersFilter) => dispatch(updateUsersFilterAction(arg)), [dispatch]);
   const resetFormHandle = useCallback(() => dispatch(resetUsersFilterAction()), [dispatch]);
-  const filterHandle = useCallback(() => {
-    dispatch(fetchUsersList(filterData));
-    hideFilterHandle();
+  const filterHandle = useCallback(async () => {
+    await dispatch(clearUsers());
+    await dispatch(fetchUsersList({
+      ...filterData,
+      pagination: {
+        lastVisible: null,
+        limit: PAGINATION_LIMIT,
+      }
+    }));
+    await hideFilterHandle();
   }, [dispatch, filterData, hideFilterHandle]);
   const config: IBaseFormConfig = useMemo(() => ({
     list: [

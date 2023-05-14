@@ -9,10 +9,15 @@ class BaseItemService<T extends IBaseId & IBaseCreationDate> extends FirestoreSe
   constructor(firestore: Firestore, key: EModelKeys) {
     super(firestore);
     this.key = key;
+    this.getDocRef = this.getDocRef.bind(this);
     this.getOne = this.getOne.bind(this);
     this.createOne = this.createOne.bind(this);
     this.updateOne = this.updateOne.bind(this);
     this.deleteOne = this.deleteOne.bind(this);
+  }
+
+  public getDocRef(id: string) {
+    return doc(this.db, this.key, id);
   }
 
   public async getOne(id: string): Promise<T | DocumentData | undefined> { // TODO?
@@ -29,11 +34,11 @@ class BaseItemService<T extends IBaseId & IBaseCreationDate> extends FirestoreSe
     return undefined;
   }
 
-  public async createOne(user: T): Promise<string> {
+  public async createOne(arg: T): Promise<string> {
     const {
       id,
       ...rest
-    } = user as T;
+    } = arg as T;
     const data = {
       ...rest,
       creationDate: rest.creationDate ? Timestamp.fromDate(new Date(rest.creationDate)) : Timestamp.fromDate(new Date()),

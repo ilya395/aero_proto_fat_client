@@ -5,15 +5,17 @@ import { ENavigationKeys } from "../../../types/enums/navigation.enum";
 import BaseCard from "../../ui/BaseCard/BaseCard.ui";
 import BaseList from "../../ui/BaseList/BaseList.ui";
 import useOrders from "./hooks/Orders.hook";
+import { getScrollLimit } from "../../../utils/base";
 
 const OrdersContainer = () => {
-  const { orders, handleDelete, fetchOrders } = useOrders();
+  const { orders, handleDelete, fetchNextOrders } = useOrders();
 
   const {
     setLastElement,
   } = useInfiniteScroll({
     dataLength: orders.length,
-    callback: fetchOrders,
+    callback: fetchNextOrders,
+    limit: getScrollLimit(),
   });
 
   if (!orders.length) {

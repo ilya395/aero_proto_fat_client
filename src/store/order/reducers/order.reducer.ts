@@ -3,6 +3,7 @@ import { IOrderError, IOrderState } from "../models/order.model";
 import { IOrder } from "../../models/orders.model";
 import { getOrder, putOrder, updateOrder } from "../action-creators/order.action-creator";
 import { RootState } from "../../root.reducer";
+import { IKit } from "../../models/kits.model";
 
 const initialOrderState: IOrderState = {
   await: false,
@@ -27,6 +28,30 @@ export const OrderSlice = createSlice({
       state.orderData = {
         ...state.orderData,
         ...action.payload,
+      };
+    },
+    changeOrderCustomerDataAction(state, action: PayloadAction<IOrder>) {
+      state.orderData = {
+        ...state.orderData,
+        customer: {
+          ...state.orderData?.customer,
+          ...action.payload,
+        },
+      };
+    },
+    addOrderKitAction(state, action: PayloadAction<IKit>) {
+      state.orderData = {
+        ...state.orderData,
+        order: [
+          ...state.orderData?.order ?? [],
+          action.payload,
+        ],
+      };
+    },
+    deleteOrderKitAction(state, action: PayloadAction<IKit>) {
+      state.orderData = {
+        ...state.orderData,
+        order: state.orderData?.order?.filter((item) => item.id !== action.payload.id),
       };
     },
   },
@@ -78,6 +103,9 @@ export const {
   resetOrderDataAction,
   addNewOrderAction,
   changeOrderDataAction,
+  changeOrderCustomerDataAction,
+  addOrderKitAction,
+  deleteOrderKitAction,
 } = OrderSlice.actions;
 
 export const OrderReducer = OrderSlice.reducer;
@@ -91,7 +119,7 @@ export const orderDeliveryDateSelector = (state: RootState) => state.order.order
 export const orderPriceSelector = (state: RootState) => state.order.orderData?.price;
 export const orderCommentSelector = (state: RootState) => state.order.orderData?.comment;
 export const orderCustomerSelector = (state: RootState) => state.order.orderData?.customer;
-export const orderOrderSelector = (state: RootState) => state.order.orderData?.order;
+export const orderOrdersSelector = (state: RootState) => state.order.orderData?.order;
 
 export const orderRedirectIdSelector = createSelector(
   [orderRedirectIdSelect],
@@ -108,5 +136,13 @@ export const orderPriceMemoSelector = createSelector(
 );
 export const orderCommentMemoSelector = createSelector(
   [orderCommentSelector],
+  (arg) => arg,
+);
+export const orderCustomerMemoSelector = createSelector(
+  [orderCustomerSelector],
+  (arg) => arg,
+);
+export const orderOrdersMemoSelector = createSelector(
+  [orderOrdersSelector],
   (arg) => arg,
 );

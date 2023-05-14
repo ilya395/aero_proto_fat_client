@@ -7,13 +7,13 @@ import BaseList from "../../ui/BaseList/BaseList.ui";
 import useKits from "./hooks/Kits.hook";
 
 const KitsContainer = () => {
-  const { kits, handleDelete, fetchKits } = useKits();
+  const { kits, handleDelete, fetchNextKits } = useKits();
 
   const {
     setLastElement,
   } = useInfiniteScroll({
     dataLength: kits.length,
-    callback: fetchKits,
+    callback: fetchNextKits,
   });
 
   if (!kits.length) {

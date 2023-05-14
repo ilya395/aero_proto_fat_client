@@ -10,7 +10,7 @@ import useFilterMethods from "./hooks/FilterMethods/FilterMethods.hook";
 const KitsPanelContainer = () => {
   const { config } = useKitsFilterForm();
 
-  const { handleCreateNew, handleUpdate, handleFilter, handleResetForm } = useFilterMethods();
+  const { handleCreateNew, handleUpdate, handleFilter, handleResetForm, handleClearList } = useFilterMethods();
 
   // ui
   const {
@@ -20,6 +20,7 @@ const KitsPanelContainer = () => {
   } = useFilterMove();
 
   const onFilterHandle = () => {
+    handleClearList();
     handleFilter();
     hideFilterHandle();
   };

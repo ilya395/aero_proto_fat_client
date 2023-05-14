@@ -27,6 +27,26 @@ export const fetchOrdersList = createAsyncThunk(
   },
 );
 
+export const fetchNextOrdersList = createAsyncThunk(
+  "orders/fetchNext",
+  async (object: IBaseListRequest<IOrdersFilter>, thunkAPI) => {
+    try {
+      const ordersService = new OrdersService(firebaseInstance.getFirestore(), EModelKeys.Orders);
+      const data = await ordersService.filter(object);
+      if (data) {
+        return data;
+      }
+      return thunkAPI.rejectWithValue({
+        message: EBaseErrorTitles.FailGetOrdersList,
+      });
+    } catch (e) {
+      return thunkAPI.rejectWithValue({
+        message: EBaseErrorTitles.FailGetOrdersList,
+      });
+    }
+  },
+);
+
 export const fetchDeleteOrder = createAsyncThunk(
   "orders/deleteOneOrder",
   async (object: { id: string; collection?: string; }, thunkAPI) => {

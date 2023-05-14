@@ -1,9 +1,12 @@
 import { DocumentData, Firestore } from "firebase/firestore";
 import { IOrder } from "../../store/models/orders.model";
-import ItemService from "../base/Item/Item.service";
 import { EModelKeys } from "../../types/enums/models.enum";
+import { firebaseInstance } from "../firebase/firebase.service";
+import BaseItemService from "../base/Item/Item.service";
+import KitService from "../Kit/Kit.service";
+import { IKit } from "../../store/models/kits.model";
 
-class OrderService extends ItemService<IOrder> {
+class OrderService extends BaseItemService<IOrder> {
   constructor(firestore: Firestore, key: EModelKeys) {
     super(firestore, key);
     this.getOne = this.getOne.bind(this);
@@ -14,21 +17,33 @@ class OrderService extends ItemService<IOrder> {
     if (!response) {
       return response;
     }
-    return {
+    const object = {
       ...response,
       deliveryDate: response?.deliveryDate?.toDate(),
-    };
-    // const docRef = doc(this.db, this.key, id);
-    // const docSnap = await getDoc(docRef);
-    // if (docSnap.exists()) {
-    //   const toData = docSnap.data();
-    //   return {
-    //     id,
-    //     ...toData,
-    //     creationDate: toData.creationDate.toDate(),
-    //   } as T;
-    // }
-    // return undefined;
+    } as IOrder;
+
+    const customerId = object.customer?.id;
+    if (customerId) {
+      const userService = new BaseItemService(firebaseInstance.getFirestore(), EModelKeys.Users);
+      const response = await userService.getOne(customerId);
+      object.customer = response;
+    }
+
+    const { order } = object;
+    if (order) {
+      const kits = new KitService();
+      const array = [] as Array<IKit>;
+      for (const i of order) {
+        if (i?.id) {
+        // eslint-disable-next-line no-await-in-loop
+          const response = await kits.getOne(i.id);
+          response && array.push(response);
+        }
+      }
+      object.order = array;
+    }
+
+    return object;
   }
 }
 
