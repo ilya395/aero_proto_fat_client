@@ -31,7 +31,7 @@ class OrderService extends BaseItemService<IOrder> {
 
     const { order } = object;
     if (order) {
-      const kits = new KitService(firebaseInstance.getFirestore(), EModelKeys.Kits);
+      const kits = new KitService();
       const array = [] as Array<IKit>;
       for (const i of order) {
         if (i?.id) {

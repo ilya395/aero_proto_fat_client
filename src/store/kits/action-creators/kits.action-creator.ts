@@ -54,7 +54,7 @@ export const fetchDeleteKit = createAsyncThunk(
       const {
         id,
       } = object;
-      const kitService = new KitService(firebaseInstance.getFirestore(), EModelKeys.Kits);
+      const kitService = new KitService();
       await kitService.deleteOne(id);
       return true;
     } catch (e) {

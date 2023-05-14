@@ -1,8 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { firebaseInstance } from "../../../services/firebase/firebase.service";
 import KitService from "../../../services/Kit/Kit.service";
 import { EBaseErrorTitles } from "../../../types/enums/errors.enum";
-import { EModelKeys } from "../../../types/enums/models.enum";
 import { IKit } from "../../models/kits.model";
 
 export const getKit = createAsyncThunk(
@@ -13,7 +11,7 @@ export const getKit = createAsyncThunk(
         id,
       } = object;
 
-      const kitService = new KitService(firebaseInstance.getFirestore(), EModelKeys.Kits);
+      const kitService = new KitService();
 
       const data = await kitService.getOne(id);
 
@@ -36,7 +34,7 @@ export const putKit = createAsyncThunk(
   "kit/put",
   async (object: IKit, thunkAPI) => {
     try {
-      const kitService = new KitService(firebaseInstance.getFirestore(), EModelKeys.Kits);
+      const kitService = new KitService();
 
       const data = await kitService.createOne(object);
 
@@ -59,7 +57,7 @@ export const updateKit = createAsyncThunk(
   "kit/update",
   async (object: IKit, thunkAPI) => {
     try {
-      const kitService = new KitService(firebaseInstance.getFirestore(), EModelKeys.Kits);
+      const kitService = new KitService();
 
       const data = await kitService.updateOne(object);
 

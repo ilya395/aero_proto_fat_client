@@ -63,7 +63,7 @@ export const putOrder = createAsyncThunk(
 
       const customerService = new BaseItemService(firebaseInstance.getFirestore(), EModelKeys.Users);
 
-      const kitService = new KitService(firebaseInstance.getFirestore(), EModelKeys.Kits);
+      const kitService = new KitService();
 
       const order = object.order?.filter((item) => item.id) as Array<Omit<IOrder, 'id'> & {id: string}>;
 
@@ -122,7 +122,7 @@ export const updateOrder = createAsyncThunk(
 
       const customerService = new BaseItemService(firebaseInstance.getFirestore(), EModelKeys.Users);
 
-      const kitService = new KitService(firebaseInstance.getFirestore(), EModelKeys.Kits);
+      const kitService = new KitService();
 
       const data = await orderService.updateOne({
         ...object,

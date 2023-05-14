@@ -77,7 +77,7 @@ const BaseSearchField = <T extends Object, >(props: IBaseSearchFieldProps<T>) =>
 
   return (
     <>
-      <Form.Label htmlFor={id}>{label}</Form.Label>
+      {label ? <Form.Label htmlFor={id}>{label}</Form.Label> : null}
       <OverlayTrigger
         show={show}
         placement="bottom"

@@ -2,7 +2,7 @@ import { IDefaultPopoverProps } from "../components/DefaultPopover/models/Defaul
 
 export interface IBaseSearchFieldProps<T> extends IDefaultPopoverProps<T> {
   id: string;
-  label: string;
+  label?: string;
   placeholder?: string;
   onSearch?: (arg: string) => void;
   value?: T | null;
