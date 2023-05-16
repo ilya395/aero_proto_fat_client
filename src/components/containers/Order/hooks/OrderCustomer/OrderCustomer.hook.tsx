@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Col } from "react-bootstrap";
 import { useAppDispatch } from "../../../../../store/hooks/store.hook";
@@ -9,9 +9,19 @@ import { EInputTypeKeys, EInputTypeTitles } from "../../../../../types/enums/inp
 import BaseDateTimePicker from "../../../../ui/BaseDateTimePicker/BaseDateTimePicker.ui";
 import { IUser } from "../../../../../store/models/users.model";
 import { clearUsers, usersAwaitSelector, usersListSelector } from "../../../../../store/users/reducers/users.reducer";
-import BaseSearchField from "../../../../ui/BaseSearchField/BaseSearchField.ui";
 import { fetchUsersList } from "../../../../../store/users/action-creators/users.action-creator";
 import { PAGINATION_LIMIT } from "../../../../../constants/variables.constant";
+import BaseSearchFieldWithSelectingKeys from "../../../../ui/BaseSearchFieldWithSelectingKeys/BaseSearchFieldWithSelectingKeys.ui";
+
+const keys = [{
+  value: "name",
+  label: "по имени",
+  placeholder: "Поиск по имени..."
+}, {
+  value: "phone",
+  label: "по телефону",
+  placeholder: "Поиск по телефону..."
+}];
 
 const useOrderCustomer = () => {
   const dispatch = useAppDispatch();
@@ -93,50 +103,55 @@ const useOrderCustomer = () => {
 
   const onReset = useCallback(() => dispatch(clearUsers()), [dispatch]);
 
+  const [currentKey, setCurrentKey] = useState(keys[0].value);
+
+  const onChooseKeyHandle = useCallback((arg: React.ChangeEvent<HTMLSelectElement>) => setCurrentKey(arg.target.value), []);
+
   const customers = useSelector(usersListSelector);
   // const customersData = useSelector(usersListDataSelector);
   const usersAwait = useSelector(usersAwaitSelector);
   const filterHandle = useCallback((arg: string) => dispatch(fetchUsersList({
     filter: {
-      name: arg
+      [currentKey]: arg
     },
     pagination: {
       lastVisible: null,
       limit: PAGINATION_LIMIT,
     },
-  })), [dispatch]);
+  })), [currentKey, dispatch]);
 
   const customerSearch = useMemo(() => ({
     id: "customer",
     component: <Col xs={12}>
-      <BaseSearchField
+      {/* <BaseSearchField
         id="customer"
         label="Заказчик"
         placeholder="Поиск по имени и хотелось бы по телефону, но нетъ..."
-        // value={orderCustomer ?? null}
-        // computedValueHandle={(arg) => {
-        //   if (arg) {
-        //     if (arg.name && arg.phone) {
-        //       return `${arg?.phone} ${arg?.name}`;
-        //     }
-        //     if (arg.name) {
-        //       return `${arg?.name}`;
-        //     }
-        //     if (arg.phone) {
-        //       return `${arg?.phone}`;
-        //     }
-        //   }
-        //   return null;
-        // }}
         items={customers}
         onSearch={filterHandle}
         await={usersAwait}
         renderProps={(item: IUser) => `${item.name || "-"} ${item.phone || "-"}`}
         callback={(item: IUser) => changeHandle(item)}
         reset={onReset}
+      /> */}
+
+      <BaseSearchFieldWithSelectingKeys
+        id="customer"
+        label="Заказчик"
+        placeholder={keys.find((item) => item.value === currentKey)?.placeholder ?? ""}
+        items={customers}
+        onSearch={filterHandle}
+        await={usersAwait}
+        renderProps={(item: IUser) => `${item.name || "-"} ${item.phone || "-"}`}
+        callback={(item: IUser) => changeHandle(item)}
+        reset={onReset}
+
+        keys={keys}
+        currentKey={currentKey}
+        onChooseKey={onChooseKeyHandle}
       />
     </Col>
-  }), [changeHandle, customers, filterHandle, onReset, usersAwait]);
+  }), [changeHandle, currentKey, customers, filterHandle, onChooseKeyHandle, onReset, usersAwait]);
 
   const config: IBaseFormConfig = useMemo(() => ({
     list: [
