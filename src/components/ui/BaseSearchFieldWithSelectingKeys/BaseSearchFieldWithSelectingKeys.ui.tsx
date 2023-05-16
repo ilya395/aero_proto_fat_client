@@ -4,9 +4,9 @@ import BaseSearchField from "../BaseSearchField/BaseSearchField.ui";
 import { IBaseSearchFieldWithSelectingKeysProps } from "./models/BaseSearchFieldWithSelectingKeys.model";
 
 const BaseSearchFieldWithSelectingKeys = <T extends Record<string, any>, >(props: IBaseSearchFieldWithSelectingKeysProps<T>) => {
-  const { keys, currentKey, onChooseKey, id, label, ...rest } = props;
+  const { keys, currentKey, onChooseKey, id, label, className = "mb-3", ...rest } = props;
   return (
-    <Row>
+    <Row className={`align-items-end ${className}`}>
       <Col xs={3}>
         <Form.Label htmlFor={id}>{label}</Form.Label>
         <Form.Select aria-label="Select keys" onChange={onChooseKey} value={currentKey}>
@@ -18,7 +18,8 @@ const BaseSearchFieldWithSelectingKeys = <T extends Record<string, any>, >(props
       <Col xs={9}>
         <BaseSearchField
           id={id}
-          label={label}
+          label=""
+          className="mb-0"
           {...rest}
         />
       </Col>
